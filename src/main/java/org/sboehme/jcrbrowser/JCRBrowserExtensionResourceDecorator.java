@@ -27,15 +27,21 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * Overrules the resource resolver to let the JCRBrowser render servlets that have been registered by path.
  * 
+ * E.g. the login servlet is registered by path using the URL /system/sling/login.
+ * When calling /system/sling/login.jcrbrowser.html the servlet would usually be called to render the request.
+ * To render this resource with the JCRBrowser this ResourceDecorator sets the resource type for requests that 
+ * end with '.jcrbrowser.html' to 'jcrbrowser'.
  * @scr.component immediate="true" label="%defaultRtp.name"
  *                description="%defaultRtp.description"
  * @scr.property name="service.vendor" value="Sandro Boehme"
- * @scr.property name="service.description" value="Sample Resource Decorator"
+ * @scr.property name="service.description" value="JCRBrowser extension Resource Decorator"
  * @scr.service
  */
-public class AppPathDecorator implements ResourceDecorator {
+public class JCRBrowserExtensionResourceDecorator implements ResourceDecorator {
 
+	private static final String RESOURCE_TYPE_JCRBROWSER = "jcrbrowser";
 	private final Logger log = LoggerFactory.getLogger(getClass());
 
 	/**
@@ -45,21 +51,12 @@ public class AppPathDecorator implements ResourceDecorator {
 	public Resource decorate(Resource resource, HttpServletRequest request) {
 		Resource result = null;
 		String pathInfo = request.getPathInfo();
-		if (pathInfo != null && pathInfo.startsWith("/browser")) {
+		if (pathInfo != null && pathInfo.endsWith("." + RESOURCE_TYPE_JCRBROWSER + ".html")) {
 			result = new ResourceWrapper(resource) {
 
 				@Override
-				public boolean isResourceType(String resourceType) {
-					// TODO Auto-generated method stub
-					return "browsernode".equals(resourceType);//super.isResourceType(resourceType);
-				}
-
-				@Override
 				public String getResourceType() {
-					String resourceType = getResource().getResourceType();
-					return "browsernode";
-//					return "servletresourcetype";
-//					return resourceType;//"browsernode";
+					return RESOURCE_TYPE_JCRBROWSER;
 				}
 
 			};
@@ -67,7 +64,10 @@ public class AppPathDecorator implements ResourceDecorator {
 		return result;
 	}
 
-	/** Return a resource type for given node, if we have a mapping that applies */
+	/**
+	 * Returning null to signal that no decoration is needed.
+	 * @see org.apache.sling.api.resource.ResourceDecorator#decorate(org.apache.sling.api.resource.Resource)
+	 */
 	public Resource decorate(Resource resource) {
 		return null;
 	}
