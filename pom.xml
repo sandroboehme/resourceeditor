@@ -71,8 +71,8 @@
 							org.apache.taglibs.standard;version="1.1.2"org.apache.taglibs.standard.extra.spath;version="1.1.2",org.apache.taglibs.standard.functions;version="1.1.2",org.apache.taglibs.standard.lang.jstl;version="1.1.2",org.apache.taglibs.standard.lang.jstl.parser;version="1.1.2",org.apache.taglibs.standard.lang.jstl.test;version="1.1.2",org.apache.taglibs.standard.lang.jstl.test.beans;version="1.1.2",org.apache.taglibs.standard.lang.support;version="1.1.2",org.apache.taglibs.standard.resources;version="1.1.2",org.apache.taglibs.standard.tag.common.core;version="1.1.2",org.apache.taglibs.standard.tag.common.fmt;version="1.1.2",org.apache.taglibs.standard.tag.common.sql;version="1.1.2",org.apache.taglibs.standard.tag.common.xml;version="1.1.2",org.apache.taglibs.standard.tag.el.core;version="1.1.2",org.apache.taglibs.standard.tag.el.fmt;version="1.1.2",org.apache.taglibs.standard.tag.el.sql;version="1.1.2",org.apache.taglibs.standard.tag.el.xml;version="1.1.2",org.apache.taglibs.standard.tag.rt.core;version="1.1.2",org.apache.taglibs.standard.tag.rt.fmt;version="1.1.2",org.apache.taglibs.standard.tag.rt.sql;version="1.1.2",org.apache.taglibs.standard.tag.rt.xml;version="1.1.2",org.apache.taglibs.standard.tei;version="1.1.2",org.apache.taglibs.standard.tlv;version="1.1.2"
 						</Import-Package>
 					</instructions>
-					<remoteOBR>jcrbrowser.org</remoteOBR>
-					<prefixURL>dav:http://www.wingsuit.de/sling/obr</prefixURL>
+					<remoteOBR>jcrbrowser.com</remoteOBR>
+					<prefixURL>dav:http://www.jcrbrowser.com/sling/obr</prefixURL>
 				</configuration>
 				<version>2.0.1</version>
 			</plugin>
@@ -101,7 +101,7 @@
 					</execution>
 				</executions>
 				<configuration>
-					<obr>http://www.wingsuit.de/sling/obr</obr>
+					<obr>http://www.jcrbrowser.com/sling/obr</obr>
 				</configuration>
 				<version>2.0.6</version>
 			</plugin>
@@ -167,8 +167,8 @@
 	</dependencies>
 	<distributionManagement>
 		<repository>
-			<id>jcrbrowser.org</id>
-			<url>dav:http://www.wingsuit.de/sling/obr</url>
+			<id>jcrbrowser.com</id>
+			<url>dav:http://www.jcrbrowser.com/sling/obr</url>
 		</repository>
 	</distributionManagement>
 </project>
