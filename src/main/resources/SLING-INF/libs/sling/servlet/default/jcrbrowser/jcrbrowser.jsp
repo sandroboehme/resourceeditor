@@ -187,7 +187,7 @@ $(document).ready(function() {
 				<div id="inner_content_margin">
 					<form action="not_configured_yet.change.properties" method="post">
 						<c:set var="resourceIsNode" scope="request" value="<%=resource.adaptTo(Node.class) !=null %>"/>
-						<c:if test="resourceIsNode">
+						<c:if test="${resourceIsNode}">
 							<%--
 							For some reason I get the following exception when using the JSTL expression '${currentNode.properties}'
 							instead of the scriptlet code 'currentNode.getProperties()':
