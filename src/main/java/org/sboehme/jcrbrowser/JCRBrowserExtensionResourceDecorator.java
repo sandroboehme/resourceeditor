@@ -22,6 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ResourceDecorator;
+import org.apache.sling.api.resource.ResourceMetadata;
 import org.apache.sling.api.resource.ResourceWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,7 +42,8 @@ import org.slf4j.LoggerFactory;
  */
 public class JCRBrowserExtensionResourceDecorator implements ResourceDecorator {
 
-	private static final String RESOURCE_TYPE_JCRBROWSER = "jcrbrowser";
+	private static final String JCRBROWSER_RESOURCE_TYPE = "jcrbrowser/view";
+	private static final String JCRBROWSER_SELECTOR = "jcrbrowser.view";
 	private final Logger log = LoggerFactory.getLogger(getClass());
 
 	/**
@@ -49,26 +51,31 @@ public class JCRBrowserExtensionResourceDecorator implements ResourceDecorator {
 	 *      javax.servlet.http.HttpServletRequest)
 	 */
 	public Resource decorate(Resource resource, HttpServletRequest request) {
-		Resource result = null;
-		String pathInfo = request.getPathInfo();
-		if (pathInfo != null && pathInfo.endsWith("." + RESOURCE_TYPE_JCRBROWSER + ".html")) {
-			result = new ResourceWrapper(resource) {
-
-				@Override
-				public String getResourceType() {
-					return RESOURCE_TYPE_JCRBROWSER;
-				}
-
-			};
-		}
-		return result;
+		// Returning null signals that no decoration is needed.
+		return null;
 	}
 
 	/**
-	 * Returning null to signal that no decoration is needed.
 	 * @see org.apache.sling.api.resource.ResourceDecorator#decorate(org.apache.sling.api.resource.Resource)
 	 */
 	public Resource decorate(Resource resource) {
-		return null;
+		// Returning null signals that no decoration is needed.
+		Resource result = null;
+		if (resource!=null){
+			ResourceMetadata resourceMetadata = resource.getResourceMetadata();
+			if (resourceMetadata!=null){
+				String resolutionPathInfo = resourceMetadata.getResolutionPathInfo();
+				if (resolutionPathInfo!=null && resolutionPathInfo.endsWith("." + JCRBROWSER_SELECTOR + ".html")){
+					result = new ResourceWrapper(resource) {
+						@Override
+						public String getResourceType() {
+							return JCRBROWSER_RESOURCE_TYPE;
+						}
+
+					};
+				}
+			}
+		}
+		return result;
 	}
 }

@@ -86,12 +86,12 @@ body
 	overflow: hidden;
 	
 	margin: 10px;
+	border:1px solid transparent; 
 	
-	text-shadow: 1px 1px 1px #303030, -1px -1px 0px #A0A0A0;
+	text-shadow: 2px 2px 2px #303030, -1px -1px 0px #A0A0A0;
 /* 	text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.6), -1px -1px 0px rgba(255, 255, 255, 0.6); */
 /* 	text-shadow: rgba(0, 0, 0, 0.6) 0 0 0,rgba(255, 255, 255, 0.6) 0 1px 0; */
 	font-family: arial, helvetica, sans-serif, times;
-	font-weight: bold;
 	color: #c0c0c0;
 }
 
@@ -155,7 +155,7 @@ fieldset
 {
 	float: left;
 	width: 65%;
-	margin: 0 5px 0 5%;
+	margin: 0 5px 0 0;
 }
 
 .clear {
@@ -163,20 +163,31 @@ fieldset
 }
 
 #tree a, :visited, :link {
-	text-shadow: 1px 1px 1px #303030, -1px -1px 0px #A0A0A0;
+	border:1px solid transparent; 
 	font-family: arial, helvetica, sans-serif, times;
-	font-weight: bold;
 	color: #c0c0c0;
 }
 
-#expl_sidebar li a:hover
-{
-/*     color: #545D66; */
-    border: 1px solid #000000;
+#tree a.jstree-hovered { 
+	text-shadow: 1px 1px 1px #A0A0A0, -1px -1px 0px #303030;
+	color: #303030;
+	background:transparent; 
+	border:1px solid #000000; 
+	padding:2px 1px;
     -moz-border-radius: 5px;
     border-radius: 5px;
 }
 
+#tree a.jstree-clicked 
+{
+	text-shadow: 1px 1px 1px #A0A0A0, -1px -1px 0px #303030;
+	color: #303030;
+	background:transparent; 
+	border:1px solid #000000; 
+	padding:2px 1px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
    /*TODO: specify later than jstree*/ 
 
 #vakata-contextmenu ul {

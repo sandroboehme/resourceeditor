@@ -5,7 +5,7 @@ The JCRBrowser shows the virtual tree of Apache Sling resources in a web page.
 ++ Deploy Binaries ++
 o Install Apache Sling (see http://sling.apache.org/site/getting-and-building-sling.html)
 o Navigate to the OSGi Repository page of the management console within your running Sling instance (/system/console/obr)
-o Add the JCRBrowser repository URL (http://www.jcrbrowser.com/sling/obr/repository.xml). 
+o Add the JCRBrowser repository URL (http://www.jcrbrowser.org/sling/obr/repository.xml). 
 o Search for the "jcrbrowser" resource and navigate to the latest version.
 o Click "Deploy and Start".
 o At /system/console/bundles you will see that the "jcrbrowser" bundle is active.

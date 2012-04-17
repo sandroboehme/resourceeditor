@@ -18,8 +18,8 @@
 <!-- <script type="text/javascript" src="jquery/js/jquery-1.6.2.min.js"></script> -->
 
 <!-- <link rel="stylesheet" type="text/css" href="jquery/css/custom-theme/jquery-ui-1.8.16.custom.css"> -->
-<link rel="stylesheet" type="text/css" href="${request.contextPath}/jcrbrowser/css/browser.css">
 <link rel="stylesheet" type="text/css" media="all" href="${request.contextPath}/jcrbrowser/css/style.css">
+<link rel="stylesheet" type="text/css" media="all" href="${request.contextPath}/jcrbrowser/css/browser.css">
 <script type="text/javascript">
 var currentNodePath = $.URLDecode("${resource.path}");
 var paths = currentNodePath.substring(1).split("/");
@@ -113,6 +113,12 @@ $(document).ready(function() {
 			},
 			"progressive_render" : true, 
 		},
+// 		"themes" : {
+// 	        "theme" : "jcrbrowser",
+// 	        "url"	: "/",
+// 	        "dots" : true,
+// 	        "icons" : true
+// 	    },
 		"contextmenu" : {
 			"items" : function(li){
 							var menu = {"create_sibling_node" : {
@@ -169,6 +175,8 @@ $(document).ready(function() {
 		"plugins" : [ "themes", "json_data",  "ui", "core", "hotkeys"]
 	// it makes sense to configure a plugin only if overriding the defaults
 	})
+
+// 	$("#tree").jstree("set_theme","jcrbrowser");
 
 });
 </script>
