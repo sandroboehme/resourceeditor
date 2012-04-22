@@ -1,0 +1,19 @@
+JCRBrowser
+
+The JCRBrowser shows the virtual tree of Apache Sling resources in a web page.
+
+++ Deploy Binaries ++
+o Install Apache Sling (see http://sling.apache.org/site/getting-and-building-sling.html)
+o Navigate to the OSGi Repository page of the management console within your running Sling instance (/system/console/obr)
+o Add the JCRBrowser repository URL (http://www.jcrbrowser.org/sling/obr/repository.xml). 
+o Search for the "jcrbrowser" resource and navigate to the latest version.
+o Click "Deploy and Start".
+o At /system/console/bundles you will see that the "jcrbrowser" bundle is active.
+o Open "/.jcrbrowser.html" at your server to see the web application.
+
+++ Build JCRBrowser ++
+o Deploy the binaries as described above. 
+o Download and install Git from http://www.git-scm.com/download
+o Call 'git clone git://github.com/sandroboehme/jcrbrowser.git' in a shell. It will create the jcrbrowser subfolder containing the source. 
+o Change to the jcrbrowser subdirectory and call 'mvn clean install' there to install the sources into the running Sling instance.
+
