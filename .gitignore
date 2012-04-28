@@ -3,3 +3,7 @@
 target
 .settings
 .DS_Store
+pom.xml.releaseBackup
+release.properties
+pom.xml.tag
+pom.xml.next
