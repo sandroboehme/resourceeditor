@@ -9,7 +9,7 @@ o Add the JCRBrowser repository URL (http://www.jcrbrowser.org/sling/obr/reposit
 o Search for the "jcrbrowser" resource and navigate to the latest version.
 o Click "Deploy and Start".
 o At /system/console/bundles you will see that the "jcrbrowser" bundle is active.
-o Open "/.jcrbrowser.html" at your server to see the web application.
+o Open "/.jcrbrowser.view.html" at your server to see the web application.
 
 ++ Build JCRBrowser ++
 o Deploy the binaries as described above. 
