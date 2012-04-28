@@ -14,7 +14,7 @@
 	<groupId>org.sboehme</groupId>
 	<artifactId>jcrbrowser</artifactId>
 	<packaging>bundle</packaging>
-	<version>1.3.24-SNAPSHOT</version>
+	<version>1.3.24</version>
 	<name>jcrbrowser</name>
 	<description>org.sboehme - jcrbrowser</description>
 
