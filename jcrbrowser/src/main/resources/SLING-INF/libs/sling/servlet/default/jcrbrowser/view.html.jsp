@@ -8,18 +8,18 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <!-- TODO servername and port should not be absolute -->
-<script type="text/javascript" src="${request.contextPath}/jcrbrowser/js/jquery.js"></script>
-<script type="text/javascript" src="${request.contextPath}/jcrbrowser/js/jquery.cookie.js"></script>
-<script type="text/javascript" src="${request.contextPath}/jcrbrowser/js/jquery.hotkeys.js"></script>
-<script type="text/javascript" src="${request.contextPath}/jcrbrowser/js/jquery.jstree.js"></script>
-<script type="text/javascript" src="${request.contextPath}/jcrbrowser/js/jquery.scrollTo-min.js"></script>
-<script type="text/javascript" src="${request.contextPath}/jcrbrowser/js/urlEncode.js"></script>
+<script type="text/javascript" src="<%= request.getContextPath() %>/jcrbrowser/js/jquery.js"></script>
+<script type="text/javascript" src="<%= request.getContextPath() %>/jcrbrowser/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="<%= request.getContextPath() %>/jcrbrowser/js/jquery.hotkeys.js"></script>
+<script type="text/javascript" src="<%= request.getContextPath() %>/jcrbrowser/js/jquery.jstree.js"></script>
+<script type="text/javascript" src="<%= request.getContextPath() %>/jcrbrowser/js/jquery.scrollTo-min.js"></script>
+<script type="text/javascript" src="<%= request.getContextPath() %>/jcrbrowser/js/urlEncode.js"></script>
 <!-- <script type="text/javascript" src="jquery/js/jquery-ui-1.8.16.custom.min.js"></script> -->
 <!-- <script type="text/javascript" src="jquery/js/jquery-1.6.2.min.js"></script> -->
 
 <!-- <link rel="stylesheet" type="text/css" href="jquery/css/custom-theme/jquery-ui-1.8.16.custom.css"> -->
-<link rel="stylesheet" type="text/css" media="all" href="${request.contextPath}/jcrbrowser/css/style.css">
-<link rel="stylesheet" type="text/css" media="all" href="${request.contextPath}/jcrbrowser/css/browser.css">
+<link rel="stylesheet" type="text/css" media="all" href="<%= request.getContextPath() %>/jcrbrowser/css/style.css">
+<link rel="stylesheet" type="text/css" media="all" href="<%= request.getContextPath() %>/jcrbrowser/css/browser.css">
 <script type="text/javascript">
 var currentNodePath = $.URLDecode("${resource.path}");
 var paths = currentNodePath.substring(1).split("/");
@@ -74,7 +74,8 @@ function openElement(root, paths) {
 function get_uri_from_li(li, extension){
 	var path = getPathFromLi(li);
 	path = $.URLEncode(path);
-	return "${request.contextPath}/"+path+extension;
+	path = path.replace(/%2F/g, "/");
+	return "<%= request.getContextPath() %>"+path+extension;
 }
 
 function adjust_height(){
@@ -109,7 +110,7 @@ $(document).ready(function() {
 			"ajax" : {
 				"url" : function (li) {
 					// the li the user clicked on.
-					return li.attr ?  get_uri_from_li(li,".jcrbrowser.nodes.json") : "${request.contextPath}/.jcrbrowser.nodes.json"; },
+					return li.attr ?  get_uri_from_li(li,".jcrbrowser.nodes.json") : "<%= request.getContextPath() %>/.jcrbrowser.nodes.json"; },
 			},
 			"progressive_render" : true, 
 		},
@@ -128,7 +129,7 @@ $(document).ready(function() {
 							};
 							var the_nodetypes = "";
 							$.ajax({
-// 								  url: '${request.contextPath}/jcrbrowser/jcr%3Asystem.nodetypes.json',
+// 								  url: '<%= request.getContextPath() %>/jcrbrowser/jcr%3Asystem.nodetypes.json',
 							  url: get_uri_from_li(li,".nodetypes.json"),
 							  dataType: 'json',
 							  async: false,
@@ -205,7 +206,7 @@ $(document).ready(function() {
 							<c:forEach var="property" items="<%=currentNode.getProperties()%>">
 						<%  Property property = (Property) pageContext.getAttribute("property");%>
 								<fieldset>
-									<label class="proplabel" for='${property.name}'>${property.name} [<%=PropertyType.nameFromValue(property.getType()) %> ${property.multiple ? 'multiple' : ''}]</label>
+									<label class="proplabel" for='${property.name}'>${property.name} [<%=PropertyType.nameFromValue(property.getType()) %>${property.multiple ? ' multiple' : ''}]</label>
 									<c:choose>
 									     <c:when test="${property.multiple}" >
 									     	<fieldset class="propmultival_fieldset">
@@ -229,10 +230,10 @@ $(document).ready(function() {
 										     <c:when test="<%=property.getType() == PropertyType.BINARY %>" >
 										     	<c:choose>
 											     	<c:when test='<%=currentNode.getParent().isNodeType("nt:file") %>'>
-											     		<a class="propinput" href="${resource.parent.path}">Download</a>
+											     		<a class="propinput" href="<%= request.getContextPath() %>${resource.parent.path}">Download</a>
 											     	</c:when>
 											     	<c:otherwise>
-											     		<a class="propinput" href="${resource.path}.property.download?property=${property.name}">View (choose "Save as..." to download)</a>
+											     		<a class="propinput" href="<%= request.getContextPath() %>${resource.path}.property.download?property=${property.name}">View (choose "Save as..." to download)</a>
 											     	</c:otherwise>
 										     	</c:choose>
 										     </c:when>
