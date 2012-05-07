@@ -26,10 +26,7 @@
 /* ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: */
 /* --- Sub-Seperator  ---*/
 /* ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: */
- 
- */
- 
-*
+
 
 html /* shows always scrollbar in Firefox*/
 {
@@ -74,7 +71,7 @@ body
 	background: -o-linear-gradient(-45deg,  rgba(0,0,0,0.4) 0%,rgba(0,0,0,0.7) 100%); /* Opera 11.10+ */
 	background: -ms-linear-gradient(-45deg,  rgba(0,0,0,0.4) 0%,rgba(0,0,0,0.7) 100%); /* IE10+ */
 	background: linear-gradient(-45deg,  rgba(0,0,0,0.4) 0%,rgba(0,0,0,0.7) 100%); /* W3C */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#a6000000',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a0000000', endColorstr='#c9000000',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
 	
     box-shadow: 5px 5px 5px #888;
     -moz-box-shadow: 5px 5px 5px #888;
@@ -86,11 +83,8 @@ body
 	overflow: hidden;
 	
 	margin: 10px;
-	border:1px solid transparent; 
 	
 	text-shadow: 2px 2px 2px #303030, -1px -1px 0px #A0A0A0;
-/* 	text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.6), -1px -1px 0px rgba(255, 255, 255, 0.6); */
-/* 	text-shadow: rgba(0, 0, 0, 0.6) 0 0 0,rgba(255, 255, 255, 0.6) 0 1px 0; */
 	font-family: arial, helvetica, sans-serif, times;
 	color: #c0c0c0;
 }
@@ -155,17 +149,18 @@ fieldset
 {
 	float: left;
 	width: 65%;
-	margin: 0 5px 0 0;
+	margin: 0 5px 0 0
 }
 
 .clear {
-    clear: both;
+    clear: both
 }
 
 #tree a, :visited, :link {
 	border:1px solid transparent; 
+	padding:2px 1px;
 	font-family: arial, helvetica, sans-serif, times;
-	color: #c0c0c0;
+	color: #c0c0c0
 }
 
 #tree a.jstree-hovered { 
@@ -175,7 +170,7 @@ fieldset
 	border:1px solid #000000; 
 	padding:2px 1px;
     -moz-border-radius: 5px;
-    border-radius: 5px;
+    border-radius: 5px
 }
 
 #tree a.jstree-clicked 
@@ -186,9 +181,8 @@ fieldset
 	border:1px solid #000000; 
 	padding:2px 1px;
     -moz-border-radius: 5px;
-    border-radius: 5px;
+    border-radius: 5px
 }
-   /*TODO: specify later than jstree*/ 
 
 #vakata-contextmenu ul {
 	min-width: 250px !important;

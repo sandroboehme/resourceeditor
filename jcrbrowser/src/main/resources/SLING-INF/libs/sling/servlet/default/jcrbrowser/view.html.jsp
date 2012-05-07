@@ -7,7 +7,6 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<!-- TODO servername and port should not be absolute -->
 <script type="text/javascript" src="<%= request.getContextPath() %>/jcrbrowser/js/jquery.js"></script>
 <script type="text/javascript" src="<%= request.getContextPath() %>/jcrbrowser/js/jquery.cookie.js"></script>
 <script type="text/javascript" src="<%= request.getContextPath() %>/jcrbrowser/js/jquery.hotkeys.js"></script>
@@ -20,9 +19,15 @@
 <!-- <link rel="stylesheet" type="text/css" href="jquery/css/custom-theme/jquery-ui-1.8.16.custom.css"> -->
 <link rel="stylesheet" type="text/css" media="all" href="<%= request.getContextPath() %>/jcrbrowser/css/style.css">
 <link rel="stylesheet" type="text/css" media="all" href="<%= request.getContextPath() %>/jcrbrowser/css/browser.css">
+
+<!--[if IE]>
+	<link rel="stylesheet" type="text/css" media="all" href="<%= request.getContextPath() %>/jcrbrowser/css/browser_ie.css"/>
+<![endif]-->
+
 <script type="text/javascript">
 var currentNodePath = $.URLDecode("${resource.path}");
 var paths = currentNodePath.substring(1).split("/");
+var selectingNodeWhileOpeningTree=true;
 
 //!"#$%&'()*+,./:;<=>?@[\]^`{|}~
 var specialSelectorChars = new RegExp("[\\[\\]:!\"#\\$%&'\\(\\)\\*\\+,\\./:;<=>\\?@\\\\\\^`{}\\|~]","g");
@@ -30,8 +35,8 @@ var specialSelectorChars = new RegExp("[\\[\\]:!\"#\\$%&'\\(\\)\\*\\+,\\./:;<=>\
 function getPathFromLi(li){
 	return $(li).parentsUntil(".root").andSelf().map(
 			function() {
-				return this.tagName === 'LI'
-						? $(this).attr("nodename").trim() 
+				return this.tagName == "LI"
+						? $(this).attr("nodename") 
 						: null;
 			}
 		).get().join("/");
@@ -53,7 +58,9 @@ function openElement(root, paths) {
 	if (pathElementLi.length === 0){
 		alert("Couldn't find "+pathElementName+" under the path "+getPathFromLi(root.parent()));
 	} else {
+		selectingNodeWhileOpeningTree=true;
 		$.jstree._reference(pathElementLi).select_node(pathElementLi, true);
+		selectingNodeWhileOpeningTree=false;
 		if (paths.length==0){
 			_openingPathFinished();
 		}
@@ -102,6 +109,7 @@ $(document).ready(function() {
 		if (currentNodePath != "/") {
 			openElement($("#tree > ul > li[nodename=''] > ul"), paths);
 		}
+		selectingNodeWhileOpeningTree=false;
 	})
 	// call `.jstree` with the options object
 	.jstree({
@@ -110,74 +118,18 @@ $(document).ready(function() {
 			"ajax" : {
 				"url" : function (li) {
 					// the li the user clicked on.
-					return li.attr ?  get_uri_from_li(li,".jcrbrowser.nodes.json") : "<%= request.getContextPath() %>/.jcrbrowser.nodes.json"; },
+					return li.attr ?  get_uri_from_li(li,".jcrbrowser.nodes.json") : "<%= request.getContextPath() %>/.jcrbrowser.nodes.json"; }
 			},
-			"progressive_render" : true, 
-		},
-// 		"themes" : {
-// 	        "theme" : "jcrbrowser",
-// 	        "url"	: "/",
-// 	        "dots" : true,
-// 	        "icons" : true
-// 	    },
-		"contextmenu" : {
-			"items" : function(li){
-							var menu = {"create_sibling_node" : {
-											"label"	: "Create sibling node",
-											"submenu"	: {}
-								}
-							};
-							var the_nodetypes = "";
-							$.ajax({
-// 								  url: '<%= request.getContextPath() %>/jcrbrowser/jcr%3Asystem.nodetypes.json',
-							  url: get_uri_from_li(li,".nodetypes.json"),
-							  dataType: 'json',
-							  async: false,
-							  success: function( data ) {
-							    the_nodetypes=data;
-							  }
-							});
-							$.each(the_nodetypes,function(){
-								menu["create_sibling_node"]["submenu"][this] = {
-										"label" : "Create "+this,
-										"action": function(obj){alert(this+"");}
-									};
-							}
-							);
-							return menu;
-// 							"create" : {
-// 								// The item label
-// 								"label"				: "Create",
-// 								// The function to execute upon a click
-// 								"action"			: function (obj) {
-// // 									alert(obj.html());
-// // 									$("#tree").jstree("create", obj, "after",
-// // 											{ "data" : "child2" },
-// // 									true);
-// // 									obj.rename();
-// // 									$("#tree").jstree("remove",obj); 
-// // 									$("#tree").jstree("rename",obj);
-// 									},
-// 						},
-// 						"create_sibling_node" : {
-// 							"label"	: "Create sibling node",
-// 							"submenu"	: {
-// 								"ntunstructured" : {
-// 									"label"	: "Create ntunstructured",
-// 									"action"	: function (obj) {
-// 										createNode(obj, "nt:unstructured");
-// 									}
-// 								}
-// 							}
-// 						}
-					}	
+			"progressive_render" : true
 		},
 		// the `plugins` array allows you to configure the active plugins on this instance
 		"plugins" : [ "themes", "json_data",  "ui", "core", "hotkeys"]
-	// it makes sense to configure a plugin only if overriding the defaults
-	})
-
-// 	$("#tree").jstree("set_theme","jcrbrowser");
+	}).bind("select_node.jstree", function (event, data) {
+		if (!selectingNodeWhileOpeningTree){
+	        // `data.rslt.obj` is the jquery extended node that was clicked
+	        location.href=$(data.rslt.obj).children("a:first").attr("href");
+		}
+    })
 
 });
 </script>
@@ -202,6 +154,7 @@ $(document).ready(function() {
 							instead of the scriptlet code 'currentNode.getProperties()':
 							org.apache.sling.scripting.jsp.jasper.JasperException: Unable to compile class for JSP: 
 							org.apache.sling.scripting.jsp.jasper.el.JspValueExpression cannot be resolved to a type
+							see https://issues.apache.org/jira/browse/SLING-2455
 							 --%>
 							<c:forEach var="property" items="<%=currentNode.getProperties()%>">
 						<%  Property property = (Property) pageContext.getAttribute("property");%>

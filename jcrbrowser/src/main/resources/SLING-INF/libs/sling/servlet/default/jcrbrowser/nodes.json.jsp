@@ -12,8 +12,7 @@
             	"data":	{
             			"title" : "/",
             			"attr" :{
-            					"href" : "<%= request.getContextPath() %>/.jcrbrowser.view.html",
-            					"onclick" : "javascript:self.location.href=$(this).attr('href');"
+            					"href" : "<%= request.getContextPath() %>/.jcrbrowser.view.html"
             					}
             			},
             		"state" : "open",
@@ -32,8 +31,7 @@
 		"data":	{
 				"title" : "${theResource.name} [${theResource.resourceType}]",
 				"attr" :{
-						"href" : "<%= java.net.URLEncoder.encode(thePath, "UTF-8").replaceAll("%2F", "/") %>",
-						"onclick" : "javascript:self.location.href=$(this).attr('href');"
+						"href" : "<%= java.net.URLEncoder.encode(thePath, "UTF-8").replaceAll("%2F", "/") %>"
 						}
 				},
 			<% if(theResource.listChildren().hasNext()){ %>
