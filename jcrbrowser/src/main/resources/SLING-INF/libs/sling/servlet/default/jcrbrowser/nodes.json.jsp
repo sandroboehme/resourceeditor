@@ -16,7 +16,7 @@
             					}
             			},
             		"state" : "open",
-            		"attr" : {"nodename" : ""},
+            		"attr" : { "nodename" : "" },
             		"children" :
 		</c:if>
 	[

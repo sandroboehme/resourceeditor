@@ -113,6 +113,9 @@ $(document).ready(function() {
 	})
 	// call `.jstree` with the options object
 	.jstree({
+		"core"      : {
+			html_titles : false
+		},
 		"json_data" : {
 			"async" : true,
 			"ajax" : {
@@ -138,7 +141,7 @@ $(document).ready(function() {
 <body>
 	<div id="content_container">
 		 <div id="header" class="plate">
-			JCRBrowser 2.0
+			JCRBrowser 2.0 
 		</div>
 		<div id="sidebar" class="plate">
 			<div id="tree" class="demo root" ></div>

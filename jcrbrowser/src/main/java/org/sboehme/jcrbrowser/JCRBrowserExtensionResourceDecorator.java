@@ -28,16 +28,20 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Overrules the resource resolver to let the JCRBrowser render servlets that have been registered by path.
+ * Overrules the resource resolver to let the JCRBrowser render servlets that
+ * have been registered by path.
  * 
- * E.g. the login servlet is registered by path using the URL /system/sling/login.
- * When calling /system/sling/login.jcrbrowser.html the servlet would usually be called to render the request.
- * To render this resource with the JCRBrowser this ResourceDecorator sets the resource type for requests that 
- * end with '.jcrbrowser.html' to 'jcrbrowser'.
+ * E.g. the login servlet is registered by path using the URL
+ * /system/sling/login. When calling /system/sling/login.jcrbrowser.view.html the
+ * servlet would usually be called to render the request. To render this
+ * resource with the JCRBrowser instead, this ResourceDecorator sets the resource type
+ * for requests that use the 'jcrbrowser.view' selector in the path info to 'jcrbrowser/view'.
+ * 
  * @scr.component immediate="true" label="%defaultRtp.name"
  *                description="%defaultRtp.description"
  * @scr.property name="service.vendor" value="Sandro Boehme"
- * @scr.property name="service.description" value="JCRBrowser extension Resource Decorator"
+ * @scr.property name="service.description"
+ *               value="JCRBrowser extension Resource Decorator"
  * @scr.service
  */
 public class JCRBrowserExtensionResourceDecorator implements ResourceDecorator {
@@ -51,30 +55,41 @@ public class JCRBrowserExtensionResourceDecorator implements ResourceDecorator {
 	 *      javax.servlet.http.HttpServletRequest)
 	 */
 	public Resource decorate(Resource resource, HttpServletRequest request) {
-		// Returning null signals that no decoration is needed.
-		return null;
+		String pathInfo = request.getPathInfo();
+		return getJCRBrowserResourceWrapper(resource,
+				pathInfo);
 	}
 
 	/**
 	 * @see org.apache.sling.api.resource.ResourceDecorator#decorate(org.apache.sling.api.resource.Resource)
 	 */
 	public Resource decorate(Resource resource) {
-		// Returning null signals that no decoration is needed.
 		Resource result = null;
-		if (resource!=null){
+		if (resource != null) {
 			ResourceMetadata resourceMetadata = resource.getResourceMetadata();
-			if (resourceMetadata!=null){
-				String resolutionPathInfo = resourceMetadata.getResolutionPathInfo();
-				if (resolutionPathInfo!=null && resolutionPathInfo.endsWith("." + JCRBROWSER_SELECTOR + ".html")){
-					result = new ResourceWrapper(resource) {
-						@Override
-						public String getResourceType() {
-							return JCRBROWSER_RESOURCE_TYPE;
-						}
-
-					};
-				}
+			if (resourceMetadata != null) {
+				String resolutionPathInfo = resourceMetadata
+						.getResolutionPathInfo();
+				result = getJCRBrowserResourceWrapper(resource,
+						resolutionPathInfo);
 			}
+		}
+		return result;
+	}
+
+	private Resource getJCRBrowserResourceWrapper(Resource resource,
+			String resolutionPathInfo) {
+		Resource result = null;
+		if (resolutionPathInfo != null
+				&& resolutionPathInfo.endsWith("." + JCRBROWSER_SELECTOR
+						+ ".html")) {
+			result = new ResourceWrapper(resource) {
+				@Override
+				public String getResourceType() {
+					return JCRBROWSER_RESOURCE_TYPE;
+				}
+
+			};
 		}
 		return result;
 	}
