@@ -1,6 +1,6 @@
 JCRBrowser
 
-The JCRBrowser shows the virtual tree of Apache Sling resources in a web page.
+The JCRBrowser shows the tree of Apache Sling resources in a lightweight web page.
 
 ++ Deploy Binaries ++
 o Install Apache Sling (see http://sling.apache.org/site/getting-and-building-sling.html)
