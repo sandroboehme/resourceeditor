@@ -32,16 +32,6 @@
 			Releases</name>
 			<url>http://repository.springsource.com/maven/bundles/external</url>
 		</repository>
-		<repository>
-			<id>spring-external</id>
-			<name>spring-external</name>
-			<url>http://sigil.codecauldron.org/spring-external.obr</url>
-		</repository>
-		<repository>
-			<id>spring-release</id>
-			<name>spring-release</name>
-			<url>http://sigil.codecauldron.org/spring-release.obr</url>
-		</repository>
 	</repositories>
 	<scm>
 		<developerConnection>scm:git:https://sandroboehme@github.com/sandroboehme/jcrbrowser.git</developerConnection>
@@ -99,7 +89,7 @@
 						</goals>
 						<configuration>
 							<mountByFS>true</mountByFS>
-                            <slingUrl>http://localhost:8080/system/console</slingUrl>
+                            <slingUrl>http://localhost:8080/sling6/system/console</slingUrl>
                             <user>admin</user>
                             <password>admin</password>
 						</configuration>

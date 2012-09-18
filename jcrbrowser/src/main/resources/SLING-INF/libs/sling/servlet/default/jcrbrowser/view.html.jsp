@@ -23,12 +23,6 @@
 <!--[if IE]>
 	<link rel="stylesheet" type="text/css" media="all" href="<%= request.getContextPath() %>/jcrbrowser/css/browser_ie.css"/>
 <![endif]-->
-<%
-boolean debug = true;
-java.util.Iterator<org.apache.sling.api.resource.Resource> it = resource.listChildren();
-boolean hasNext = it.hasNext();
-System.out.println(hasNext);
-%>
 <script type="text/javascript">
 var currentNodePath = $.URLDecode("${resource.path}");
 var paths = currentNodePath.substring(1).split("/");
