@@ -23,7 +23,12 @@
 <!--[if IE]>
 	<link rel="stylesheet" type="text/css" media="all" href="<%= request.getContextPath() %>/jcrbrowser/css/browser_ie.css"/>
 <![endif]-->
-
+<%
+boolean debug = true;
+java.util.Iterator<org.apache.sling.api.resource.Resource> it = resource.listChildren();
+boolean hasNext = it.hasNext();
+System.out.println(hasNext);
+%>
 <script type="text/javascript">
 var currentNodePath = $.URLDecode("${resource.path}");
 var paths = currentNodePath.substring(1).split("/");
@@ -82,6 +87,7 @@ function get_uri_from_li(li, extension){
 	var path = getPathFromLi(li);
 	path = $.URLEncode(path);
 	path = path.replace(/%2F/g, "/");
+	path = path.replace(/%3A/g, ":");
 	return "<%= request.getContextPath() %>"+path+extension;
 }
 

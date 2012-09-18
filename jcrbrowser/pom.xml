@@ -14,7 +14,7 @@
 	<groupId>org.sboehme</groupId>
 	<artifactId>jcrbrowser</artifactId>
 	<packaging>bundle</packaging>
-	<version>2.0.4-SNAPSHOT</version>
+	<version>2.0.6-SNAPSHOT</version>
 	<name>jcrbrowser</name>
 	<description>org.sboehme - jcrbrowser</description>
 
@@ -70,9 +70,9 @@
 				<configuration>
 					<instructions>
 						<Sling-Initial-Content>SLING-INF/libs/sling/servlet/default/jcrbrowser;overwrite:=true;path:=/libs/sling/servlet/default/jcrbrowser,SLING-INF/jcrbrowser;overwrite:=true;path:=/jcrbrowser</Sling-Initial-Content>
-						<Import-Package>*,javax.servlet.jsp.jstl.core,javax.servlet.jsp.jstl.fmt,javax.servlet.jsp.jstl.sql,javax.servlet.jsp.jstl.tlv,
+						<Import-Package>*,javax.servlet;version="[2.5.0, 3.1.0)",javax.servlet.http;version="[2.5.0, 3.1.0)",javax.servlet.jsp.jstl.core,javax.servlet.jsp.jstl.fmt,javax.servlet.jsp.jstl.sql,javax.servlet.jsp.jstl.tlv,
 							org.apache.xalan.serialize,org.apache.xalan.templates,org.apache.xml.utils,org.apache.xpath,org.apache.xpath.objects,
-							org.apache.taglibs.standard;version="1.1.2"org.apache.taglibs.standard.extra.spath;version="1.1.2",org.apache.taglibs.standard.functions;version="1.1.2",org.apache.taglibs.standard.lang.jstl;version="1.1.2",org.apache.taglibs.standard.lang.jstl.parser;version="1.1.2",org.apache.taglibs.standard.lang.jstl.test;version="1.1.2",org.apache.taglibs.standard.lang.jstl.test.beans;version="1.1.2",org.apache.taglibs.standard.lang.support;version="1.1.2",org.apache.taglibs.standard.resources;version="1.1.2",org.apache.taglibs.standard.tag.common.core;version="1.1.2",org.apache.taglibs.standard.tag.common.fmt;version="1.1.2",org.apache.taglibs.standard.tag.common.sql;version="1.1.2",org.apache.taglibs.standard.tag.common.xml;version="1.1.2",org.apache.taglibs.standard.tag.el.core;version="1.1.2",org.apache.taglibs.standard.tag.el.fmt;version="1.1.2",org.apache.taglibs.standard.tag.el.sql;version="1.1.2",org.apache.taglibs.standard.tag.el.xml;version="1.1.2",org.apache.taglibs.standard.tag.rt.core;version="1.1.2",org.apache.taglibs.standard.tag.rt.fmt;version="1.1.2",org.apache.taglibs.standard.tag.rt.sql;version="1.1.2",org.apache.taglibs.standard.tag.rt.xml;version="1.1.2",org.apache.taglibs.standard.tei;version="1.1.2",org.apache.taglibs.standard.tlv;version="1.1.2"
+							org.apache.taglibs.standard,org.apache.taglibs.standard.extra.spath,org.apache.taglibs.standard.functions,org.apache.taglibs.standard.lang.jstl,org.apache.taglibs.standard.lang.jstl.parser,org.apache.taglibs.standard.lang.jstl.test,org.apache.taglibs.standard.lang.jstl.test.beans,org.apache.taglibs.standard.lang.support,org.apache.taglibs.standard.resources,org.apache.taglibs.standard.tag.common.core,org.apache.taglibs.standard.tag.common.fmt,org.apache.taglibs.standard.tag.common.sql,org.apache.taglibs.standard.tag.common.xml,org.apache.taglibs.standard.tag.el.core,org.apache.taglibs.standard.tag.el.fmt,org.apache.taglibs.standard.tag.el.sql,org.apache.taglibs.standard.tag.el.xml,org.apache.taglibs.standard.tag.rt.core,org.apache.taglibs.standard.tag.rt.fmt,org.apache.taglibs.standard.tag.rt.sql,org.apache.taglibs.standard.tag.rt.xml,org.apache.taglibs.standard.tei,org.apache.taglibs.standard.tlv
 						</Import-Package>
 					</instructions>
 					<remoteOBR>www.jcrbrowser.org</remoteOBR>
@@ -99,6 +99,9 @@
 						</goals>
 						<configuration>
 							<mountByFS>true</mountByFS>
+                            <slingUrl>http://localhost:8080/system/console</slingUrl>
+                            <user>admin</user>
+                            <password>admin</password>
 						</configuration>
 					</execution>
 				</executions>

@@ -7,6 +7,7 @@
 <%@ taglib prefix="sling" uri="http://sling.apache.org/taglibs/sling/1.0"%>
 <sling:defineObjects />
 <% response.setContentType("application/json"); %>
+		<%-- This condition block is specifically for the root node. --%>
 		<c:if test='${"/" == resource.path}'>
 [{
             	"data":	{
@@ -31,7 +32,7 @@
 		"data":	{
 				"title" : "${theResource.name} [${theResource.resourceType}]",
 				"attr" :{
-						"href" : "<%= java.net.URLEncoder.encode(thePath, "UTF-8").replaceAll("%2F", "/") %>"
+						"href" : "<%= java.net.URLEncoder.encode(thePath, "UTF-8").replaceAll("%2F", "/").replaceAll("%3A", ":") %>"
 						}
 				},
 			<% if(theResource.listChildren().hasNext()){ %>
