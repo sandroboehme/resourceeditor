@@ -1,0 +1,33 @@
+ul.tree, ul.tree ul {
+     list-style-type: none;
+     margin: 0;
+     padding: 0;
+   }
+
+ul.tree li.default {
+     background: url(../img/vline.png) repeat-y;
+   }
+   
+ul.tree ul {
+  margin-left: 5px;
+}
+
+ul.tree li {
+  margin: 0;
+  padding: 0 10px; 
+  line-height: 20px; /* As the img is 20px wide */
+  color: #369;
+  font-weight: bold;
+}
+
+ul.tree li div {
+  margin: 0 -10px;
+  padding: 0 10px; 
+  line-height: 20px; /* As the img is 20px wide */
+  background: url(../img/node.png) no-repeat;
+  display: inline;
+}
+
+ul.tree li.last {
+  background: url(../img/lastnode.png) no-repeat;
+}
