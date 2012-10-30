@@ -18,38 +18,45 @@ var paths = currentNodePath.substring(1).split("/");
 
 </script>
 
+<style type="text/css">
+body {
+	background-color: #505050;
+	color: #c0c0c0;
+}
+</style>
+
 </head>
 <body>
 <ul class="tree">
-	<li class="open">Root
+	<li class="open"><div class="node">Root</div>
 		<ul>
 			<li class="open">
-				Animals
+				<div class="node">Animals</div>
 				<ul>
 					<li class="closed">
-						Birds
+						<div class="node">Birds</div>
 					</li>
-					<li class="open">Mammals
+					<li class="open"><div class="node">Mammals</div>
 						<ul>
 							<li class="closed">
-								Elephant
+								<div class="node">Elephant</div>
 							</li>
-							<li class="closed">Mouse</li>
+							<li class="closed"><div class="node">Mouse</div></li>
 						</ul>
 					</li>
 				</ul>
 			</li>
-			<li class="open">Plants
+			<li class="open"><div class="node">Plants</div>
 				<ul>
 					<li class="open">
-						Flowers
+						<div class="node">Flowers</div>
 						<ul>
 							<li class="closed">
-								Rose
+								<div class="node">Rose</div>
 							</li>
-							<li class="closed">Tulip</li>
+							<li class="closed"><div class="node">Tulip</div></li>
 						</ul></li>
-					<li class="closed">Trees
+					<li class="closed"><div class="node">Trees</div>
 					</li>
 				</ul>
 			</li>
