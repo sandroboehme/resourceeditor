@@ -21,35 +21,35 @@ var paths = currentNodePath.substring(1).split("/");
 </head>
 <body>
 <ul class="tree">
-	<li class="last">Root
+	<li class="open">Root
 		<ul>
-			<li class="default">
-				<div></div>Animals
+			<li class="open">
+				Animals
 				<ul>
-					<li class="default">
-						<div></div>Birds
+					<li class="closed">
+						Birds
 					</li>
-					<li class="last">Mammals
+					<li class="open">Mammals
 						<ul>
-							<li class="default">
-								<div></div>Elephant
+							<li class="closed">
+								Elephant
 							</li>
-							<li class="last">Mouse</li>
+							<li class="closed">Mouse</li>
 						</ul>
 					</li>
 				</ul>
 			</li>
-			<li class="last">Plants
+			<li class="open">Plants
 				<ul>
-					<li class="default">
-						<div></div>Flowers
+					<li class="open">
+						Flowers
 						<ul>
-							<li class="default">
-								<div></div>Rose
+							<li class="closed">
+								Rose
 							</li>
-							<li class="last">Tulip</li>
+							<li class="closed">Tulip</li>
 						</ul></li>
-					<li class="last">Trees
+					<li class="closed">Trees
 					</li>
 				</ul>
 			</li>

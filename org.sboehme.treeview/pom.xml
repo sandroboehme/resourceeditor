@@ -19,6 +19,14 @@
 	<description>org.sboehme - treeview</description>
 
 	<build>
+		<resources>
+			<resource>
+				<directory>src/main/test/resources</directory>
+			</resource>
+			<resource>
+				<directory>src/main/resources</directory>
+			</resource>
+		</resources>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.felix</groupId>
