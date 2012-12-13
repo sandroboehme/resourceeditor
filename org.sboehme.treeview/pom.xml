@@ -14,7 +14,7 @@
 	<groupId>org.sboehme</groupId>
 	<artifactId>org.sboehme.treeview</artifactId>
 	<packaging>bundle</packaging>
-	<version>1.0.0-SNAPSHOT</version>
+	<version>1.0.1-SNAPSHOT</version>
 	<name>treeview</name>
 	<description>org.sboehme - treeview</description>
 
@@ -34,7 +34,7 @@
 				<extensions>true</extensions>
 				<configuration>
 					<instructions>
-						<Sling-Initial-Content>SLING-INF/libs/sling/servlet/default/treeview;overwrite:=true;path:=/libs/sling/servlet/default/treeview,SLING-INF/treeview;overwrite:=true;path:=/libs/org/sboehme/treeview</Sling-Initial-Content>
+						<Sling-Initial-Content>SLING-INF/libs/org/sboehme/treeview;overwrite:=true;path:=/libs/org/sboehme/treeview,SLING-INF/libs/sling/servlet/default/treeviewtest;overwrite:=true;path:=/libs/sling/servlet/default/treeviewtest,SLING-INF/libs/test/org/sboehme/treeview;overwrite:=true;path:=/libs/test/org/sboehme/treeview</Sling-Initial-Content>
 						<Import-Package>*,javax.servlet;version="[2.5.0,
 							3.1.0)",javax.servlet.http;version="[2.5.0,
 							3.1.0)",javax.servlet.jsp.jstl.core,javax.servlet.jsp.jstl.fmt,javax.servlet.jsp.jstl.sql,javax.servlet.jsp.jstl.tlv,
