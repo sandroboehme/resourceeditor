@@ -12,10 +12,61 @@
 
 <link rel="stylesheet" type="text/css" media="all" href="<%= request.getContextPath() %>/libs/org/sboehme/treeview/css/style.css">
 
-<script type="text/javascript">
-var currentNodePath = $.URLDecode("${resource.path}");
-var paths = currentNodePath.substring(1).split("/");
 
+<script type="text/javascript" src="<%= request.getContextPath() %>/libs/org/sboehme/treeview/jquery/jquery-1.8.2.min.js"></script>
+
+<script type="text/javascript">
+
+$.fn.tooltip = function(optionen){
+	optionen = $.extend({
+		hintergrund: "#000000"
+	}, optionen);
+	console.log(optionen.hintergrund);
+	console.log($(this).attr("id"));
+	console.log($(this));
+	
+	function zeigeTooltip(){
+		$("<div>", {
+			id: "tooltip",
+			css: {
+				background: optionen.hintergrund,
+				color: "#444",
+				display: "none"
+			},
+			html: "Beispieltext"
+		})
+		.appendTo("body")
+		.fadeIn(1000);
+	}
+	$(this).bind({
+		mouseenter: function(){
+			zeigeTooltip();
+		},
+		mouseenter: function(){
+			if ($("#tooltip").css("opacity") != 0) {
+				$("#tooltip").stop().remove();
+			}
+				 
+				zeigeTooltip();
+		},
+		mouseleave: function(){
+			$("#tooltip").fadeOut(
+				500,
+				function(){
+					$(this).remove();
+				}
+			);
+		}
+	});
+	
+}
+
+$(document).ready(function() {
+	// Plugin-Aufruf
+	$("#tree").tooltip({
+		hintergrund: "#CCCCCC"
+	});
+});
 </script>
 
 <style type="text/css">
@@ -27,7 +78,7 @@ body {
 
 </head>
 <body>
-<ul class="tree">
+<ul id="tree" class="tree">
 	<li class="open"><div class="node">Root</div>
 		<ul>
 			<li class="open">

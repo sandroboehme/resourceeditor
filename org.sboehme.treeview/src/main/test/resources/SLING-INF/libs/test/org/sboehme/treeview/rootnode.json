@@ -1,0 +1,227 @@
+[{
+            	"data":	{
+            			"title" : "/",
+            			"attr" :{
+            					"href" : "/sling6/.jcrbrowser.view.html"
+            					}
+            			},
+            		"state" : "open",
+            		"attr" : { "nodename" : "" },
+            		"children" :
+		
+	[
+			
+				
+		{
+		"data":	{
+				"title" : "jcr:system [rep:system]",
+				"attr" :{
+						"href" : "/sling6/jcr:system.jcrbrowser.view.html"
+						}
+				},
+			
+			"state" : "closed",
+			
+			"attr" : {"nodename" : "jcr:system"}
+		},
+			
+				
+		{
+		"data":	{
+				"title" : "var [sling:Folder]",
+				"attr" :{
+						"href" : "/sling6/var.jcrbrowser.view.html"
+						}
+				},
+			
+			"state" : "closed",
+			
+			"attr" : {"nodename" : "var"}
+		},
+			
+				
+		{
+		"data":	{
+				"title" : "apps [sling:Folder]",
+				"attr" :{
+						"href" : "/sling6/apps.jcrbrowser.view.html"
+						}
+				},
+			
+			"state" : "closed",
+			
+			"attr" : {"nodename" : "apps"}
+		},
+			
+				
+		{
+		"data":	{
+				"title" : "index.html [nt:file]",
+				"attr" :{
+						"href" : "/sling6/index.html.jcrbrowser.view.html"
+						}
+				},
+			
+			"state" : "closed",
+			
+			"attr" : {"nodename" : "index.html"}
+		},
+			
+				
+		{
+		"data":	{
+				"title" : "signup.html [nt:file]",
+				"attr" :{
+						"href" : "/sling6/signup.html.jcrbrowser.view.html"
+						}
+				},
+			
+			"state" : "closed",
+			
+			"attr" : {"nodename" : "signup.html"}
+		},
+			
+				
+		{
+		"data":	{
+				"title" : "sling-logo.png [nt:file]",
+				"attr" :{
+						"href" : "/sling6/sling-logo.png.jcrbrowser.view.html"
+						}
+				},
+			
+			"state" : "closed",
+			
+			"attr" : {"nodename" : "sling-logo.png"}
+		},
+			
+				
+		{
+		"data":	{
+				"title" : "sling-test [sling:Folder]",
+				"attr" :{
+						"href" : "/sling6/sling-test.jcrbrowser.view.html"
+						}
+				},
+			
+			"state" : "closed",
+			
+			"attr" : {"nodename" : "sling-test"}
+		},
+			
+				
+		{
+		"data":	{
+				"title" : "sling.css [nt:file]",
+				"attr" :{
+						"href" : "/sling6/sling.css.jcrbrowser.view.html"
+						}
+				},
+			
+			"state" : "closed",
+			
+			"attr" : {"nodename" : "sling.css"}
+		},
+			
+				
+		{
+		"data":	{
+				"title" : ".DS_Store [nt:file]",
+				"attr" :{
+						"href" : "/sling6/.DS_Store.jcrbrowser.view.html"
+						}
+				},
+			
+			"state" : "closed",
+			
+			"attr" : {"nodename" : ".DS_Store"}
+		},
+			
+				
+		{
+		"data":	{
+				"title" : "libs [sling:Folder]",
+				"attr" :{
+						"href" : "/sling6/libs.jcrbrowser.view.html"
+						}
+				},
+			
+			"state" : "closed",
+			
+			"attr" : {"nodename" : "libs"}
+		},
+			
+				
+		{
+		"data":	{
+				"title" : "jcrbrowser [sling:Folder]",
+				"attr" :{
+						"href" : "/sling6/jcrbrowser.jcrbrowser.view.html"
+						}
+				},
+			
+			"state" : "closed",
+			
+			"attr" : {"nodename" : "jcrbrowser"}
+		},
+			
+				
+		{
+		"data":	{
+				"title" : "content [sling:Folder]",
+				"attr" :{
+						"href" : "/sling6/content.jcrbrowser.view.html"
+						}
+				},
+			
+			"state" : "closed",
+			
+			"attr" : {"nodename" : "content"}
+		},
+			
+				
+		{
+		"data":	{
+				"title" : "website [sling:Folder]",
+				"attr" :{
+						"href" : "/sling6/website.jcrbrowser.view.html"
+						}
+				},
+			
+			"state" : "closed",
+			
+			"attr" : {"nodename" : "website"}
+		},
+			
+				
+		{
+		"data":	{
+				"title" : "csstree [sling:Folder]",
+				"attr" :{
+						"href" : "/sling6/csstree.jcrbrowser.view.html"
+						}
+				},
+			
+			"state" : "closed",
+			
+			"attr" : {"nodename" : "csstree"}
+		},
+			
+				
+		{
+		"data":	{
+				"title" : "system [sling:syntheticResourceProviderResource]",
+				"attr" :{
+						"href" : "/sling6/system.jcrbrowser.view.html"
+						}
+				},
+			
+			"state" : "closed",
+			
+			"attr" : {"nodename" : "system"}
+		}
+			
+	]
+
+		
+}]
