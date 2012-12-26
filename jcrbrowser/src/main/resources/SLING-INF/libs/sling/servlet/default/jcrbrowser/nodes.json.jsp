@@ -13,7 +13,8 @@
             	"data":	{
             			"title" : "/",
             			"attr" :{
-            					"href" : "<%= request.getContextPath() %>/.jcrbrowser.view.html"
+            					"target" : "<%= request.getContextPath() %>/",
+            					"href" : "JavaScript:void(0);"
             					}
             			},
             		"state" : "open",
@@ -26,13 +27,14 @@
 				Resource theResource = (Resource) pageContext.getAttribute("theResource");
 				String aPath = request.getContextPath() + theResource.getPath();
 				// TODO Find out why e.g. '//apps/sling' has two slashes 
-				String thePath = aPath.startsWith("//") ? aPath.substring(1) + ".jcrbrowser.view.html" : aPath + ".jcrbrowser.view.html";
+				String thePath = aPath.startsWith("//") ? aPath.substring(1) : aPath;
 				%>
 		{
 		"data":	{
 				"title" : "${theResource.name} [${theResource.resourceType}]",
 				"attr" :{
-						"href" : "<%= java.net.URLEncoder.encode(thePath, "UTF-8").replaceAll("%2F", "/").replaceAll("%3A", ":") %>"
+						"target" : "<%= java.net.URLEncoder.encode(thePath, "UTF-8").replaceAll("%2F", "/").replaceAll("%3A", ":") %>",
+            			"href" : "JavaScript:void(0);"
 						}
 				},
 			<% if(theResource.listChildren().hasNext()){ %>

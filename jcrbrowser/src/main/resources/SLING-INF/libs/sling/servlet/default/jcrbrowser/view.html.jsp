@@ -11,19 +11,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <link href='http://fonts.googleapis.com/css?family=Michroma' rel='stylesheet' type='text/css'>
-<script type="text/javascript" src="<%= request.getContextPath() %>/jcrbrowser/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="<%= request.getContextPath() %>/jcrbrowser/js/jquery.js"></script>
+<script type="text/javascript" src="<%= request.getContextPath() %>/jcrbrowser/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="<%= request.getContextPath() %>/jcrbrowser/js/jquery-ui.custom.min.js"></script>
 <script type="text/javascript" src="<%= request.getContextPath() %>/jcrbrowser/js/jquery.cookie.js"></script>
 <script type="text/javascript" src="<%= request.getContextPath() %>/jcrbrowser/js/jquery.hotkeys.js"></script>
 <script type="text/javascript" src="<%= request.getContextPath() %>/jcrbrowser/js/jquery.jstree.js"></script>
 <script type="text/javascript" src="<%= request.getContextPath() %>/jcrbrowser/js/jquery.scrollTo-min.js"></script>
 <script type="text/javascript" src="<%= request.getContextPath() %>/jcrbrowser/js/urlEncode.js"></script>
-<!-- <script type="text/javascript" src="jquery/js/jquery-ui-1.8.16.custom.min.js"></script> -->
-<!-- <script type="text/javascript" src="jquery/js/jquery-1.6.2.min.js"></script> -->
 
 <!-- <link rel="stylesheet" type="text/css" href="jquery/css/custom-theme/jquery-ui-1.8.16.custom.css"> -->
 <link rel="stylesheet" type="text/css" media="all" href="<%= request.getContextPath() %>/jcrbrowser/css/style.css">
 <link rel="stylesheet" type="text/css" media="all" href="<%= request.getContextPath() %>/jcrbrowser/css/bootstrap.css">
+<link rel="stylesheet" type="text/css" media="all" href="<%= request.getContextPath() %>/jcrbrowser/css/theme/smoothness/jquery-ui.custom.css">
 
 <!--[if IE]>
 	<link rel="stylesheet" type="text/css" media="all" href="<%= request.getContextPath() %>/jcrbrowser/css/browser_ie.css"/>
@@ -84,13 +84,18 @@ function get_uri_from_li(li, extension){
 
 function adjust_height(){
 	var header_height = $("#header").outerHeight(true);
+	var alert_height = $("#alert").outerHeight(true);
 	var footer_height = $("#footer").outerHeight(true);
 	var sidebar_margin = $("#sidebar").outerHeight(true)-$("#sidebar").outerHeight(false);
-	var usable_height = $(window).height() - header_height - sidebar_margin - 1;
+	var usable_height = $(window).height() - header_height - alert_height - sidebar_margin - 1;
 // activate again if the footer is needed	
 // 	var usable_height = $(window).height() - header_height - footer_height - sidebar_margin - 1;
 	$("#sidebar").height( usable_height );
 	$("#outer_content").height( usable_height );
+}
+
+function isModifierPressed(e){
+	return (e.shiftKey || e.altKey || e.ctrlKey);
 }
 
 $(document).ready(function() {
@@ -108,32 +113,92 @@ $(document).ready(function() {
 			openElement($("#tree > ul > li[nodename=''] > ul"), paths);
 		}
 		selectingNodeWhileOpeningTree=false;
+
 	})
 	// call `.jstree` with the options object
 	.jstree({
 		"core"      : {
 			html_titles : false
 		},
-		"json_data" : {
+		"hotkeys"	: {
+// 			"space" : function () { alert("hotkey pressed"); }
+		},
+		"html_data" : {
 			"async" : true,
 			"ajax" : {
 				"url" : function (li) {
 					// the li the user clicked on.
-					return li.attr ?  get_uri_from_li(li,".jcrbrowser.nodes.json") : "<%= request.getContextPath() %>/.jcrbrowser.nodes.json"; }
+					return li.attr ?  get_uri_from_li(li,".jcrbrowser.nodes.html") : "<%= request.getContextPath() %>/.jcrbrowser.nodes.html"; }
 			},
 			"progressive_render" : true
 		},
 		// the `plugins` array allows you to configure the active plugins on this instance
-		"plugins" : [ "themes", "json_data",  "ui", "core", "hotkeys"]
-	}).bind("select_node.jstree", function (event, data) {
-		if (!selectingNodeWhileOpeningTree){
-	        // `data.rslt.obj` is the jquery extended node that was clicked
-	        location.href=$(data.rslt.obj).children("a:first").attr("href");
-		}
+		"plugins" : [ "themes", "html_data",  "ui", "core", "hotkeys", "crrm"]
+    }).bind("rename.jstree", function (e, data) {
+    	var newName = data.rslt.new_name;
+    	$.ajax({
+      	  type: 'POST',
+			  url: $(data.rslt.obj).children("a:first").attr("target"),
+      	  success: function(data) {
+        		var target = "<%= request.getContextPath() %>/"+newName;
+            	location.href=target+".jcrbrowser.view.html";
+    		  },
+      	  error: function(data) {
+        		console.log("Error renaming node. Result:");
+          		console.log(data);
+    		    alert('Could not rename.');
+    		  },
+      	  data: { 
+      		":operation": "move",
+      		":dest": "/"+newName,
+      	  	":transient_operation": "true" 
+      		  }
+      	});
+    }).bind("remove.jstree", function (e, data) {
+		var currentPath = $(data.rslt.obj).children("a:first").attr("target");
+    	$.ajax({
+        	  type: 'POST',
+			  url: currentPath,
+        	  success: function(data) {
+          		console.log("Successful");
+          		var target = getPathFromLi(data.rslt.obj.parents("li").first())
+            	location.href=target+".jcrbrowser.view.html";
+      		  },
+        	  error: function(data) {
+        		var errorDiv = $('<div id="alertMsg" class="alert alert-error">');
+				errorDiv.append('<button type="button" class="close" data-dismiss="alert">&times;</button>');
+				errorDiv.append("<h4>Error</h4>");
+				var errorMessage = $("#Message",data.responseText);
+				errorDiv.append(errorMessage);
+				$("#alert").append(errorDiv);
+				$('#alertMsg').bind('closed', function () {
+					// All characters from the beginning to the last slash.
+					// The slash is quoted with a backslash.
+					var parentPathRegExp = /(^.*)\//g;
+					var parentPath = parentPathRegExp.exec(currentPath)[1];
+	            	location.href=parentPath+".jcrbrowser.view.html";
+// 					$('#alertMsg').remove();
+				});
+				$("#alert").slideToggle(function() {
+					adjust_height();
+				  });
+      		  },
+        	  data: { 
+        		  ":operation": "delete",
+            	  ":transient_operation": "true" 
+        	  }
+        	});
     })
-
+    .click(function(e) {		
+        e.preventDefault(); 
+       	var target = ($(e.target).attr("target")) ? $(e.target).attr("target") : $(e.target).parent().attr("target");
+    	if (target && !selectingNodeWhileOpeningTree && !isModifierPressed(e)){
+        	location.href=target+".jcrbrowser.view.html";
+		}
+	});
+	
 });
-</script>
+</script>	
 
 </head>
 <body>
@@ -144,9 +209,25 @@ $(document).ready(function() {
 				 	<div class="logo">
 					JCRBrowser 2.0
 					</div> 
+					<div>
+					    <c:set var="authorized" value='<%=!"anonymous".equals(((HttpServletRequest)pageContext.getRequest()).getUserPrincipal().getName()) %>'/>
+			            <c:if test='${!authorized}'>
+			                <form action="/j_security_check" method="post">
+			                        <input type="hidden" value="${pageContext.request.requestURI}" name="resource" />
+			                        <label for="j_username">Username:</label>&nbsp;<input type="text" name="j_username" />
+			                        <label for="j_password">Password:</label>&nbsp;<input type="password" name="j_password" />
+			                        <input type="hidden" value="form" name="selectedAuthType" />
+			                        <input type="submit" value="Login" >
+			                </form>
+			             </c:if>
+			             <c:if test='${authorized}'>
+			                    <%= request.getContextPath() %> User: "${pageContext.request.userPrincipal.name}" <a href="/system/sling/logout.html?resource=${pageContext.request.requestURI}">Logout</a>
+			             </c:if>
+					</div>
 				</div> 
 			</div>
 		</div>
+		<div id="alert" style="display:none;" class="row-fluid"></div>
 		<div class="row-fluid">
 			<div class="span4">
 				<div id="sidebar" class="plate">
