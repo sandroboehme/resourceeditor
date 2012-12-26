@@ -151,7 +151,6 @@ $(document).ready(function() {
       	  data: { 
       		":operation": "move",
       		":dest": "/"+newName,
-      	  	":transient_operation": "true" 
       		  }
       	});
     }).bind("remove.jstree", function (e, data) {
@@ -185,7 +184,6 @@ $(document).ready(function() {
       		  },
         	  data: { 
         		  ":operation": "delete",
-            	  ":transient_operation": "true" 
         	  }
         	});
     })
