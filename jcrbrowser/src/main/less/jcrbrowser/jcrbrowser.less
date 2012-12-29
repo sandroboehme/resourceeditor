@@ -23,6 +23,9 @@
 
 @import "alerts.less";
 @import "variables.less";
+@import "navs.less";
+@import "scaffolding.less";
+@import "forms.less";
  
 
 /* ################################################################# */
@@ -103,8 +106,6 @@ body
 	
 	.plate-margin;
 	
-	font-family: arial, helvetica, sans-serif, times;
-	color: @textColor;
 }
 
 /* .logo has to be defined after .plate to overwrite the font properties */
@@ -115,6 +116,10 @@ body
 	color: @textColor;
 	text-shadow: 2px 2px 2px @dark-gray, 1px -1px 0px @light-gray;
 	margin: 10px;
+}
+
+#login_error {
+	width: 200px;
 }
 
 #tree

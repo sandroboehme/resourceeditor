@@ -2,6 +2,7 @@
 <%@ page session="false"%>
 <%@ page isELIgnored="false"%>
 <%@ page import="javax.jcr.*,org.apache.sling.api.resource.Resource"%>
+<%@ page import="java.security.Principal"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="sling" uri="http://sling.apache.org/taglibs/sling/1.0"%>
 <sling:defineObjects />
@@ -14,21 +15,33 @@
 <script type="text/javascript" src="<%= request.getContextPath() %>/jcrbrowser/js/jquery.js"></script>
 <script type="text/javascript" src="<%= request.getContextPath() %>/jcrbrowser/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="<%= request.getContextPath() %>/jcrbrowser/js/jquery-ui.custom.min.js"></script>
-<script type="text/javascript" src="<%= request.getContextPath() %>/jcrbrowser/js/jquery.cookie.js"></script>
 <script type="text/javascript" src="<%= request.getContextPath() %>/jcrbrowser/js/jquery.hotkeys.js"></script>
+<script type="text/javascript" src="<%= request.getContextPath() %>/jcrbrowser/js/jquery.cookie.js"></script>
 <script type="text/javascript" src="<%= request.getContextPath() %>/jcrbrowser/js/jquery.jstree.js"></script>
 <script type="text/javascript" src="<%= request.getContextPath() %>/jcrbrowser/js/jquery.scrollTo-min.js"></script>
 <script type="text/javascript" src="<%= request.getContextPath() %>/jcrbrowser/js/urlEncode.js"></script>
 
-<!-- <link rel="stylesheet" type="text/css" href="jquery/css/custom-theme/jquery-ui-1.8.16.custom.css"> -->
 <link rel="stylesheet" type="text/css" media="all" href="<%= request.getContextPath() %>/jcrbrowser/css/style.css">
 <link rel="stylesheet" type="text/css" media="all" href="<%= request.getContextPath() %>/jcrbrowser/css/bootstrap.css">
+<link rel="stylesheet" type="text/css" media="all" href="<%= request.getContextPath() %>/jcrbrowser/css/shake.css">
 <link rel="stylesheet" type="text/css" media="all" href="<%= request.getContextPath() %>/jcrbrowser/css/theme/smoothness/jquery-ui.custom.css">
 
 <!--[if IE]>
 	<link rel="stylesheet" type="text/css" media="all" href="<%= request.getContextPath() %>/jcrbrowser/css/browser_ie.css"/>
 <![endif]-->
+
+
+<%
+Principal userPrincipal = ((HttpServletRequest)pageContext.getRequest()).getUserPrincipal();
+%>
+<c:set var="authorized" value='<%=!"anonymous".equals(userPrincipal.getName()) %>'/>
+<c:set var="userPrincipal" value='<%=userPrincipal %>'/>
+
 <script type="text/javascript">
+
+var authorized = ${authorized};
+var authorizedUser = '${userPrincipal.name}';
+
 var currentNodePath = $.URLDecode("${resource.path}");
 var paths = currentNodePath.substring(1).split("/");
 var selectingNodeWhileOpeningTree=true;
@@ -83,11 +96,12 @@ function get_uri_from_li(li, extension){
 }
 
 function adjust_height(){
+	var login_height = $("#login").outerHeight(true)+10;
 	var header_height = $("#header").outerHeight(true);
 	var alert_height = $("#alert").outerHeight(true);
 	var footer_height = $("#footer").outerHeight(true);
 	var sidebar_margin = $("#sidebar").outerHeight(true)-$("#sidebar").outerHeight(false);
-	var usable_height = $(window).height() - header_height - alert_height - sidebar_margin - 1;
+	var usable_height = $(window).height() - login_height - header_height - alert_height - sidebar_margin - 1;
 // activate again if the footer is needed	
 // 	var usable_height = $(window).height() - header_height - footer_height - sidebar_margin - 1;
 	$("#sidebar").height( usable_height );
@@ -98,6 +112,13 @@ function isModifierPressed(e){
 	return (e.shiftKey || e.altKey || e.ctrlKey);
 }
 
+function setLoginTabLabel(authorizedUser){
+	$('#login_tab').text(authorized ? 'Logout '+authorizedUser : authorizedUser);
+	if (authorized) {
+		$('#login .nav-tabs').removeClass('nav-tabs').addClass('nav-pills');
+	}
+}
+
 $(document).ready(function() {
 	adjust_height();
 	$(window).resize( function() {
@@ -105,6 +126,37 @@ $(document).ready(function() {
 	});
 	var selectorFromCurrentPath = getSelectorFromPath(currentNodePath);
 	var scrollToPathFinished=false;
+	
+	setLoginTabLabel(authorizedUser);
+	
+	$('#login_tab').click(function(e) {	
+		if (authorized) {
+        	location.href='/system/sling/logout.html?resource=${pageContext.request.requestURI}';
+		} else {
+			$('#login_tab_content').slideToggle(function() {adjust_height();});
+		}
+	});
+
+	$('#login_submit').click(function(e) {		
+		$('#login').removeClass('animated shake');
+		$('#login .control-group.error').hide();
+		
+    	$.ajax({
+      	  type: 'POST',
+			  url: '<%= request.getContextPath() %>' + $('#login_form').attr('action') + '?' + $('#login_form').serialize(),
+      	  success: function(data, textStatus, jqXHR) {
+      		authorized=true;
+      		setLoginTabLabel($('#login_form input[name="j_username"]').val());
+      		$('#login_tab_content').slideToggle(function() {adjust_height();});
+    	  },
+      	  error: function(data) {
+      			$('#login_error').text(data.responseText);
+      			$('#login .control-group.error').slideToggle();
+      			$('#login').addClass('animated shake');
+    	  }
+      	});
+	});
+	
 	// TO CREATE AN INSTANCE
 	// select the tree container using jQuery
 	$("#tree")
@@ -194,33 +246,65 @@ $(document).ready(function() {
         	location.href=target+".jcrbrowser.view.html";
 		}
 	});
-	
 });
 </script>	
 
 </head>
 <body>
 	<div id="container-fluid">
+		<div id="login" class="row-fluid">
+			<div class="span12">
+				<div class="tabbable tabs-below"> 
+				  <div id="login_tab_content" class="tab-content plate-background plate-box-shadow" style="display:none;">
+				    <div class="tab-pane active">
+						<div>
+			                <form id="login_form" class="form-horizontal" action="/j_security_check" method="post">
+			                        <div class="control-group">
+										<div class="controls">
+						                    <input type="hidden" value="${pageContext.request.requestURI}" name="resource" />
+					                        <input type="hidden" value="form" name="selectedAuthType" />
+											<input type="hidden" value="UTF-8" name="_charset_">
+										</div>
+									</div>
+			                        <div class="control-group">
+										<label class="control-label" for="j_username">Username:${userPrincipal.name}</label>
+										<div class="controls">
+											<input type="text" name="j_username" />
+										</div>
+									</div>
+			                        <div class="control-group">
+										<label class="control-label" for="j_password">Password:</label>
+										<div class="controls">
+											<input type="password" name="j_password" />
+										</div>
+									</div>
+			                        <div class="control-group error">
+										<div class="controls">
+			                        		<span id="login_error" class="help-block"></span>
+										</div>
+									</div>
+			                        <div class="control-group" id="login_submit_control_group">
+										<div class="controls">
+			                        		<input id="login_submit" type="button" class="btn" value="Login" >
+										</div>
+									</div>
+			                </form>
+						</div>
+				    </div>
+				  </div>
+				  <ul class="nav nav-tabs">
+				    <li class="active">
+				    	<a id="login_tab" href="#login_tab_content" data-toggle="tab">Login</a>
+				    </li>
+				  </ul>
+				</div>
+			</div>
+		</div>
 		<div class="row-fluid">
 			<div class="span12">
 				 <div id="header" class="plate">
 				 	<div class="logo">
 					JCRBrowser 2.0
-					</div> 
-					<div>
-					    <c:set var="authorized" value='<%=!"anonymous".equals(((HttpServletRequest)pageContext.getRequest()).getUserPrincipal().getName()) %>'/>
-			            <c:if test='${!authorized}'>
-			                <form action="/j_security_check" method="post">
-			                        <input type="hidden" value="${pageContext.request.requestURI}" name="resource" />
-			                        <label for="j_username">Username:</label>&nbsp;<input type="text" name="j_username" />
-			                        <label for="j_password">Password:</label>&nbsp;<input type="password" name="j_password" />
-			                        <input type="hidden" value="form" name="selectedAuthType" />
-			                        <input type="submit" value="Login" >
-			                </form>
-			             </c:if>
-			             <c:if test='${authorized}'>
-			                    <%= request.getContextPath() %> User: "${pageContext.request.userPrincipal.name}" <a href="/system/sling/logout.html?resource=${pageContext.request.requestURI}">Logout</a>
-			             </c:if>
 					</div>
 				</div> 
 			</div>
