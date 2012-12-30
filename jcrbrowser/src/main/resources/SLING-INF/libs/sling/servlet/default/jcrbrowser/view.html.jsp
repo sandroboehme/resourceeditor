@@ -96,7 +96,7 @@ function get_uri_from_li(li, extension){
 }
 
 function adjust_height(){
-	var login_height = $("#login").outerHeight(true)+10;
+	var login_height = $("#login").outerHeight(true);
 	var header_height = $("#header").outerHeight(true);
 	var alert_height = $("#alert").outerHeight(true);
 	var footer_height = $("#footer").outerHeight(true);
@@ -202,7 +202,7 @@ $(document).ready(function() {
     		  },
       	  data: { 
       		":operation": "move",
-      		":dest": "/"+newName,
+      		":dest": "/"+newName
       		  }
       	});
     }).bind("remove.jstree", function (e, data) {
@@ -235,7 +235,7 @@ $(document).ready(function() {
 				  });
       		  },
         	  data: { 
-        		  ":operation": "delete",
+        		  ":operation": "delete"
         	  }
         	});
     })
