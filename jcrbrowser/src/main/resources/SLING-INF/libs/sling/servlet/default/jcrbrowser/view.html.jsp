@@ -254,6 +254,9 @@ $(document).ready(function() {
 	<div id="container-fluid">
 		<div id="login" class="row-fluid">
 			<div class="span12">
+			 	<div class="logo">
+				JCRBrowser 2.0<span class="edition">node-edit</span><span class="edition">edition</span>
+				</div>			 	
 				<div class="tabbable tabs-below"> 
 				  <div id="login_tab_content" class="tab-content plate-background plate-box-shadow" style="display:none;">
 				    <div class="tab-pane active">
@@ -300,12 +303,9 @@ $(document).ready(function() {
 				</div>
 			</div>
 		</div>
-		<div class="row-fluid">
+		<div class="row-fluid" style="display:none;">
 			<div class="span12">
 				 <div id="header" class="plate">
-				 	<div class="logo">
-					JCRBrowser 2.0
-					</div>
 				</div> 
 			</div>
 		</div>
