@@ -270,7 +270,7 @@ $(document).ready(function() {
 										</div>
 									</div>
 			                        <div class="control-group">
-										<label class="control-label" for="j_username">Username:${userPrincipal.name}</label>
+										<label class="control-label" for="j_username">Username:</label>
 										<div class="controls">
 											<input type="text" name="j_username" />
 										</div>
