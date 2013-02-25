@@ -3,10 +3,10 @@ JCRBrowser
 The JCRBrowser shows the tree of JCR nodes and Apache Sling resources in a lightweight web page.
 
 ++ official Website ++
-http://www.jcrbrowser.org/sling/website/
+[http://www.jcrbrowser.org/sling/website/]
 
 ++ Demo ++
-http://www.jcrbrowser.org/sling/.jcrbrowser.view.html
+[http://www.jcrbrowser.org/sling/.jcrbrowser.view.html]
 The official website is part of the repo in the demo.
 
 ++ Deploy Binaries ++
