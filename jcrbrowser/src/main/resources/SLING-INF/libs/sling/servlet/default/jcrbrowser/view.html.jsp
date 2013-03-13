@@ -11,23 +11,34 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<link href='<%= request.getContextPath() %>/libs/jcrbrowser/content/css/font.css' rel='stylesheet' type='text/css'>
+ <!--[if lt IE 9]>
+<link href='<%= request.getContextPath() %>/libs/jcrbrowser/content/css/font_ie.css' rel='stylesheet' type='text/css'>
+  <![endif]-->
+  
+<!-- 
+original 
 <link href='http://fonts.googleapis.com/css?family=Michroma' rel='stylesheet' type='text/css'>
-<script type="text/javascript" src="<%= request.getContextPath() %>/jcrbrowser/js/jquery.js"></script>
-<script type="text/javascript" src="<%= request.getContextPath() %>/jcrbrowser/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="<%= request.getContextPath() %>/jcrbrowser/js/jquery-ui.custom.min.js"></script>
-<script type="text/javascript" src="<%= request.getContextPath() %>/jcrbrowser/js/jquery.hotkeys.js"></script>
-<script type="text/javascript" src="<%= request.getContextPath() %>/jcrbrowser/js/jquery.cookie.js"></script>
-<script type="text/javascript" src="<%= request.getContextPath() %>/jcrbrowser/js/jquery.jstree.js"></script>
-<script type="text/javascript" src="<%= request.getContextPath() %>/jcrbrowser/js/jquery.scrollTo-min.js"></script>
-<script type="text/javascript" src="<%= request.getContextPath() %>/jcrbrowser/js/urlEncode.js"></script>
+ -->
 
-<link rel="stylesheet" type="text/css" media="all" href="<%= request.getContextPath() %>/jcrbrowser/css/style.css">
-<link rel="stylesheet" type="text/css" media="all" href="<%= request.getContextPath() %>/jcrbrowser/css/bootstrap.css">
-<link rel="stylesheet" type="text/css" media="all" href="<%= request.getContextPath() %>/jcrbrowser/css/shake.css">
-<link rel="stylesheet" type="text/css" media="all" href="<%= request.getContextPath() %>/jcrbrowser/css/theme/smoothness/jquery-ui.custom.css">
+
+<script type="text/javascript" src="<%= request.getContextPath() %>/libs/jcrbrowser/content/js/jquery.js"></script>
+<script type="text/javascript" src="<%= request.getContextPath() %>/libs/jcrbrowser/content/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="<%= request.getContextPath() %>/libs/jcrbrowser/content/js/bootbox.min.js"></script>
+<script type="text/javascript" src="<%= request.getContextPath() %>/libs/jcrbrowser/content/js/jquery-ui.custom.min.js"></script>
+<script type="text/javascript" src="<%= request.getContextPath() %>/libs/jcrbrowser/content/js/jquery.hotkeys.js"></script>
+<script type="text/javascript" src="<%= request.getContextPath() %>/libs/jcrbrowser/content/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="<%= request.getContextPath() %>/libs/jcrbrowser/content/js/jquery.jstree.js"></script>
+<script type="text/javascript" src="<%= request.getContextPath() %>/libs/jcrbrowser/content/js/jquery.scrollTo-min.js"></script>
+<script type="text/javascript" src="<%= request.getContextPath() %>/libs/jcrbrowser/content/js/urlEncode.js"></script>
+
+<link rel="stylesheet" type="text/css" media="all" href="<%= request.getContextPath() %>/libs/jcrbrowser/content/css/style.css">
+<link rel="stylesheet" type="text/css" media="all" href="<%= request.getContextPath() %>/libs/jcrbrowser/content/css/bootstrap.css">
+<link rel="stylesheet" type="text/css" media="all" href="<%= request.getContextPath() %>/libs/jcrbrowser/content/css/shake.css">
+<link rel="stylesheet" type="text/css" media="all" href="<%= request.getContextPath() %>/libs/jcrbrowser/content/css/theme/smoothness/jquery-ui.custom.css">
 
 <!--[if IE]>
-	<link rel="stylesheet" type="text/css" media="all" href="<%= request.getContextPath() %>/jcrbrowser/css/browser_ie.css"/>
+	<link rel="stylesheet" type="text/css" media="all" href="<%= request.getContextPath() %>/libs/jcrbrowser/content/css/browser_ie.css"/>
 <![endif]-->
 
 
@@ -98,7 +109,7 @@ function get_uri_from_li(li, extension){
 function adjust_height(){
 	var login_height = $("#login").outerHeight(true);
 	var header_height = $("#header").outerHeight(true);
-	var alert_height = $("#alert").outerHeight(true);
+	var alert_height = $("#alerts").outerHeight(true);
 	var footer_height = $("#footer").outerHeight(true);
 	var sidebar_margin = $("#sidebar").outerHeight(true)-$("#sidebar").outerHeight(false);
 	var usable_height = $(window).height() - login_height - header_height - alert_height - sidebar_margin - 1;
@@ -115,8 +126,22 @@ function isModifierPressed(e){
 function setLoginTabLabel(authorizedUser){
 	$('#login_tab').text(authorized ? 'Logout '+authorizedUser : authorizedUser);
 	if (authorized) {
-		$('#login .nav-tabs').removeClass('nav-tabs').addClass('nav-pills');
+		$('#login .nav-tabs').removeClass('nav-tabs').addClass('logout');
 	}
+}
+
+function displayAlert(errorMsg, rlbk){
+	var errorMessage = $("#Message",errorMsg);
+	$('#alertMsg').append(errorMessage);
+	$('#alertMsg').bind('closed', function () {
+		$("#alert").slideToggle(function() {
+			adjust_height();
+		  });
+	});
+	$("#alert").slideToggle(function() {
+		adjust_height();
+	  });
+	$.jstree.rollback(rlbk);
 }
 
 $(document).ready(function() {
@@ -146,8 +171,11 @@ $(document).ready(function() {
 			  url: '<%= request.getContextPath() %>' + $('#login_form').attr('action') + '?' + $('#login_form').serialize(),
       	  success: function(data, textStatus, jqXHR) {
       		authorized=true;
-      		setLoginTabLabel($('#login_form input[name="j_username"]').val());
-      		$('#login_tab_content').slideToggle(function() {adjust_height();});
+      		$('#login_tab_content').slideToggle(function() {
+      			adjust_height();
+      			setLoginTabLabel($('#login_form input[name="j_username"]').val());
+      		});
+      		
     	  },
       	  error: function(data) {
       			$('#login_error').text(data.responseText);
@@ -172,6 +200,24 @@ $(document).ready(function() {
 		"core"      : {
 			html_titles : false
 		},
+		"ui"      : {
+			"select_limit" : 2
+		},
+		"crrm"      : {
+			"move" : {
+				"always_copy" : false
+			}
+		},
+		"dnd" : {
+			"drop_finish" : function () {
+				console.log("drop");
+				alert("DROP"); 
+			},
+			"drag_finish" : function (data) {
+				console.log("drag");
+				alert("DRAG OK"); 
+			}
+		},
 		"hotkeys"	: {
 // 			"space" : function () { alert("hotkey pressed"); }
 		},
@@ -185,60 +231,74 @@ $(document).ready(function() {
 			"progressive_render" : true
 		},
 		// the `plugins` array allows you to configure the active plugins on this instance
-		"plugins" : [ "themes", "html_data",  "ui", "core", "hotkeys", "crrm"]
+		"plugins" : [ "themes", "html_data",  "ui", "core", "hotkeys", "crrm", "dnd"]
     }).bind("rename.jstree", function (e, data) {
     	var newName = data.rslt.new_name;
     	$.ajax({
       	  type: 'POST',
 			  url: $(data.rslt.obj).children("a:first").attr("target"),
-      	  success: function(data) {
+      	  success: function(server_data) {
         		var target = "<%= request.getContextPath() %>/"+newName;
             	location.href=target+".jcrbrowser.view.html";
     		  },
-      	  error: function(data) {
-        		console.log("Error renaming node. Result:");
-          		console.log(data);
-    		    alert('Could not rename.');
+      	  error: function(server_data) {
+      			displayAlert(server_data.responseText, data.rlbk);
     		  },
       	  data: { 
       		":operation": "move",
       		":dest": "/"+newName
       		  }
       	});
-    }).bind("remove.jstree", function (e, data) {
-		var currentPath = $(data.rslt.obj).children("a:first").attr("target");
+    }).bind("move_node.jstree", function (e, data) {
+    	// see http://www.jstree.com/documentation/core ._get_move()
+    	var src_li = data.rslt.o;
+    	var src_path = <%= request.getContextPath() %>src_li.children("a").attr("target");
+    	var dest_li = data.rslt.np; // new parent .cr - same as np, but if a root node is created this is -1
+    	var dest_li_path = dest_li.children("a").attr("target") == "/" ? "" : dest_li.children("a").attr("target");
+    	var dest_path = <%= request.getContextPath() %>dest_li_path+"/"+src_li.attr("nodename");
+    	var original_parent = data.rslt.op;
+    	var is_copy = data.rslt.cy;
+    	var position = data.rslt.cp;
     	$.ajax({
-        	  type: 'POST',
-			  url: currentPath,
-        	  success: function(data) {
-          		console.log("Successful");
-          		var target = getPathFromLi(data.rslt.obj.parents("li").first())
+      	  type: 'POST',
+			  url: src_path,
+      	  success: function(server_data) {
+        		var target = "<%= request.getContextPath() %>"+dest_path;
             	location.href=target+".jcrbrowser.view.html";
-      		  },
-        	  error: function(data) {
-        		var errorDiv = $('<div id="alertMsg" class="alert alert-error">');
-				errorDiv.append('<button type="button" class="close" data-dismiss="alert">&times;</button>');
-				errorDiv.append("<h4>Error</h4>");
-				var errorMessage = $("#Message",data.responseText);
-				errorDiv.append(errorMessage);
-				$("#alert").append(errorDiv);
-				$('#alertMsg').bind('closed', function () {
-					// All characters from the beginning to the last slash.
-					// The slash is quoted with a backslash.
-					var parentPathRegExp = /(^.*)\//g;
-					var parentPath = parentPathRegExp.exec(currentPath)[1];
-	            	location.href=parentPath+".jcrbrowser.view.html";
-// 					$('#alertMsg').remove();
-				});
-				$("#alert").slideToggle(function() {
-					adjust_height();
-				  });
-      		  },
-        	  data: { 
-        		  ":operation": "delete"
-        	  }
-        	});
-    })
+    		  },
+      	  error: function(server_data) {
+      			displayAlert(server_data.responseText, data.rlbk);
+    		  },
+      	  data: { 
+       		":operation": "move",
+//          	":order": position,
+      		":dest": dest_path
+      		  }
+      	});
+    }).bind("remove.jstree", function (e, data) {
+			var currentPath = $(data.rslt.obj).children("a:first").attr("target");
+			var parentPath = data.rslt.parent.children("a:first").attr("target");
+			var confirmationMsg = "You are about to delete "+currentPath+" and all its sub nodes. Are you sure?";
+			bootbox.confirm(confirmationMsg, function(result) {
+				if (result){
+			    	$.ajax({
+			        	  type: 'POST',
+						  url: currentPath,
+			        	  success: function(server_data) {
+			            	location.href=parentPath+".jcrbrowser.view.html";
+			      		  },
+			        	  error: function(server_data) {
+			        		displayAlert(server_data.responseText, data.rlbk);
+			      		  },
+			        	  data: { 
+			        		  ":operation": "delete"
+			        	  }
+			        	});
+				} else {
+	        		$.jstree.rollback(data.rlbk);
+				}
+			});
+	    })
     .click(function(e) {		
         e.preventDefault(); 
        	var target = ($(e.target).attr("target")) ? $(e.target).attr("target") : $(e.target).parent().attr("target");
@@ -303,13 +363,20 @@ $(document).ready(function() {
 				</div>
 			</div>
 		</div>
-		<div class="row-fluid" style="display:none;">
-			<div class="span12">
-				 <div id="header" class="plate">
+		<div id="header" class="row-fluid">
+			<div class="span12" style="display:none;">
+				 <div class="plate">
 				</div> 
 			</div>
 		</div>
-		<div id="alert" style="display:none;" class="row-fluid"></div>
+		<div id="alerts" class="row-fluid">
+			<div id="alert" style="display:none;" class="span12">
+			  	<div id="alertMsg" class="alert alert-error">
+			  		<button type="button" class="close" data-dismiss="alert">&times;</button>
+			  		<h4>Error</h4>
+		  		</div>
+		  	</div>		
+		</div>
 		<div class="row-fluid">
 			<div class="span4">
 				<div id="sidebar" class="plate">

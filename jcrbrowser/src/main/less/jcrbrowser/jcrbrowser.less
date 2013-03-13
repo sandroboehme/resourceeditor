@@ -26,6 +26,7 @@
 @import "navs.less";
 @import "scaffolding.less";
 @import "forms.less";
+@import "modals.less";
  
 
 /* ################################################################# */
@@ -127,6 +128,17 @@ body
 	margin-left: 4px;
 }
 
+.logout a {
+	.border-radius;
+	border: 1px solid #2D373D;
+	color: #2D373D;
+	text-shadow: 0 1px 1px #EEE;
+	font-size: 15px;
+	margin: 10px 10px 0 0;
+	padding: 0 10px;
+	box-shadow: inset 0px 0px 1px black, 1px 1px 0px white;
+}
+
 #login_error {
 	width: 200px;
 }
@@ -189,7 +201,7 @@ fieldset
     clear: both
 }
 
-#tree a, :visited, :link {
+#tree a, #tree :visited, #tree :link {
 	border:1px solid transparent; 
 	padding:2px 1px;
 	font-family: arial, helvetica, sans-serif, times;
