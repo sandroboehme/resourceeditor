@@ -21,6 +21,7 @@ original
 <link href='http://fonts.googleapis.com/css?family=Michroma' rel='stylesheet' type='text/css'>
  -->
 
+<script type="text/javascript" src="<%= request.getContextPath() %>/libs/jsnodetypes/js/jsnodetypes.js"></script>
 
 <script type="text/javascript" src="<%= request.getContextPath() %>/libs/jcrbrowser/content/js/jquery.js"></script>
 <script type="text/javascript" src="<%= request.getContextPath() %>/libs/jcrbrowser/content/js/bootstrap.min.js"></script>
@@ -49,6 +50,7 @@ Principal userPrincipal = ((HttpServletRequest)pageContext.getRequest()).getUser
 <c:set var="userPrincipal" value='<%=userPrincipal %>'/>
 
 <script type="text/javascript">
+var ntManager = new de.sandroboehme.NodeTypeManager();
 
 var authorized = ${authorized};
 var authorizedUser = '${userPrincipal.name}';
@@ -70,10 +72,16 @@ function getPathFromLi(li){
 		).get().join("/");
 };
 
+function getNTFromLi(li){
+	var nt_name = $(li).children("a").find("span span.node-type").text();
+    return ntManager.getNodeType(nt_name);	
+}
+
 function getSelectorFromPath(path){
 	var paths = path.substring(1).split("/");
 	return "#tree > ul [nodename='"+paths.join("'] > ul > [nodename='")+"']";
 }
+
 
 function openElement(root, paths) {
 	var pathElementName = paths.shift().replace(specialSelectorChars,"\\\\$&");;
@@ -205,7 +213,25 @@ $(document).ready(function() {
 		},
 		"crrm"      : {
 			"move" : {
-				"always_copy" : false
+				"always_copy" : false,
+		        "check_move"  : function (m) {
+			        // you find the member description here
+			        // http://www.jstree.com/documentation/core.html#_get_move
+			        var src_li = m.o;
+			        var src_nt = getNTFromLi(src_li);
+			        var src_nodename = src_li.attr("nodename");
+			        
+			        var new_parent_ul = m.np.children("ul");
+			        var calculated_position = m.cp;
+			        var liAlreadySelected = new_parent_ul.length==0 && m.np.prop("tagName").toUpperCase() == 'LI';
+			        var dest_li = liAlreadySelected ? m.np : new_parent_ul.children("li:eq("+(calculated_position-1)+")");
+			        var dest_nt = getNTFromLi(dest_li);
+					var result;
+					if (dest_nt != null){ 
+						result = dest_nt.canAddChildNode(src_nodename, src_nt);
+					}
+                    return result;
+                  }
 			}
 		},
 		"dnd" : {
@@ -239,7 +265,7 @@ $(document).ready(function() {
 			  url: $(data.rslt.obj).children("a:first").attr("target"),
       	  success: function(server_data) {
         		var target = "<%= request.getContextPath() %>/"+newName;
-            	location.href=target+".jcrbrowser.view.html";
+            	location.href=target+".jcrbrowser.html";
     		  },
       	  error: function(server_data) {
       			displayAlert(server_data.responseText, data.rlbk);
@@ -264,7 +290,7 @@ $(document).ready(function() {
 			  url: src_path,
       	  success: function(server_data) {
         		var target = "<%= request.getContextPath() %>"+dest_path;
-            	location.href=target+".jcrbrowser.view.html";
+            	location.href=target+".jcrbrowser.html";
     		  },
       	  error: function(server_data) {
       			displayAlert(server_data.responseText, data.rlbk);
@@ -285,7 +311,7 @@ $(document).ready(function() {
 			        	  type: 'POST',
 						  url: currentPath,
 			        	  success: function(server_data) {
-			            	location.href=parentPath+".jcrbrowser.view.html";
+			            	location.href=parentPath+".jcrbrowser.html";
 			      		  },
 			        	  error: function(server_data) {
 			        		displayAlert(server_data.responseText, data.rlbk);
@@ -303,7 +329,7 @@ $(document).ready(function() {
         e.preventDefault(); 
        	var target = ($(e.target).attr("target")) ? $(e.target).attr("target") : $(e.target).parent().attr("target");
     	if (target && !selectingNodeWhileOpeningTree && !isModifierPressed(e)){
-        	location.href=target+".jcrbrowser.view.html";
+        	location.href=target+".jcrbrowser.html";
 		}
 	});
 });
@@ -399,12 +425,12 @@ $(document).ready(function() {
 								<c:forEach var="property" items="<%=currentNode.getProperties()%>">
 							<%  Property property = (Property) pageContext.getAttribute("property");%>
 									<fieldset>
-										<label class="proplabel" for='${property.name}'>${property.name} [<%=PropertyType.nameFromValue(property.getType()) %>${property.multiple ? ' multiple' : ''}]</label>
+										<label class="proplabel" for='${property.name}'>${property.name} [<%=PropertyType.nameFromValue(property.getType())%>${property.multiple ? ' multiple' : ''}]</label>
 										<c:choose>
 										     <c:when test="${property.multiple}" >
 										     	<fieldset class="propmultival_fieldset">
 										     		<div>&nbsp;</div>
-										     	<c:forEach var="value" items="<%=property.getValues() %>">
+										     	<c:forEach var="value" items="<%=property.getValues()%>">
 										     		<c:choose>
 										     		<c:when test="${property.type == PropertyType.BINARY}" >
 												     	<p>I'm a binary property</p>
@@ -420,7 +446,7 @@ $(document).ready(function() {
 										     </c:when>
 										     <c:otherwise>
 											     <c:choose>
-											     <c:when test="<%=property.getType() == PropertyType.BINARY %>" >
+											     <c:when test="<%=property.getType() == PropertyType.BINARY%>" >
 											     	<c:choose>
 												     	<c:when test='<%=currentNode.getParent().isNodeType("nt:file") %>'>
 												     		<a class="propinput" href="<%= request.getContextPath() %>${resource.parent.path}">Download</a>

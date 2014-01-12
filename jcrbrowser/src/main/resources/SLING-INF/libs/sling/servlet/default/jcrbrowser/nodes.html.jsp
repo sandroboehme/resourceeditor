@@ -27,7 +27,7 @@
 		%>
 	
 		<li class="jstree-closed" nodename="${theResource.name}">
-			<a href="JavaScript:void(0);" target="<%= java.net.URLEncoder.encode(thePath, "UTF-8").replaceAll("%2F", "/").replaceAll("%3A", ":") %>">${theResource.name}<span><%=modifiedAsterix%> [${theResource.resourceType}]</span></a>
+			<a href="JavaScript:void(0);" target="<%= java.net.URLEncoder.encode(thePath, "UTF-8").replaceAll("%2F", "/").replaceAll("%3A", ":") %>">${theResource.name}<span><%=modifiedAsterix%> [<span class="node-type">${theResource.resourceType}</span>]</span></a>
 		</li>
 	</c:forEach>
 

@@ -13,7 +13,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.sboehme</groupId>
-	<artifactId>org.sboehme.jcrbrowser</artifactId>
+	<artifactId>jcrbrowser</artifactId>
 	<packaging>bundle</packaging>
 	<version>2.0.9-SNAPSHOT</version>
 	<name>jcrbrowser</name>
@@ -94,6 +94,7 @@
 							org.apache.xalan.serialize,org.apache.xalan.templates,org.apache.xml.utils,org.apache.xpath,org.apache.xpath.objects,
 							org.apache.taglibs.standard,org.apache.taglibs.standard.extra.spath,org.apache.taglibs.standard.functions,org.apache.taglibs.standard.lang.jstl,org.apache.taglibs.standard.lang.jstl.parser,org.apache.taglibs.standard.lang.jstl.test,org.apache.taglibs.standard.lang.jstl.test.beans,org.apache.taglibs.standard.lang.support,org.apache.taglibs.standard.resources,org.apache.taglibs.standard.tag.common.core,org.apache.taglibs.standard.tag.common.fmt,org.apache.taglibs.standard.tag.common.sql,org.apache.taglibs.standard.tag.common.xml,org.apache.taglibs.standard.tag.el.core,org.apache.taglibs.standard.tag.el.fmt,org.apache.taglibs.standard.tag.el.sql,org.apache.taglibs.standard.tag.el.xml,org.apache.taglibs.standard.tag.rt.core,org.apache.taglibs.standard.tag.rt.fmt,org.apache.taglibs.standard.tag.rt.sql,org.apache.taglibs.standard.tag.rt.xml,org.apache.taglibs.standard.tei,org.apache.taglibs.standard.tlv,
 						</Import-Package>
+						<Require-Bundle>de.sandroboehme.jsnodetypes</Require-Bundle>
 						<Private-Package>
 							org.sboehme.jcrbrowser.*
 						</Private-Package>
@@ -122,7 +123,7 @@
 						</goals>
 						<configuration>
 							<mountByFS>true</mountByFS>
-							<slingUrl>http://localhost:8888/system/console</slingUrl>
+							<slingUrl>http://localhost:8080/system/console</slingUrl>
 							<user>admin</user>
 							<password>admin</password>
 						</configuration>
@@ -196,12 +197,8 @@
 	</dependencies>
 	<distributionManagement>
 		<repository>
-			<id>local8888</id>
-			<url>dav:http://admin:admin@localhost:8888/obr</url>
+			<id>www.jcrbrowser.org</id>
+			<url>dav:http://www.jcrbrowser.org/sling/obr</url>
 		</repository>
-		<!-- <repository> -->
-		<!-- <id>www.jcrbrowser.org</id> -->
-		<!-- <url>dav:http://www.jcrbrowser.org/sling/obr</url> -->
-		<!-- </repository> -->
 	</distributionManagement>
 </project>
