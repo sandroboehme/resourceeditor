@@ -5467,7 +5467,7 @@ fieldset {
   background-image: url(../img/folder_lightgray.png);
   background-position-y: 2px;
 }
-.jstree-default a .jstree-icon {
+.jstree-default a .jstree-icon.jstree-themeicon {
   background-image: url(../img/folder_lightgray.png);
   background-position-y: 2px;
 }

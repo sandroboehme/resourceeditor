@@ -20,9 +20,10 @@
 /* ################################################################# */
 /* --- Overwriting Bootstrap styles ---  */
 /* ################################################################# */
-
-@import "alerts.less";
+// see http://lesselements.com/
+@import "elements.less";
 @import "variables.less";
+@import "alerts.less";
 @import "navs.less";
 @import "scaffolding.less";
 @import "forms.less";
@@ -80,8 +81,8 @@ body
 	-webkit-box-shadow: 5px 5px 5px #888;
 }
 
-.border-radius {
-    .border-radius(7px);
+.rounded {
+    .rounded(7px);
 }
 
 @light-gray: #A0A0A0;
@@ -94,13 +95,13 @@ body
 	text-shadow: 1px 1px 0px @light-gray, 0px 0px 0px #202020;
 }
 .plate-margin {
-	margin: 10px;
+	margin: 15px;
 }
 
 .plate {
 	.plate-background;
 	.plate-box-shadow;
-	.border-radius;
+	.rounded;
 	.plate-text-shadow;
 	
 	overflow: hidden;
@@ -129,7 +130,7 @@ body
 }
 
 .logout a {
-	.border-radius;
+	.rounded;
 	border: 1px solid #2D373D;
 	color: #2D373D;
 	text-shadow: 0 1px 1px #EEE;
@@ -223,9 +224,9 @@ fieldset
 	background-position-y: 2px; 
 }
 
-.jstree-default a .jstree-icon { 
+.jstree-default a .jstree-icon.jstree-themeicon { 
 	background-image: url(../img/folder_lightgray.png); 
-	background-position-y: 2px;
+	background-position: 0 3px;
 }
 
 .jstree ins {

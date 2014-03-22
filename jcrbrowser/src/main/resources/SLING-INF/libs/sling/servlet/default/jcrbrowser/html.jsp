@@ -23,14 +23,14 @@ original
 
 <script type="text/javascript" src="<%= request.getContextPath() %>/libs/jsnodetypes/js/jsnodetypes.js"></script>
 
-<script type="text/javascript" src="<%= request.getContextPath() %>/libs/jcrbrowser/content/js/jquery.js"></script>
+<script type="text/javascript" src="<%= request.getContextPath() %>/libs/jcrbrowser/content/js/jquery.min.js"></script>
+<script type="text/javascript" src="<%= request.getContextPath() %>/libs/jcrbrowser/content/js/jquery-ui.custom.min.js"></script>
 <script type="text/javascript" src="<%= request.getContextPath() %>/libs/jcrbrowser/content/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="<%= request.getContextPath() %>/libs/jcrbrowser/content/js/bootbox.min.js"></script>
-<script type="text/javascript" src="<%= request.getContextPath() %>/libs/jcrbrowser/content/js/jquery-ui.custom.min.js"></script>
-<script type="text/javascript" src="<%= request.getContextPath() %>/libs/jcrbrowser/content/js/jquery.hotkeys.js"></script>
-<script type="text/javascript" src="<%= request.getContextPath() %>/libs/jcrbrowser/content/js/jquery.cookie.js"></script>
-<script type="text/javascript" src="<%= request.getContextPath() %>/libs/jcrbrowser/content/js/jquery.jstree.js"></script>
+<script type="text/javascript" src="<%= request.getContextPath() %>/libs/jcrbrowser/content/js/jstree.js"></script>
+<!-- 
 <script type="text/javascript" src="<%= request.getContextPath() %>/libs/jcrbrowser/content/js/jquery.scrollTo-min.js"></script>
+ -->
 <script type="text/javascript" src="<%= request.getContextPath() %>/libs/jcrbrowser/content/js/urlEncode.js"></script>
 
 <link rel="stylesheet" type="text/css" media="all" href="<%= request.getContextPath() %>/libs/jcrbrowser/content/css/style.css">
@@ -90,19 +90,17 @@ function openElement(root, paths) {
 		alert("Couldn't find "+pathElementName+" under the path "+getPathFromLi(root.parent()));
 	} else {
 		selectingNodeWhileOpeningTree=true;
-		$.jstree._reference(pathElementLi).select_node(pathElementLi, true);
+		$('#tree').jstree('deselect_all');
+		$('#tree').jstree('select_node', pathElementLi.attr('id'));
+		pathElementLi.focus();
 		selectingNodeWhileOpeningTree=false;
-		$.jstree._reference(pathElementLi).open_node(pathElementLi,
+		$('#tree').jstree('open_node', pathElementLi,
 				function(){
 					if (paths.length>0){
-						openElement(pathElementLi.children("ul"), paths);
+						openElement($("#"+pathElementLi.attr('id')).children("ul"), paths);
 					}
-				},
-				function(){
-					alert("Couldn't open "+pathElementName+" under the path "+getPathFromLi(root.parent()));
 				}
 			);
-
 	}
 }
 
@@ -201,12 +199,41 @@ $(document).ready(function() {
 			openElement($("#tree > ul > li[nodename=''] > ul"), paths);
 		}
 		selectingNodeWhileOpeningTree=false;
-
 	})
+	/*
+	$('#tree').jstree({
+'core' : {
+  'data' : {
+    'url' : function (node) {
+      return node.id === '#' ? 
+        'ajax_roots.json' : 
+        'ajax_children.json';
+    },
+    'data' : function (node) {
+      return { 'id' : node.id };
+    }
+  }
+});
+	*/
 	// call `.jstree` with the options object
 	.jstree({
 		"core"      : {
-			html_titles : false
+			html_titles : false,
+			animation: 600,
+			'data' : {
+				'url' : function (liJson) {
+					// the li the user clicked on.
+					if (liJson.id === '#'){
+						return "<%= request.getContextPath() %>/.jcrbrowser.nodes2.json";
+					} else {
+						var li = $('#'+liJson.id);
+						return get_uri_from_li(li,".jcrbrowser.nodes2.json");
+					}
+				},
+			    'data' : function (node) {
+			        return { 'id' : node.id };
+			      }
+			}
 		},
 		"ui"      : {
 			"select_limit" : 2
@@ -247,17 +274,18 @@ $(document).ready(function() {
 		"hotkeys"	: {
 // 			"space" : function () { alert("hotkey pressed"); }
 		},
-		"html_data" : {
-			"async" : true,
-			"ajax" : {
-				"url" : function (li) {
+//		"html_data" : {
+//			"async" : true,
+//			"ajax" : {
+//				"url" : function (li) {
 					// the li the user clicked on.
-					return li.attr ?  get_uri_from_li(li,".jcrbrowser.nodes.html") : "<%= request.getContextPath() %>/.jcrbrowser.nodes.html"; }
-			},
-			"progressive_render" : true
-		},
+//					return li.attr ?  get_uri_from_li(li,".jcrbrowser.nodes.html") : "<%= request.getContextPath() %>/.jcrbrowser.nodes.html"; }
+//			},
+//			"progressive_render" : true
+//		},
+		
 		// the `plugins` array allows you to configure the active plugins on this instance
-		"plugins" : [ "themes", "html_data",  "ui", "core", "hotkeys", "crrm", "dnd"]
+		"plugins" : [ "themes", "ui", "core", "hotkeys", "crrm", "dnd"]
     }).bind("rename.jstree", function (e, data) {
     	var newName = data.rslt.new_name;
     	$.ajax({
@@ -325,21 +353,22 @@ $(document).ready(function() {
 				}
 			});
 	    })
-    .click(function(e) {		
+	    /*
+    .click(function(e) {
         e.preventDefault(); 
        	var target = ($(e.target).attr("target")) ? $(e.target).attr("target") : $(e.target).parent().attr("target");
     	if (target && !selectingNodeWhileOpeningTree && !isModifierPressed(e)){
         	location.href=target+".jcrbrowser.html";
 		}
-	});
+	})*/;
 });
 </script>	
 
 </head>
 <body>
-	<div id="container-fluid">
-		<div id="login" class="row-fluid">
-			<div class="span12">
+	<div id="container-fluid" class="container-fluid">
+		<div id="login" class="row">
+			<div class="col-sm-12">
 			 	<div class="logo">
 				JCRBrowser 2.0<span class="edition">node-edit</span><span class="edition">edition</span>
 				</div>			 	
@@ -389,27 +418,27 @@ $(document).ready(function() {
 				</div>
 			</div>
 		</div>
-		<div id="header" class="row-fluid">
-			<div class="span12" style="display:none;">
+		<div id="header" class="row">
+			<div class="col-sm-12" style="display:none;">
 				 <div class="plate">
 				</div> 
 			</div>
 		</div>
-		<div id="alerts" class="row-fluid">
-			<div id="alert" style="display:none;" class="span12">
+		<div id="alerts" class="row">
+			<div id="alert" style="display:none;" class="col-sm-12">
 			  	<div id="alertMsg" class="alert alert-error">
 			  		<button type="button" class="close" data-dismiss="alert">&times;</button>
 			  		<h4>Error</h4>
 		  		</div>
 		  	</div>		
 		</div>
-		<div class="row-fluid">
-			<div class="span4">
+		<div class="row">
+			<div class="col-sm-4">
 				<div id="sidebar" class="plate">
 					<div id="tree" class="demo root" ></div>
 				</div>
 			</div>
-			<div class="span8">
+			<div class="col-sm-8">
 				<div id="outer_content" class="plate">
 					<div id="inner_content_margin">
 						<form action="not_configured_yet.change.properties" method="post">
@@ -470,8 +499,8 @@ $(document).ready(function() {
 			    </div>
 			</div>
 	    </div>
-		<div class="row-fluid" style="display:none">
-			<div class="span12">
+		<div class="row" style="visibility:hidden; display:none;">
+			<div class="col-sm-12">
 				 <div id="footer" class="plate">
 						<p>I'm looking forward to be filled with useful content</p>
 				</div>
