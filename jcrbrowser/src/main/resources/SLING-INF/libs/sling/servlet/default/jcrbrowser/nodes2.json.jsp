@@ -13,7 +13,7 @@
 [{
 					"id" : "/",
             		"text"	: "/",
-            		"state" : {"opened":true, "disabled": false, "selected": true},
+            		"state" : {"opened":true, "disabled": false, "selected": false},
 					"a_attr" :{
 							"target" : "<%= request.getContextPath() %>/",
 		           			"href" : "JavaScript:void(0);"

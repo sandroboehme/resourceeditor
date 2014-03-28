@@ -52,7 +52,7 @@
 			<plugin>
 				<groupId>de.sandroboehme.lesscss</groupId>
 				<artifactId>lesscss-maven-plugin</artifactId>
-				<version>1.6.1.1.0-SNAPSHOT</version>
+				<version>1.6.1.1.0</version>
 				<configuration>
 					<outputDirectory>${project.basedir}/src/main/resources/SLING-INF/libs/jcrbrowser/content/css</outputDirectory>
 					<includes>

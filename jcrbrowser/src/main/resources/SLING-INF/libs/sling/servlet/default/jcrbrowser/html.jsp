@@ -170,7 +170,7 @@ $(document).ready(function() {
 
 	$('#login_submit').click(function(e) {		
 		$('#login').removeClass('animated shake');
-		$('#login .control-group.error').hide();
+		$('#login .form-group.error').hide();
 		
     	$.ajax({
       	  type: 'POST',
@@ -185,7 +185,7 @@ $(document).ready(function() {
     	  },
       	  error: function(data) {
       			$('#login_error').text(data.responseText);
-      			$('#login .control-group.error').slideToggle();
+      			$('#login .form-group.error').slideToggle();
       			$('#login').addClass('animated shake');
     	  }
       	});
@@ -218,6 +218,7 @@ $(document).ready(function() {
 	// call `.jstree` with the options object
 	.jstree({
 		"core"      : {
+		    "check_callback" : true,
 			html_titles : false,
 			animation: 600,
 			'data' : {
@@ -329,7 +330,9 @@ $(document).ready(function() {
       		":dest": dest_path
       		  }
       	});
-    }).bind("remove.jstree", function (e, data) {
+    }).on('hover_node.jstree', function (event, nodeObj) {
+        $('#'+nodeObj.node.id+' a:first').focus();
+      }).bind("remove.jstree", function (e, data) {
 			var currentPath = $(data.rslt.obj).children("a:first").attr("target");
 			var parentPath = data.rslt.parent.children("a:first").attr("target");
 			var confirmationMsg = "You are about to delete "+currentPath+" and all its sub nodes. Are you sure?";
@@ -377,33 +380,33 @@ $(document).ready(function() {
 				    <div class="tab-pane active">
 						<div>
 			                <form id="login_form" class="form-horizontal" action="/j_security_check" method="post">
-			                        <div class="control-group">
+			                        <div class="form-group">
 										<div class="controls">
-						                    <input type="hidden" value="${pageContext.request.requestURI}" name="resource" />
-					                        <input type="hidden" value="form" name="selectedAuthType" />
-											<input type="hidden" value="UTF-8" name="_charset_">
+						                    <input class="form-control" type="hidden" value="${pageContext.request.requestURI}" name="resource" />
+					                        <input class="form-control" type="hidden" value="form" name="selectedAuthType" />
+											<input class="form-control" type="hidden" value="UTF-8" name="_charset_">
 										</div>
 									</div>
-			                        <div class="control-group">
+			                        <div class="form-group">
 										<label class="control-label" for="j_username">Username:</label>
 										<div class="controls">
-											<input type="text" name="j_username" />
+											<input class="form-control" type="text" name="j_username" />
 										</div>
 									</div>
-			                        <div class="control-group">
+			                        <div class="form-group">
 										<label class="control-label" for="j_password">Password:</label>
 										<div class="controls">
-											<input type="password" name="j_password" />
+											<input class="form-control" type="password" name="j_password" />
 										</div>
 									</div>
-			                        <div class="control-group error">
+			                        <div class="form-group error">
 										<div class="controls">
 			                        		<span id="login_error" class="help-block"></span>
 										</div>
 									</div>
-			                        <div class="control-group" id="login_submit_control_group">
+			                        <div class="form-group" id="login_submit_control_group">
 										<div class="controls">
-			                        		<input id="login_submit" type="button" class="btn" value="Login" >
+			                        		<input id="login_submit" type="button" class="btn btn-default form-control" value="Login" >
 										</div>
 									</div>
 			                </form>
@@ -426,7 +429,7 @@ $(document).ready(function() {
 		</div>
 		<div id="alerts" class="row">
 			<div id="alert" style="display:none;" class="col-sm-12">
-			  	<div id="alertMsg" class="alert alert-error">
+			  	<div id="alertMsg" class="alert alert-error alert-warning alert-dismissable">
 			  		<button type="button" class="close" data-dismiss="alert">&times;</button>
 			  		<h4>Error</h4>
 		  		</div>
@@ -465,7 +468,7 @@ $(document).ready(function() {
 												     	<p>I'm a binary property</p>
 												     </c:when>
 												     <c:otherwise>
-											     		<input class="propinputmultival" value="${value.string}"/>
+											     		<input class="propinputmultival form-control" value="${value.string}"/>
 												     </c:otherwise>
 												     </c:choose>
 										     	</c:forEach>
@@ -486,7 +489,7 @@ $(document).ready(function() {
 											     	</c:choose>
 											     </c:when>
 											     <c:otherwise>
-													<input class="propinput" id="${property.name}" name="${property.name}" value="${property.string}"/>							
+													<input class="propinput form-control" id="${property.name}" name="${property.name}" value="${property.string}"/>							
 											     </c:otherwise>
 											     </c:choose>
 										     </c:otherwise>
@@ -507,6 +510,5 @@ $(document).ready(function() {
 			</div>
 		</div>
 	</div>
-</div>	
 </body>
 </html>

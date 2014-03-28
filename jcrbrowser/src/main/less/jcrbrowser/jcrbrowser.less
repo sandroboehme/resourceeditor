@@ -27,6 +27,7 @@
 @import "navs.less";
 @import "scaffolding.less";
 @import "forms.less";
+@import "buttons.less";
 @import "modals.less";
  
 
@@ -170,7 +171,7 @@ body
 fieldset
 {
 	border: none;
-	margin: 0;
+	margin-top: 5px;
 	padding: 0;
 }
 .proplabel
@@ -178,6 +179,9 @@ fieldset
 	width: 25%;
 	float: left;
 	display: inline;
+	line-height: 24px;
+	color: #C0C0C0;
+	font-weight: normal;
 }
 .propinput
 {
@@ -204,7 +208,7 @@ fieldset
 
 #tree a, #tree :visited, #tree :link {
 	border:1px solid transparent; 
-	padding:2px 1px;
+	padding:0px 1px;
 	font-family: arial, helvetica, sans-serif, times;
 	color: @textColor
 }
@@ -214,19 +218,19 @@ fieldset
 	color: #202020;
 	background:transparent; 
 	border:1px solid #000000; 
-	padding:2px 1px;
+	padding:0px 1px;
     -moz-border-radius: 5px;
     border-radius: 5px
 }
 
 .jstree-default a ins.jstree-icon { 
 	background-image: url(../img/folder_lightgray.png);
-	background-position-y: 2px; 
+	background-position-y: 5px; 
 }
 
 .jstree-default a .jstree-icon.jstree-themeicon { 
 	background-image: url(../img/folder_lightgray.png); 
-	background-position: 0 3px;
+	background-position: 0 6px;
 }
 
 .jstree ins {
@@ -239,7 +243,7 @@ fieldset
 	color: #202020;
 	background:transparent; 
 	border:1px solid #000000; 
-	padding:2px 1px;
+	padding:0px 1px;
     -moz-border-radius: 5px;
     border-radius: 5px
 }
