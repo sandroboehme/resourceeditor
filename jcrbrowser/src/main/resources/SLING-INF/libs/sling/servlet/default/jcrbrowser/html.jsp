@@ -174,7 +174,6 @@ function submitForm(){
 }
 
 $(document).ready(function() {
-	adjust_height();
 	$(window).resize( function() {
 		adjust_height();
 	});
@@ -182,6 +181,8 @@ $(document).ready(function() {
 	var scrollToPathFinished=false;
 	
 	setLoginTabLabel(authorizedUser);
+	
+	adjust_height();
 	
 	$('#login_tab').click(function(e) {	
 		if (authorized) {
