@@ -150,6 +150,29 @@ function displayAlert(errorMsg, rlbk){
 	$.jstree.rollback(rlbk);
 }
 
+function submitForm(){
+	$('#login').removeClass('animated shake');
+	$('#login .form-group.error').hide();
+	
+	$.ajax({
+  	  type: 'POST',
+		  url: '<%= request.getContextPath() %>' + $('#login_form').attr('action') + '?' + $('#login_form').serialize(),
+  	  success: function(data, textStatus, jqXHR) {
+  		authorized=true;
+  		$('#login_tab_content').slideToggle(function() {
+  			adjust_height();
+  			setLoginTabLabel($('#login_form input[name="j_username"]').val());
+  		});
+  		
+	  },
+  	  error: function(data) {
+  			$('#login_error').text(data.responseText);
+  			$('#login .form-group.error').slideToggle();
+  			$('#login').addClass('animated shake');
+	  }
+  	});
+}
+
 $(document).ready(function() {
 	adjust_height();
 	$(window).resize( function() {
@@ -165,30 +188,19 @@ $(document).ready(function() {
         	location.href='/system/sling/logout.html?resource=${pageContext.request.requestURI}';
 		} else {
 			$('#login_tab_content').slideToggle(function() {adjust_height();});
+			$("#login_form input[name='j_username']").focus();
 		}
 	});
 
-	$('#login_submit').click(function(e) {		
-		$('#login').removeClass('animated shake');
-		$('#login .form-group.error').hide();
-		
-    	$.ajax({
-      	  type: 'POST',
-			  url: '<%= request.getContextPath() %>' + $('#login_form').attr('action') + '?' + $('#login_form').serialize(),
-      	  success: function(data, textStatus, jqXHR) {
-      		authorized=true;
-      		$('#login_tab_content').slideToggle(function() {
-      			adjust_height();
-      			setLoginTabLabel($('#login_form input[name="j_username"]').val());
-      		});
-      		
-    	  },
-      	  error: function(data) {
-      			$('#login_error').text(data.responseText);
-      			$('#login .form-group.error').slideToggle();
-      			$('#login').addClass('animated shake');
-    	  }
-      	});
+	$('#login_form input').keydown(function(event) {
+        if (event.keyCode == 13) {	
+    		submitForm();
+            return false;
+         }
+    });
+	
+	$('#login_submit').click(function(e) {	
+		submitForm();
 	});
 	
 	// TO CREATE AN INSTANCE
