@@ -89,15 +89,15 @@ function openElement(root, paths) {
 	if (pathElementLi.length === 0){
 		alert("Couldn't find "+pathElementName+" under the path "+getPathFromLi(root.parent()));
 	} else {
-		selectingNodeWhileOpeningTree=true;
-		$('#tree').jstree('deselect_all');
-		$('#tree').jstree('select_node', pathElementLi.attr('id'));
-		pathElementLi.focus();
-		selectingNodeWhileOpeningTree=false;
 		$('#tree').jstree('open_node', pathElementLi,
 				function(){
 					if (paths.length>0){
 						openElement($("#"+pathElementLi.attr('id')).children("ul"), paths);
+					} else  {
+						selectingNodeWhileOpeningTree=true;
+						$('#tree').jstree('select_node', pathElementLi.attr('id'), 'true'/*doesn't seem to work*/);
+						selectingNodeWhileOpeningTree=false;
+				        $('#'+pathElementLi.attr('id')+' a:first').focus();
 					}
 				}
 			);
@@ -345,38 +345,34 @@ $(document).ready(function() {
       	});
     }).on('hover_node.jstree', function (event, nodeObj) {
         $('#'+nodeObj.node.id+' a:first').focus();
-      }).bind("remove.jstree", function (e, data) {
-			var currentPath = $(data.rslt.obj).children("a:first").attr("target");
-			var parentPath = data.rslt.parent.children("a:first").attr("target");
-			var confirmationMsg = "You are about to delete "+currentPath+" and all its sub nodes. Are you sure?";
-			bootbox.confirm(confirmationMsg, function(result) {
-				if (result){
-			    	$.ajax({
-			        	  type: 'POST',
-						  url: currentPath,
-			        	  success: function(server_data) {
-			            	location.href=parentPath+".jcrbrowser.html";
-			      		  },
-			        	  error: function(server_data) {
-			        		displayAlert(server_data.responseText, data.rlbk);
-			      		  },
-			        	  data: { 
-			        		  ":operation": "delete"
-			        	  }
-			        	});
-				} else {
-	        		$.jstree.rollback(data.rlbk);
-				}
-			});
-	    })
-	    /*
-    .click(function(e) {
-        e.preventDefault(); 
-       	var target = ($(e.target).attr("target")) ? $(e.target).attr("target") : $(e.target).parent().attr("target");
-    	if (target && !selectingNodeWhileOpeningTree && !isModifierPressed(e)){
-        	location.href=target+".jcrbrowser.html";
-		}
-	})*/;
+    }).on('select_node.jstree', function (e, data) {
+    	if (!selectingNodeWhileOpeningTree){
+       		location.href=data.node.a_attr.target+".jcrbrowser.html";
+    	}
+    }).bind("remove.jstree", function (e, data) {
+		var currentPath = $(data.rslt.obj).children("a:first").attr("target");
+		var parentPath = data.rslt.parent.children("a:first").attr("target");
+		var confirmationMsg = "You are about to delete "+currentPath+" and all its sub nodes. Are you sure?";
+		bootbox.confirm(confirmationMsg, function(result) {
+			if (result){
+		    	$.ajax({
+		        	  type: 'POST',
+					  url: currentPath,
+		        	  success: function(server_data) {
+		            	location.href=parentPath+".jcrbrowser.html";
+		      		  },
+		        	  error: function(server_data) {
+		        		displayAlert(server_data.responseText, data.rlbk);
+		      		  },
+		        	  data: { 
+		        		  ":operation": "delete"
+		        	  }
+		        	});
+			} else {
+        		$.jstree.rollback(data.rlbk);
+			}
+		});
+	});
 });
 </script>	
 

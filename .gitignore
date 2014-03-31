@@ -8,7 +8,7 @@ release.properties
 pom.xml.tag
 pom.xml.next
 website/
-jcrbrowser/src/main/resources/SLING-INF/jcrbrowser/css/bootstrap.css
+jcrbrowser/src/main/resources/SLING-INF/libs/jcrbrowser/content/css/bootstrap.css
 jcrbrowser/.externalToolBuilders/Maven_Ant_Builder.launch
 jcrbrowser/maven-eclipse.xml
 org.sboehme.treeview/.externalToolBuilders/Maven_Ant_Builder.launch
