@@ -86,14 +86,13 @@ body
     .rounded(7px);
 }
 
-@light-gray: #A0A0A0;
 @dark-gray: #303030;
 
 .plate-text-shadow {
-	text-shadow: 1px 1px 0px @dark-gray, 0px 0px 0px @light-gray;
+	text-shadow: 1px 1px 0px @dark-gray, 0px 0px 0px black;
 }
 .plate-selected-text-shadow {
-	text-shadow: 1px 1px 0px @light-gray, 0px 0px 0px #202020;
+	text-shadow: 1px 1px 0px black, 0px 0px 0px #202020;
 }
 .plate-margin {
 	margin: 15px;
@@ -213,17 +212,39 @@ fieldset
 	color: @textColor
 }
 
-#tree a.jstree-hovered { 
+#tree a.jstree-hovered, #tree a.jstree-hovered.jstree-clicked { 
 	.plate-selected-text-shadow;
-	color: #202020;
-	background:transparent; 
-	border:1px solid #000000; 
-	padding:0px 1px;
+	color: #FFF;
+	background: transparent; 
+	border: 1px solid #000000; 
+	padding: 0px 1px;
     -moz-border-radius: 5px;
     border-radius: 5px
 }
 
-.jstree-default a ins.jstree-icon { 
+.jstree-default a .jstree-icon.open-icon{
+	background-image: url(../img/right_arrow_lightgray.png);
+	background-position: 1px 3px;
+	border:1px solid transparent; 
+    display: inline-block;
+    background-repeat: no-repeat;
+    height: 16px;
+    margin-right: 3px;
+    margin-top: 4px;
+    padding-right: 12px;
+    padding-top: 12px;
+    width: 13px;
+}
+
+.jstree-default a .open-icon:hover{
+	border:1px solid darkgray; 
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+
+
+
+.jstree-default a ins.jstree-icon{ 
 	background-image: url(../img/folder_lightgray.png);
 	background-position-y: 5px; 
 }
@@ -237,12 +258,16 @@ fieldset
 	width: 15px !important;
 }
 
+.jstree-default .jstree-clicked {
+  background: transparent;
+  .rounded;
+  box-shadow: none;
+}
+
 #tree a.jstree-clicked 
 {
-	.plate-selected-text-shadow ;
-	color: #202020;
-	background:transparent; 
-	border:1px solid #000000; 
+	background:#303030; 
+	border:1px solid black; 
 	padding:0px 1px;
     -moz-border-radius: 5px;
     border-radius: 5px
@@ -250,4 +275,17 @@ fieldset
 
 #vakata-contextmenu ul {
 	min-width: 250px !important;
+}
+
+span.jstree-anchor {
+	background-image: none;
+	color: black;
+}
+
+a.jstree-anchor {
+	margin-top: 1px;
+}
+.jstree-default .jstree-anchor {
+    height: 22px;
+    line-height: 20px;
 }

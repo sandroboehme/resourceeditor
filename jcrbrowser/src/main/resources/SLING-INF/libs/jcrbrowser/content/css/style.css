@@ -56,9 +56,6 @@
 .jstree .jstree-leaf > .jstree-children {
   display: none;
 }
-.jstree-anchor > .jstree-themeicon {
-  margin-right: 2px;
-}
 .jstree-no-icons .jstree-themeicon,
 .jstree-anchor > .jstree-themeicon-hidden {
   display: none;
@@ -394,7 +391,7 @@
   line-height: 24px;
 }
 .jstree-default .jstree-icon:empty {
-  width: 18px;
+  width: 16px;
   height: 24px;
   line-height: 24px;
 }

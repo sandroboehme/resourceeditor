@@ -40,7 +40,7 @@
 					"nodename" : "${theResource.name}"
 			},
 				
-            "text"	: "${theResource.name} [<span class=\"node-type\">${theResource.resourceType}</span>]",
+            "text"	: "<i class=\"jstree-icon open-icon\"></i>${theResource.name} [<span class=\"node-type\">${theResource.resourceType}</span>]",
             "children" : <%= theResource.listChildren().hasNext() %>
 		}${!status.last ? ',': ''}
 			</c:forEach>
