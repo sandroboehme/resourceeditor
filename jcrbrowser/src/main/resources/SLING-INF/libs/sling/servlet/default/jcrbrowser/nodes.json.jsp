@@ -3,22 +3,28 @@
 <%@ page import="javax.jcr.*,org.apache.sling.api.resource.Resource"%>
 <%@ page import="java.util.Iterator"%>
 <%@ page import="java.util.LinkedList, java.util.List"%>
+
+<%@ page language="java" contentType="application/json; charset=UTF-8" pageEncoding="UTF-8"%>
+
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ taglib prefix="sling" uri="http://sling.apache.org/taglibs/sling/1.0"%>
 <sling:defineObjects />
 <% response.setContentType("application/json"); %>
 		<%-- This condition block is specifically for the root node. --%>
+		
 		<c:if test='${"/" == resource.path}'>
 [{
-            	"data":	{
-            			"title" : "/",
-            			"attr" :{
-            					"target" : "<%= request.getContextPath() %>/",
-            					"href" : "JavaScript:void(0);"
-            					}
-            			},
-            		"state" : "open",
-            		"attr" : { "nodename" : "" },
+					"id" : "/",
+            		"text"	: "/",
+            		"state" : {"opened":true, "disabled": false, "selected": false},
+					"a_attr" :{
+							"target" : "<%= request.getContextPath() %>/",
+		           			"href" : "JavaScript:void(0);"
+					},
+					"li_attr" :{
+							"nodename" : "${theResource.name}"
+					},
             		"children" :
 		</c:if>
 	[
@@ -30,17 +36,16 @@
 				String thePath = aPath.startsWith("//") ? aPath.substring(1) : aPath;
 				%>
 		{
-		"data":	{
-				"title" : "${theResource.name} [${theResource.resourceType}]",
-				"attr" :{
-						"target" : "<%= java.net.URLEncoder.encode(thePath, "UTF-8").replaceAll("%2F", "/").replaceAll("%3A", ":") %>",
-            			"href" : "JavaScript:void(0);"
-						}
-				},
-			<% if(theResource.listChildren().hasNext()){ %>
-			"state" : "closed",
-			<% } %>
-			"attr" : {"nodename" : "${theResource.name}"}
+			"a_attr" :{
+					"target" : "${fn:escapeXml(theResource.path)}",
+           			"href" : "JavaScript:void(0);"
+			},
+			"li_attr" :{
+					"nodename" : "${theResource.name}"
+			},
+				
+            "text"	: "<i class=\"jstree-icon open-icon\"></i>${theResource.name} [<span class=\"node-type\">${theResource.resourceType}</span>]",
+            "children" : <%= theResource.listChildren().hasNext() %>
 		}${!status.last ? ',': ''}
 			</c:forEach>
 	]

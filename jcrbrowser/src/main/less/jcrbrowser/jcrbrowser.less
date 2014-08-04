@@ -212,7 +212,7 @@ fieldset
 	color: @textColor
 }
 
-#tree a.jstree-hovered, #tree a.jstree-hovered.jstree-clicked { 
+#tree .jstree-hovered, #tree .jstree-hovered.jstree-clicked { 
 	.plate-selected-text-shadow;
 	color: #FFF;
 	background: transparent; 
@@ -222,7 +222,7 @@ fieldset
     border-radius: 5px
 }
 
-.jstree-default a .jstree-icon.open-icon{
+.jstree-default .jstree-icon.open-icon{
 	background-image: url(../img/right_arrow_lightgray.png);
 	background-position: 1px 3px;
 	border:1px solid transparent; 
@@ -236,7 +236,7 @@ fieldset
     width: 13px;
 }
 
-.jstree-default a .open-icon:hover{
+.jstree-default .open-icon:hover{
 	border:1px solid darkgray; 
     -moz-border-radius: 3px;
     border-radius: 3px;
@@ -244,12 +244,12 @@ fieldset
 
 
 
-.jstree-default a ins.jstree-icon{ 
+.jstree-default ins.jstree-icon{ 
 	background-image: url(../img/folder_lightgray.png);
 	background-position-y: 5px; 
 }
 
-.jstree-default a .jstree-icon.jstree-themeicon { 
+.jstree-default .jstree-icon.jstree-themeicon { 
 	background-image: url(../img/folder_lightgray.png); 
 	background-position: 0 6px;
 }
@@ -264,7 +264,7 @@ fieldset
   box-shadow: none;
 }
 
-#tree a.jstree-clicked 
+#tree .jstree-clicked 
 {
 	background:#303030; 
 	border:1px solid black; 
@@ -282,7 +282,13 @@ span.jstree-anchor {
 	color: black;
 }
 
-a.jstree-anchor {
+input.jstree-rename-input{
+    height: 17px !important;
+    line-height: 16px !important;
+	color: black !important;
+}
+
+.jstree-anchor {
 	margin-top: 1px;
 }
 .jstree-default .jstree-anchor {

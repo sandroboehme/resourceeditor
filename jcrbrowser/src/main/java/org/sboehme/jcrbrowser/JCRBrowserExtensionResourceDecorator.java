@@ -32,10 +32,10 @@ import org.slf4j.LoggerFactory;
  * have been registered by path.
  * 
  * E.g. the login servlet is registered by path using the URL
- * /system/sling/login. When calling /system/sling/login.jcrbrowser.view.html the
+ * /system/sling/login. When calling /system/sling/login.jcrbrowser.html the
  * servlet would usually be called to render the request. To render this
  * resource with the JCRBrowser instead, this ResourceDecorator sets the resource type
- * for requests that use the 'jcrbrowser.view' selector in the path info to 'jcrbrowser/view'.
+ * for requests that use the 'jcrbrowser' selector in the path info to 'jcrbrowser'.
  * 
  * @scr.component immediate="true" label="%defaultRtp.name"
  *                description="%defaultRtp.description"
@@ -46,8 +46,8 @@ import org.slf4j.LoggerFactory;
  */
 public class JCRBrowserExtensionResourceDecorator implements ResourceDecorator {
 
-	private static final String JCRBROWSER_RESOURCE_TYPE = "jcrbrowser/view";
-	private static final String JCRBROWSER_SELECTOR = "jcrbrowser.view";
+	private static final String JCRBROWSER_RESOURCE_TYPE = "jcrbrowser";
+	private static final String JCRBROWSER_SELECTOR = "jcrbrowser";
 	private final Logger log = LoggerFactory.getLogger(getClass());
 
 	/**
