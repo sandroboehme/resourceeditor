@@ -62,27 +62,31 @@ org.sboehme.jcrbrowser.TreeController = (function() {
 	TreeController.prototype.renameNode = function(e, data) {
 		var thatTreeController = this;
 		var newName = data.text;
-		var url = data.node.a_attr.target;
-		url = thatTreeController.mainController.decodeFromHTML(url);
-		url = encodeURI(url);
-		$.ajax({
-	  	  type: 'POST',
-			  url: url,
-	  	  success: function(server_data) {
-	  		  var theNewName = encodeURI(newName);
-	    	  var target = thatTreeController.settings.contextPath+"/"+theNewName;
-	    	  location.href=target+".jcrbrowser.html";
-		  },
-	  	  error: function(server_data) {
-	  		  thatTreeController.mainController.displayAlert(server_data.responseText, data.rlbk);
-		  },
-		  contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
-	  	  data: { 
-	  		":operation": "move",
-	  		"_charset_": "utf-8",
-	  		":dest": "/"+newName
-	  		  }
-	  	});
+		var oldName = data.old;
+		if (oldName!==newName){
+			var newURI = data.node.a_attr.target.replace(oldName, newName);
+			var url = data.node.a_attr.target;
+			url = thatTreeController.mainController.decodeFromHTML(url);
+			url = encodeURI(url);
+			$.ajax({
+		  	  type: 'POST',
+				  url: url,
+		  	  success: function(server_data) {
+		  		  var newURIencoded = encodeURI(newURI);
+		    	  var target = thatTreeController.settings.contextPath+newURIencoded;
+		    	  location.href=target+".jcrbrowser.html";
+			  },
+		  	  error: function(server_data) {
+		  		  thatTreeController.mainController.displayAlert(server_data.responseText, data.rlbk);
+			  },
+			  contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
+		  	  data: { 
+		  		":operation": "move",
+		  		"_charset_": "utf-8",
+		  		":dest": newURI
+		  		  }
+		  	});
+		}
 	}
 	
 	TreeController.prototype.getSelectorFromPath = function(path){
@@ -115,7 +119,9 @@ org.sboehme.jcrbrowser.TreeController = (function() {
 							selectingNodeWhileOpeningTree=true;
 							$('#tree').jstree('select_node', pathElementLi.attr('id'), 'true'/*doesn't seem to work*/);
 							selectingNodeWhileOpeningTree=false;
-					        $('#'+pathElementLi.attr('id')+' a:first').focus();
+					        var target = $('#'+pathElementLi.attr('id')+' a:first');
+					        target.focus();
+					        console.log('#'+pathElementLi.attr('id')+' a:first');
 						}
 					}
 				);
