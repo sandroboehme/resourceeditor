@@ -43,6 +43,11 @@ org.sboehme.jcrbrowser.MainController = (function() {
 		});
 	};
 
+	MainController.prototype.encodeURL = function(unencodedURL){
+		url = encodeURIComponent(unencodedURL);
+		return url.replace(/%2F/g, "/");
+	}
+
 	MainController.prototype.encodeToHTML = function(unencodedHTML){
 		//create a in-memory div, set it's inner text(which jQuery automatically encodes)
 		//then grab the encoded contents back out.The div never exists on the page.

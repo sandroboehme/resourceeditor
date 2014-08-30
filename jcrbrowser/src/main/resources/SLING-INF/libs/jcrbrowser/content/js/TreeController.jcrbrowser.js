@@ -47,10 +47,9 @@ org.sboehme.jcrbrowser.TreeController = (function() {
 	};
 
 	TreeController.prototype.openNodeTarget = function(e) {
-		var thatTreeController = this;
 		var url = $(e.target).parent().attr("target");
-		url = thatTreeController.mainController.decodeFromHTML(url);
-		url = encodeURI(url);
+		url = this.mainController.decodeFromHTML(url);
+		url = this.mainController.encodeURL(url);
 		location.href=url+".jcrbrowser.html";
 	}
 
@@ -64,15 +63,16 @@ org.sboehme.jcrbrowser.TreeController = (function() {
 		var newName = data.text;
 		var oldName = data.old;
 		if (oldName!==newName){
-			var newURI = data.node.a_attr.target.replace(oldName, newName);
+			var encodedTargetURI = this.mainController.decodeFromHTML(data.node.a_attr.target);
+			var newURI = encodedTargetURI.replace(oldName, newName);
 			var url = data.node.a_attr.target;
-			url = thatTreeController.mainController.decodeFromHTML(url);
-			url = encodeURI(url);
+			url = this.mainController.decodeFromHTML(url);
+			url = this.mainController.encodeURL(url);
 			$.ajax({
 		  	  type: 'POST',
 				  url: url,
 		  	  success: function(server_data) {
-		  		  var newURIencoded = encodeURI(newURI);
+		  		  var newURIencoded = thatTreeController.mainController.encodeURL(newURI);
 		    	  var target = thatTreeController.settings.contextPath+newURIencoded;
 		    	  location.href=target+".jcrbrowser.html";
 			  },
@@ -130,7 +130,7 @@ org.sboehme.jcrbrowser.TreeController = (function() {
 
 	TreeController.prototype.get_uri_from_li = function(li, extension){
 		var path = this.getPathFromLi(li);
-		path = encodeURI(path);
+		path = this.mainController.encodeURL(path);
 		path = path.replace(/%2F/g, "/");
 		path = path.replace(/%3A/g, ":");
 		return this.settings.contextPath+path+extension;
