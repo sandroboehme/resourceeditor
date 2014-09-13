@@ -14,17 +14,15 @@
 * limitations under the License.
 */
 
+/*
+ * As the name implies, the LoginController contains functionality for the user login.
+ */
+
 // creating the namespace
 var org = org || {};
 org.sboehme = org.sboehme || {};
 org.sboehme.jcrbrowser = org.sboehme.jcrbrowser || {};
 
-
-/*
- Controller - It adapts the JSTree library for the use in the JCRBrowser.
- This JCRBrowserJSTreeAdapter contains as less logic as needed to configure the JSTree for the JCRBrowser. For 
- everything that goes beyond that and contains more functionality, the JCRBrowserTreeController is called.
-*/
 
 //defining the module
 org.sboehme.jcrbrowser.LoginController = (function() {

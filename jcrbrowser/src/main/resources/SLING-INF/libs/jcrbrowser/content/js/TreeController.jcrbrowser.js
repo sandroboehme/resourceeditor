@@ -19,12 +19,11 @@ var org = org || {};
 org.sboehme = org.sboehme || {};
 org.sboehme.jcrbrowser = org.sboehme.jcrbrowser || {};
 
-
 /*
- Controller - It adapts the JSTree library for the use in the JCRBrowser.
- This JCRBrowserJSTreeAdapter contains as less logic as needed to configure the JSTree for the JCRBrowser. For 
- everything that goes beyond that and contains more functionality, the JCRBrowserTreeController is called.
-*/
+ * The TreeController is responsible for the node tree functionality of the JCRBrowser
+ * that is not specific for a 3rd party library.
+ * JSTree-specific functionality is implemented in the JSTreeAdapter instead.
+ */
 
 //defining the module
 org.sboehme.jcrbrowser.TreeController = (function() {
@@ -47,10 +46,10 @@ org.sboehme.jcrbrowser.TreeController = (function() {
 	};
 
 	TreeController.prototype.openNodeTarget = function(e) {
-		var url = $(e.target).parent().attr("target");
+		var url = $(e.target).parent().attr("href");
 		url = this.mainController.decodeFromHTML(url);
 		url = this.mainController.encodeURL(url);
-		location.href=url+".jcrbrowser.html";
+		location.href=url;
 	}
 
 	TreeController.prototype.openRenameNodeDialog = function(id) {
@@ -60,17 +59,18 @@ org.sboehme.jcrbrowser.TreeController = (function() {
 	
 	TreeController.prototype.renameNode = function(e, data) {
 		var thatTreeController = this;
-		var newName = data.text;
+		var newName = this.mainController.decodeFromHTML(data.text);
+//		var newName = data.text;
 		var oldName = data.old;
 		if (oldName!==newName){
-			var encodedTargetURI = this.mainController.decodeFromHTML(data.node.a_attr.target);
-			var newURI = encodedTargetURI.replace(oldName, newName);
-			var url = data.node.a_attr.target;
-			url = this.mainController.decodeFromHTML(url);
-			url = this.mainController.encodeURL(url);
+			var currentURL = this.getPathFromLi($('#'+data.node.id));
+			var unencodedURI = currentURL;
+			var decodedCurrentURI = this.mainController.decodeFromHTML(unencodedURI);
+			var newURI = decodedCurrentURI.replace(oldName, newName);
+			currentURL = this.mainController.encodeURL(decodedCurrentURI);
 			$.ajax({
 		  	  type: 'POST',
-				  url: url,
+				  url: currentURL,
 		  	  success: function(server_data) {
 		  		  var newURIencoded = thatTreeController.mainController.encodeURL(newURI);
 		    	  var target = thatTreeController.settings.contextPath+newURIencoded;
@@ -121,7 +121,6 @@ org.sboehme.jcrbrowser.TreeController = (function() {
 							selectingNodeWhileOpeningTree=false;
 					        var target = $('#'+pathElementLi.attr('id')+' a:first');
 					        target.focus();
-					        console.log('#'+pathElementLi.attr('id')+' a:first');
 						}
 					}
 				);
@@ -131,8 +130,6 @@ org.sboehme.jcrbrowser.TreeController = (function() {
 	TreeController.prototype.get_uri_from_li = function(li, extension){
 		var path = this.getPathFromLi(li);
 		path = this.mainController.encodeURL(path);
-		path = path.replace(/%2F/g, "/");
-		path = path.replace(/%3A/g, ":");
 		return this.settings.contextPath+path+extension;
 	}
 	/*

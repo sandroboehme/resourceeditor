@@ -22,7 +22,7 @@ org.sboehme.jcrbrowser.tree = org.sboehme.jcrbrowser.tree || {};
 
 
 /*
- JCRBrowserJSTreeAdapter - It adapts the JSTree library for the use in the JCRBrowser.
+ JSTreeAdapter - It adapts the JSTree library for the use in the JCRBrowser.
  This JSTreeAdapter contains as less logic as needed to configure the JSTree for the JCRBrowser. For 
  everything that goes beyond that and contains more functionality, the other JCRBrowser controllers are called.
 */
