@@ -11,5 +11,12 @@
 <%@ taglib prefix="sling" uri="http://sling.apache.org/taglibs/sling/1.0"%>
 <sling:defineObjects />
 <% response.setContentType("application/json"); %>
-
-<%@ include file="nodes.json.incl.jsp" %>
+[{
+	"id" : "/",
+	"state" : {"opened":true, "disabled": false, "selected": false},
+	"text"	: "/",
+	"li_attr" :{ "nodename" : "${theResource.name}" },
+	"a_attr" :{ "href" : "<%= request.getContextPath() %>/.jcrbrowser.html" },
+	"children" :
+		<%@ include file="nodes.json.incl.jsp" %>
+}]

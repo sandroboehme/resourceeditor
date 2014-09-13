@@ -23,7 +23,7 @@ org.sboehme.jcrbrowser.tree = org.sboehme.jcrbrowser.tree || {};
 
 /*
  JCRBrowserJSTreeAdapter - It adapts the JSTree library for the use in the JCRBrowser.
- This JCRBrowserJSTreeAdapter contains as less logic as needed to configure the JSTree for the JCRBrowser. For 
+ This JSTreeAdapter contains as less logic as needed to configure the JSTree for the JCRBrowser. For 
  everything that goes beyond that and contains more functionality, the other JCRBrowser controllers are called.
 */
 
@@ -71,10 +71,11 @@ $(document).ready(function() {
 			animation: 600,
 			'data' : {
 				'url' : function (liJson) {
-					// the li the user clicked on.
+					// initial call for the root element
 					if (liJson.id === '#'){
-						return settings.contextPath+"/.jcrbrowser.nodes.json";
+						return settings.contextPath+"/.jcrbrowser.rootnodes.json";
 					} else {
+						// the li the user clicked on.
 						var li = $('#'+liJson.id);
 						return treeController.get_uri_from_li(li,".jcrbrowser.nodes.json");
 					}
@@ -157,7 +158,8 @@ $(document).ready(function() {
         $('#'+nodeObj.node.id+' a:first').focus();
     }).on('select_node.jstree', function (e, data) {
     	;
-    }).bind("remove.jstree", function (e, data) {
+    }).bind("delete_node.jstree", function (e, data) {
+    	//http://www.jstree.com/api/#/?q=delete&f=delete_node.jstree
 		var currentPath = $(data.rslt.obj).children("a:first").attr("target");
 		var parentPath = data.rslt.parent.children("a:first").attr("target");
 		var confirmationMsg = "You are about to delete "+currentPath+" and all its sub nodes. Are you sure?";
