@@ -34,21 +34,19 @@ import org.slf4j.LoggerFactory;
  * E.g. the login servlet is registered by path using the URL
  * /system/sling/login. When calling /system/sling/login.jcrbrowser.html the
  * servlet would usually be called to render the request. To render this
- * resource with the JCRBrowser instead, this ResourceDecorator sets the resource type
- * for requests that use the 'jcrbrowser' selector in the path info to 'jcrbrowser'.
+ * resource with the JCRBrowser instead, this ResourceDecorator removes the 
+ * servlet resource type for requests that use the 'jcrbrowser' selector in 
+ * the path.
  * 
- * @scr.component immediate="true" label="%defaultRtp.name"
- *                description="%defaultRtp.description"
+ * @scr.component immediate="true" label="%defaultRtp.name" description="%defaultRtp.description"
  * @scr.property name="service.vendor" value="Sandro Boehme"
- * @scr.property name="service.description"
- *               value="JCRBrowser extension Resource Decorator"
+ * @scr.property name="service.description" value="JCRBrowser extension Resource Decorator"
  * @scr.service
  */
-public class JCRBrowserExtensionResourceDecorator implements ResourceDecorator {
+public class JCRBrowserSelectorResourceDecorator implements ResourceDecorator {
 
 	private static final String JCRBROWSER_RESOURCE_TYPE = "jcrbrowser";
 	private static final String JCRBROWSER_SELECTOR = "jcrbrowser";
-	private final Logger log = LoggerFactory.getLogger(getClass());
 
 	/**
 	 * @see org.apache.sling.api.resource.ResourceDecorator#decorate(org.apache.sling.api.resource.Resource,
@@ -68,24 +66,24 @@ public class JCRBrowserExtensionResourceDecorator implements ResourceDecorator {
 		if (resource != null) {
 			ResourceMetadata resourceMetadata = resource.getResourceMetadata();
 			if (resourceMetadata != null) {
-				String resolutionPathInfo = resourceMetadata
-						.getResolutionPathInfo();
-				result = getJCRBrowserResourceWrapper(resource,
-						resolutionPathInfo);
+				String resolutionPathInfo = resourceMetadata.getResolutionPathInfo();
+				result = getJCRBrowserResourceWrapper(resource,resolutionPathInfo);
 			}
 		}
 		return result;
 	}
 
-	private Resource getJCRBrowserResourceWrapper(Resource resource,
-			String resolutionPathInfo) {
+	private Resource getJCRBrowserResourceWrapper(Resource resource, String resolutionPathInfo) {
 		Resource result = null;
-		if (resolutionPathInfo != null
-				&& resolutionPathInfo.endsWith("." + JCRBROWSER_SELECTOR
-						+ ".html")) {
+		if (resolutionPathInfo != null && resolutionPathInfo.endsWith("." + JCRBROWSER_SELECTOR + ".html")) {
 			result = new ResourceWrapper(resource) {
 				@Override
 				public String getResourceType() {
+					/*
+					 * It overwrites the resource types to avoid that the servlet 
+					 * resource types have a higher priority then the
+					 * JCRBrowsers html.jsp.
+					 */
 					return JCRBROWSER_RESOURCE_TYPE;
 				}
 
