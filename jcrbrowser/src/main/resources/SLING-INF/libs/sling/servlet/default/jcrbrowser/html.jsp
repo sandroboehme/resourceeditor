@@ -118,7 +118,7 @@ new org.sboehme.jcrbrowser.tree.JSTreeAdapter(jsTreeAdapterSettings, treeControl
 									</div>
 			                        <div class="form-group error">
 										<div class="controls">
-			                        		<span id="login_error" class="help-block"></span>
+			                        		<span id="login_error" class="help-block alert-warning"></span>
 										</div>
 									</div>
 			                        <div class="form-group" id="login_submit_control_group">
