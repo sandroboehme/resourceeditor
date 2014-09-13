@@ -15,10 +15,9 @@
 	<groupId>org.sboehme</groupId>
 	<artifactId>jcrbrowser</artifactId>
 	<packaging>bundle</packaging>
-	<version>2.0.9-SNAPSHOT</version>
+	<version>2.0.14-SNAPSHOT</version>
 	<name>jcrbrowser</name>
 	<description>org.sboehme - jcrbrowser</description>
-
 	<repositories>
 		<repository>
 			<id>com.springsource.repository.bundles.release</id>
@@ -196,6 +195,10 @@
 		</dependency>
 	</dependencies>
 	<distributionManagement>
+<!-- 		<repository> -->
+<!-- 			<id>local8888</id> -->
+<!-- 			<url>dav:http://localhost:8080/obr</url> -->
+<!-- 		</repository> -->
 		<repository>
 			<id>www.jcrbrowser.org</id>
 			<url>dav:http://www.jcrbrowser.org/sling/obr</url>
