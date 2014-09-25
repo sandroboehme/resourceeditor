@@ -34,6 +34,9 @@ org.sboehme.jcrbrowser.LoginController = (function() {
 			
 			$('#login_tab').click(function(e) {	
 				if (authorized) {
+					//@TODO: Use real <a href="/system/sling/logout.html"... instead
+					//make sure the context path is used
+					//check if there is a settings.requestURI, if not redirect to "/"
 		        	location.href='/system/sling/logout.html?resource='+settings.requestURI;
 				} else {
 					$('#login_tab_content').slideToggle(function() {mainController.adjust_height();});

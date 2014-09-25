@@ -29,6 +29,7 @@ org.sboehme.jcrbrowser.MainController = (function() {
 
 	function MainController(settings, ntManager){
 		this.ntManager = ntManager;
+		this.settings = settings;
 		
 		var thisMainController = this;
 		
@@ -36,6 +37,7 @@ org.sboehme.jcrbrowser.MainController = (function() {
 			$('#alertClose').click(function () {
 				$("#alert").slideUp(function() {
 					thisMainController.adjust_height();
+					$('#alertMsg #Message').remove();
 				});
 			})
 		});
@@ -71,23 +73,30 @@ org.sboehme.jcrbrowser.MainController = (function() {
 		$("#outer_content").height( usable_height );
 	}
 
-	MainController.prototype.displayAlert = function(errorMsg, rlbk){
+	MainController.prototype.displayAlert = function(errorMsg, resourcePath){
 		var thisMainController = this;
-		$('#alertMsg #Message').remove();
 		// Let jQuery parse the error message from the html 
 		// by using an id selector.
 		var errorMessage = $("#Message",errorMsg).html();
+		if (resourcePath) {
+			errorMessage = "'"+resourcePath+"': "+errorMessage;
+		}
 		$('#alertMsg').append($("<div id='Message'>").append(errorMessage));
 		$("#alert").slideDown(function() {
 			thisMainController.adjust_height();
 		});
-		$.jstree.rollback(rlbk);
 	}
 
 
 	MainController.prototype.getNTFromLi = function(li){
 		var nt_name = $(li).children("a").find("span span.node-type").text();
 	    return this.ntManager.getNodeType(nt_name);	
+	}
+	
+	MainController.prototype.redirectTo = function(unencodedTargetPath){
+		var newURIencoded = this.encodeURL(unencodedTargetPath);
+  	  	var target = this.settings.contextPath+newURIencoded;
+  	  	location.href=target+".jcrbrowser.html";
 	}
 	
 	return MainController;

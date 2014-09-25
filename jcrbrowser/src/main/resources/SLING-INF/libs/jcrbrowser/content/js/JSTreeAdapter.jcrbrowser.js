@@ -35,7 +35,7 @@ org.sboehme.jcrbrowser.tree.JSTreeAdapter = (function() {
 		this.treeController = treeController;
 		this.mainController = mainController;
 		
-var currentNodePath = decodeURI(settings.resourcePath);
+var currentNodePath = this.mainController.encodeToHTML(settings.resourcePath);
 var paths = currentNodePath.substring(1).split("/");
 var selectingNodeWhileOpeningTree=true;
 
@@ -67,7 +67,6 @@ $(document).ready(function() {
 		"core"      : {
 		    "check_callback" : true,
 		    multiple: true,
-			html_titles : false,
 			animation: 600,
 			'data' : {
 				'url' : function (liJson) {
@@ -146,7 +145,7 @@ $(document).ready(function() {
             	location.href=target+".jcrbrowser.html";
     		  },
       	  error: function(server_data) {
-      			displayAlert(server_data.responseText, data.rlbk);
+      			displayAlert(server_data.responseText);
     		  },
       	  data: { 
        		":operation": "move",
@@ -156,32 +155,14 @@ $(document).ready(function() {
       	});
     }).on('hover_node.jstree', function (event, nodeObj) {
         $('#'+nodeObj.node.id+' a:first').focus();
+    }).on('keydown.jstree', '.jstree-anchor', function (e) {
+    	if (46==e.which) {
+    		treeController.deleteNodes();
+    	}
     }).on('select_node.jstree', function (e, data) {
     	;
     }).bind("delete_node.jstree", function (e, data) {
-    	//http://www.jstree.com/api/#/?q=delete&f=delete_node.jstree
-		var currentPath = $(data.rslt.obj).children("a:first").attr("target");
-		var parentPath = data.rslt.parent.children("a:first").attr("target");
-		var confirmationMsg = "You are about to delete "+currentPath+" and all its sub nodes. Are you sure?";
-		bootbox.confirm(confirmationMsg, function(result) {
-			if (result){
-		    	$.ajax({
-		        	  type: 'POST',
-					  url: currentPath,
-		        	  success: function(server_data) {
-		            	location.href=parentPath+".jcrbrowser.html";
-		      		  },
-		        	  error: function(server_data) {
-		        		displayAlert(server_data.responseText, data.rlbk);
-		      		  },
-		        	  data: { 
-		        		  ":operation": "delete"
-		        	  }
-		        	});
-			} else {
-        		$.jstree.rollback(data.rlbk);
-			}
-		});
+    	//see treeController.deleteNode();
 	});
 });
 

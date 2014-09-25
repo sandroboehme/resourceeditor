@@ -44,6 +44,7 @@ original
 
 <link rel="stylesheet" type="text/css" media="all" href="<%= request.getContextPath() %>/libs/jcrbrowser/content/css/style.css">
 <link rel="stylesheet" type="text/css" media="all" href="<%= request.getContextPath() %>/libs/jcrbrowser/content/css/bootstrap.css">
+<link rel="stylesheet" type="text/css" media="all" href="<%= request.getContextPath() %>/libs/jcrbrowser/content/css/bootbox.jcrbrowser.css">
 <link rel="stylesheet" type="text/css" media="all" href="<%= request.getContextPath() %>/libs/jcrbrowser/content/css/shake.css">
 <link rel="stylesheet" type="text/css" media="all" href="<%= request.getContextPath() %>/libs/jcrbrowser/content/css/theme/smoothness/jquery-ui.custom.css">
 
@@ -59,6 +60,7 @@ Principal userPrincipal = ((HttpServletRequest)pageContext.getRequest()).getUser
 
 <script type="text/javascript">
 var mainControllerSettings = {
+		contextPath: "<%= request.getContextPath() %>"
 };
 var ntManager = new de.sandroboehme.NodeTypeManager();
 var mainController = new org.sboehme.jcrbrowser.MainController(mainControllerSettings, ntManager);
