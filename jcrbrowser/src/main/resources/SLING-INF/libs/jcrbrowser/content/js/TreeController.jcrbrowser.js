@@ -93,18 +93,23 @@ org.sboehme.jcrbrowser.TreeController = (function() {
 	}
 
 	TreeController.prototype.getPathFromLi = function(li){
-		return $(li).parentsUntil(".root").andSelf().map(
+		var path = $(li).parentsUntil(".root").andSelf().map(
 				function() {
 					return this.tagName == "LI"
 							? $(this).attr("nodename") 
 							: null;
 				}
 			).get().join("/");
+		return "" == path ? "/" : path;
+	};
+
+	TreeController.prototype.getURLEncodedPathFromLi = function(li){
+		return this.mainController.encodeURL(this.getPathFromLi(li));
 	};
 
 	TreeController.prototype.openElement = function(root, paths) {
 		var thisTreeController = this;
-		var pathElementName = paths.shift();//.replace(specialSelectorChars,"\\\\$&");
+		var pathElementName = paths.shift();
 		var pathElementLi = root.children("[nodename='"+pathElementName+"']");
 		if (pathElementLi.length === 0){
 			alert("Couldn't find "+pathElementName+" under the path "+this.getPathFromLi(root.parent()));
@@ -135,53 +140,43 @@ org.sboehme.jcrbrowser.TreeController = (function() {
 		var thatTreeController = this;
 		var lastDeletedLI;
 		var selectedIds = $("#tree").jstree('get_selected');
-		var pathsToDelete = [];
+		var firstId = selectedIds[0];
+		var parentLi = $('#'+firstId).parents('li');
+		var parentPath = this.getURLEncodedPathFromLi(parentLi);
+		var otherPathsToDelete = [];
 		for (var i=0; i<selectedIds.length; i++){
 			var id = selectedIds[i];
 			var li = $('#'+id);
-			pathsToDelete.push(this.getPathFromLi(li));
+			var resourcePathToDelete = this.getURLEncodedPathFromLi(li);
+			otherPathsToDelete.push(resourcePathToDelete);
 		}
-		var confirmationMsg = "You are about to delete '"+pathsToDelete+"' and all its sub nodes. Are you sure?";
+		var confirmationMsg = "You are about to delete '"+otherPathsToDelete+"' and all its sub nodes. Are you sure?";
 		bootbox.confirm(confirmationMsg, function(result) {
 			if (result){
-				for (var i=0; i<selectedIds.length; i++){
-					var id = selectedIds[i];
-					var liToDelete = $('#'+id);
-					thatTreeController.deleteNode(liToDelete);
-					lastDeletedLI = liToDelete;
-				}
+					//http://www.jstree.com/api/#/?q=delete&f=delete_node.jstree
+			    	$.ajax({
+			        	  type: 'POST',
+						  url: parentPath,
+			        	  success: function(server_data) {
+							var tree = $('#tree').jstree(true);
+							for (var i=0; i<selectedIds.length; i++){
+								var id = selectedIds[i];
+								tree.delete_node(id);
+							}
+			      		  },
+			        	  error: function(server_data) {
+			        		thatTreeController.mainController.displayAlert(server_data.responseText);
+			      		  },
+			      		  traditional: true,
+			        	  data: { 
+			        		  ":operation": "delete",
+			            	  ":applyTo": otherPathsToDelete        		
+			        	  }
+			        });
 			}
 		});
 	}
 
-	TreeController.prototype.deleteNode = function(li) {
-		var thatTreeController = this;
-		//http://www.jstree.com/api/#/?q=delete&f=delete_node.jstree
-		var resourcePathToDelete = this.getPathFromLi(li);
-		var encodedResourcePathToDelete = this.mainController.encodeURL(resourcePathToDelete);
-    	$.ajax({
-        	  type: 'POST',
-			  url: encodedResourcePathToDelete,
-        	  success: function(server_data) {
-				var tree = $('#tree').jstree(true);
-				tree.delete_node(li.attr("id"));
-				/*
-				 * 							
-				 * var ref = $('#jstree_demo').jstree(true),
-								sel = ref.get_selected();
-							if(!sel.length) { return false; }
-							ref.delete_node(sel);
-				 * 
-				 */
-      		  },
-        	  error: function(server_data) {
-        		thatTreeController.mainController.displayAlert(server_data.responseText, resourcePathToDelete);
-      		  },
-        	  data: { 
-        		  ":operation": "delete"
-        	  }
-        });
-	}
 	/*
 	function isModifierPressed(e){
 		return (e.shiftKey || e.altKey || e.ctrlKey);
