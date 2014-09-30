@@ -156,6 +156,7 @@ $(document).ready(function() {
     }).on('hover_node.jstree', function (event, nodeObj) {
         $('#'+nodeObj.node.id+' a:first').focus();
     }).on('keydown.jstree', '.jstree-anchor', function (e) {
+    	// see http://www.javascripter.net/faq/keycodes.htm
     	if (46==e.which) {
     		treeController.deleteNodes();
     	}

@@ -222,21 +222,32 @@ fieldset
     border-radius: 5px
 }
 
-.jstree-default .jstree-icon.open-icon{
-	background-image: url(../img/right_arrow_lightgray.png);
+.jstree-default .jstree-icon.node-icon{
 	background-position: 1px 3px;
 	border:1px solid transparent; 
     display: inline-block;
     background-repeat: no-repeat;
     height: 16px;
-    margin-right: 3px;
     margin-top: 4px;
-    padding-right: 12px;
+    padding-right: 1px;
     padding-top: 12px;
     width: 13px;
 }
 
-.jstree-default .open-icon:hover{
+.jstree-default .jstree-icon.open-icon{
+	background-image: url(../img/right_arrow_lightgray.png);
+}
+
+.jstree-default .jstree-icon.remove-icon{
+	background-image: url(../img/remove.png);
+}
+
+.jstree-default .jstree-icon.add-icon{
+	background-image: url(../img/add.png);
+    margin-right: 3px;
+}
+
+.jstree-default .open-icon:hover,.jstree-default .remove-icon:hover,.jstree-default .add-icon:hover{
 	border:1px solid darkgray; 
     -moz-border-radius: 3px;
     border-radius: 3px;

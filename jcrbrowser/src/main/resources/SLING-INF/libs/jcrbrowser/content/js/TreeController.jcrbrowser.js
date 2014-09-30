@@ -37,6 +37,12 @@ org.sboehme.jcrbrowser.TreeController = (function() {
 			$("#tree").on("click", "li.jstree-node>a.jstree-anchor>i.open-icon",function(e, data) {
 				thatTreeController.openNodeTarget(e);
 			});
+			$("#tree").on("click", "li.jstree-node>a.jstree-anchor>i.add-icon",function(e, data) {
+				thatTreeController.addNode($(e.target).parents("li"));
+			});
+			$("#tree").on("click", "li.jstree-node>a.jstree-anchor>i.remove-icon",function(e, data) {
+				thatTreeController.deleteSingleNode($(e.target).parents("li"));
+			});
 	
 			$("#tree").on("dblclick", "li.jstree-node>a.jstree-anchor",function(e, data) {
 				var id = $(e.target).parents("li:first").attr("id");
@@ -144,11 +150,14 @@ org.sboehme.jcrbrowser.TreeController = (function() {
 		var parentLi = $('#'+firstId).parents('li');
 		var parentPath = this.getURLEncodedPathFromLi(parentLi);
 		var otherPathsToDelete = [];
+		var otherPathsToDeleteDecoded = [];
 		for (var i=0; i<selectedIds.length; i++){
 			var id = selectedIds[i];
 			var li = $('#'+id);
-			var resourcePathToDelete = this.getURLEncodedPathFromLi(li);
+			var resourcePathToDelete = this.getPathFromLi(li);
 			otherPathsToDelete.push(resourcePathToDelete);
+			var decodedResourcePath = this.mainController.decodeFromHTML(resourcePathToDelete);
+			otherPathsToDeleteDecoded.push(decodedResourcePath);
 		}
 		var confirmationMsg = "You are about to delete '"+otherPathsToDelete+"' and all its sub nodes. Are you sure?";
 		bootbox.confirm(confirmationMsg, function(result) {
@@ -168,11 +177,52 @@ org.sboehme.jcrbrowser.TreeController = (function() {
 			        		thatTreeController.mainController.displayAlert(server_data.responseText);
 			      		  },
 			      		  traditional: true,
+						  contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
 			        	  data: { 
 			        		  ":operation": "delete",
-			            	  ":applyTo": otherPathsToDelete        		
+			  		  		  "_charset_": "utf-8",
+			            	  ":applyTo": otherPathsToDeleteDecoded        		
 			        	  }
 			        });
+			}
+		});
+	}
+
+	TreeController.prototype.deleteSingleNode = function(li) {
+		var thatTreeController = this;
+		var resourcePathToDelete = this.getPathFromLi(li);
+		var confirmationMsg = "You are about to delete '"+resourcePathToDelete+"' and all its sub nodes. Are you sure?";
+		var decodedResourcePath = this.mainController.decodeFromHTML(resourcePathToDelete);
+		var encodedResourcePathToDelete = this.mainController.encodeURL(decodedResourcePath);
+		bootbox.confirm(confirmationMsg, function(result) {
+			if (result){
+		    	$.ajax({
+		        	  type: 'POST',
+					  url: encodedResourcePathToDelete,
+		        	  success: function(server_data) {
+		        		var id = li.attr("id");
+						var tree = $('#tree').jstree(true);
+						tree.delete_node(id);
+		      		  },
+		        	  error: function(server_data) {
+		        		thatTreeController.mainController.displayAlert(server_data.responseText);
+		      		  },
+		        	  data: { 
+		        		  ":operation": "delete"
+		        	  }
+		        });
+			}
+		});
+	}
+
+	TreeController.prototype.addNode = function(li) {
+		var thatTreeController = this;
+		var resourcePath = this.getPathFromLi(li);
+		var confirmationMsg = "This is a mock dialog for the adding nodes at "+resourcePath+".";
+		var encodedresourcePath = this.mainController.encodeURL(resourcePath);
+		bootbox.confirm(confirmationMsg, function(result){
+			if (result){
+				bootbox.alert("Confirmed.");
 			}
 		});
 	}

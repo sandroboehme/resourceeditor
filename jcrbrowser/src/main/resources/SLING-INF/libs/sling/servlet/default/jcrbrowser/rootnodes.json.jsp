@@ -14,7 +14,7 @@
 [{
 	"id" : "/",
 	"state" : {"opened":true, "disabled": false, "selected": false},
-	"text"	: "/",
+	"text"	: "<i class=\"jstree-icon node-icon add-icon\"></i> /",
 	"li_attr" :{ "nodename" : "${theResource.name}" },
 	"a_attr" :{ "href" : "<%= request.getContextPath() %>/.jcrbrowser.html" },
 	"children" :
