@@ -18,8 +18,13 @@
  */
 package org.apache.sling.contenteditor;
 
+import javax.servlet.Servlet;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.felix.scr.annotations.Component;
+import org.apache.felix.scr.annotations.Properties;
+import org.apache.felix.scr.annotations.Property;
+import org.apache.felix.scr.annotations.Service;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ResourceDecorator;
 import org.apache.sling.api.resource.ResourceMetadata;
@@ -36,11 +41,13 @@ import org.apache.sling.api.resource.ResourceWrapper;
  * servlet resource type for requests that use the 'contenteditor' selector in 
  * the path.
  * 
- * @scr.component immediate="true" label="%defaultRtp.name" description="%defaultRtp.description"
- * @scr.property name="service.vendor" value="The Apache Software Foundation"
- * @scr.property name="service.description" value="Sling Content Editor extension Resource Decorator"
- * @scr.service
  */
+@Component
+@Service(ResourceDecorator.class)
+@Properties({
+		@Property(name = "service.description", value = "Resource Decorator for giving the Sling Content Editor scripts a higher priority."),
+		@Property(name = "service.vendor", value = "The Apache Software Foundation")
+})
 public class SelectorBasedResourceDecorator implements ResourceDecorator {
 
 	private static final String CONTENTEDITOR_RESOURCE_TYPE = "contenteditor";
