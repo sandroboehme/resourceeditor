@@ -14,9 +14,9 @@
 <meta http-equiv="content-type" content="text/html; charset=utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<link href='<%= request.getContextPath() %>/libs/jcrbrowser/content/css/font.css' rel='stylesheet' type='text/css'>
+<link href='<%= request.getContextPath() %>/libs/contenteditor/content/css/font.css' rel='stylesheet' type='text/css'>
  <!--[if lt IE 9]>
-<link href='<%= request.getContextPath() %>/libs/jcrbrowser/content/css/font_ie.css' rel='stylesheet' type='text/css'>
+<link href='<%= request.getContextPath() %>/libs/contenteditor/content/css/font_ie.css' rel='stylesheet' type='text/css'>
   <![endif]-->
   
 <!-- 
@@ -26,30 +26,29 @@ original
 
 <script type="text/javascript" src="<%= request.getContextPath() %>/libs/jsnodetypes/js/jsnodetypes.js"></script>
 
-<script type="text/javascript" src="<%= request.getContextPath() %>/libs/jcrbrowser/content/js/jquery.min.js"></script>
-<script type="text/javascript" src="<%= request.getContextPath() %>/libs/jcrbrowser/content/js/jquery-ui.custom.min.js"></script>
-<script type="text/javascript" src="<%= request.getContextPath() %>/libs/jcrbrowser/content/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="<%= request.getContextPath() %>/libs/jcrbrowser/content/js/bootbox.min.js"></script>
-<script type="text/javascript" src="<%= request.getContextPath() %>/libs/jcrbrowser/content/js/jstree.js"></script>
+<script type="text/javascript" src="<%= request.getContextPath() %>/libs/contenteditor/content/js/jquery.min.js"></script>
+<script type="text/javascript" src="<%= request.getContextPath() %>/libs/contenteditor/content/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="<%= request.getContextPath() %>/libs/contenteditor/content/js/bootbox.min.js"></script>
+<script type="text/javascript" src="<%= request.getContextPath() %>/libs/contenteditor/content/js/jstree.js"></script>
 
-<script type="text/javascript" src="<%= request.getContextPath() %>/libs/jcrbrowser/content/js/JSTreeAdapter.jcrbrowser.js"></script>
-<script type="text/javascript" src="<%= request.getContextPath() %>/libs/jcrbrowser/content/js/LoginController.jcrbrowser.js"></script>
-<script type="text/javascript" src="<%= request.getContextPath() %>/libs/jcrbrowser/content/js/MainController.jcrbrowser.js"></script>
-<script type="text/javascript" src="<%= request.getContextPath() %>/libs/jcrbrowser/content/js/TreeController.jcrbrowser.js"></script>
+<script type="text/javascript" src="<%= request.getContextPath() %>/libs/contenteditor/content/js/JSTreeAdapter.contenteditor.js"></script>
+<script type="text/javascript" src="<%= request.getContextPath() %>/libs/contenteditor/content/js/LoginController.contenteditor.js"></script>
+<script type="text/javascript" src="<%= request.getContextPath() %>/libs/contenteditor/content/js/MainController.contenteditor.js"></script>
+<script type="text/javascript" src="<%= request.getContextPath() %>/libs/contenteditor/content/js/TreeController.contenteditor.js"></script>
 
 <!-- 
-<script type="text/javascript" src="<%= request.getContextPath() %>/libs/jcrbrowser/content/js/jquery.scrollTo-min.js"></script>
+<script type="text/javascript" src="<%= request.getContextPath() %>/libs/contenteditor/content/js/jquery.scrollTo-min.js"></script>
  -->
-<script type="text/javascript" src="<%= request.getContextPath() %>/libs/jcrbrowser/content/js/urlEncode.js"></script>
+<script type="text/javascript" src="<%= request.getContextPath() %>/libs/contenteditor/content/js/urlEncode.js"></script>
 
-<link rel="stylesheet" type="text/css" media="all" href="<%= request.getContextPath() %>/libs/jcrbrowser/content/css/style.css">
-<link rel="stylesheet" type="text/css" media="all" href="<%= request.getContextPath() %>/libs/jcrbrowser/content/css/bootstrap.css">
-<link rel="stylesheet" type="text/css" media="all" href="<%= request.getContextPath() %>/libs/jcrbrowser/content/css/bootbox.jcrbrowser.css">
-<link rel="stylesheet" type="text/css" media="all" href="<%= request.getContextPath() %>/libs/jcrbrowser/content/css/shake.css">
-<link rel="stylesheet" type="text/css" media="all" href="<%= request.getContextPath() %>/libs/jcrbrowser/content/css/theme/smoothness/jquery-ui.custom.css">
+<link rel="stylesheet" type="text/css" media="all" href="<%= request.getContextPath() %>/libs/contenteditor/content/css/style.css">
+<link rel="stylesheet" type="text/css" media="all" href="<%= request.getContextPath() %>/libs/contenteditor/content/css/bootstrap.css">
+<link rel="stylesheet" type="text/css" media="all" href="<%= request.getContextPath() %>/libs/contenteditor/content/css/bootbox.contenteditor.css">
+<link rel="stylesheet" type="text/css" media="all" href="<%= request.getContextPath() %>/libs/contenteditor/content/css/shake.css">
+<link rel="stylesheet" type="text/css" media="all" href="<%= request.getContextPath() %>/libs/contenteditor/content/css/theme/smoothness/jquery-ui.custom.css">
 
 <!--[if IE]>
-	<link rel="stylesheet" type="text/css" media="all" href="<%= request.getContextPath() %>/libs/jcrbrowser/content/css/browser_ie.css"/>
+	<link rel="stylesheet" type="text/css" media="all" href="<%= request.getContextPath() %>/libs/contenteditor/content/css/browser_ie.css"/>
 <![endif]-->
 
 <%
@@ -63,19 +62,19 @@ var mainControllerSettings = {
 		contextPath: "<%= request.getContextPath() %>"
 };
 var ntManager = new de.sandroboehme.NodeTypeManager();
-var mainController = new org.sboehme.jcrbrowser.MainController(mainControllerSettings, ntManager);
+var mainController = new org.apache.sling.contenteditor.MainController(mainControllerSettings, ntManager);
 
 var treeControllerSettings = {
 		contextPath: "<%= request.getContextPath() %>"
 };
-var treeController = new org.sboehme.jcrbrowser.TreeController(treeControllerSettings, mainController);
+var treeController = new org.apache.sling.contenteditor.TreeController(treeControllerSettings, mainController);
 
 var loginControllerSettings = {
 		authorized : ${authorized},
 		authorizedUser : '${userPrincipal.name}',
 		contextPath: "<%= request.getContextPath() %>"
 };
-var loginController = new org.sboehme.jcrbrowser.LoginController(loginControllerSettings, mainController);
+var loginController = new org.apache.sling.contenteditor.LoginController(loginControllerSettings, mainController);
 
 var jsTreeAdapterSettings = {
 		resourcePath : "${resource.path}",
@@ -83,7 +82,7 @@ var jsTreeAdapterSettings = {
 		contextPath: "<%= request.getContextPath() %>",
 		resolutionPathInfo: "${resource.resourceMetadata['sling.resolutionPathInfo']}"
 };
-new org.sboehme.jcrbrowser.tree.JSTreeAdapter(jsTreeAdapterSettings, treeController, mainController);
+new org.apache.sling.contenteditor.JSTreeAdapter(jsTreeAdapterSettings, treeController, mainController);
 </script>	
 
 </head>
@@ -92,7 +91,7 @@ new org.sboehme.jcrbrowser.tree.JSTreeAdapter(jsTreeAdapterSettings, treeControl
 		<div id="login" class="row">
 			<div class="col-sm-12">
 			 	<div class="logo">
-				JCRBrowser 2.0<span class="edition">node-edit</span><span class="edition">edition</span>
+				Sling Content Editor <span class="edition">node-edit version</span>
 				</div>			 	
 				<div class="tabbable tabs-below"> 
 				  <div id="login_tab_content" class="tab-content plate-background plate-box-shadow" style="display:none;">

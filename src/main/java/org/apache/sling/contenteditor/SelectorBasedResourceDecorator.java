@@ -16,7 +16,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package org.sboehme.jcrbrowser;
+package org.apache.sling.contenteditor;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -24,29 +24,27 @@ import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ResourceDecorator;
 import org.apache.sling.api.resource.ResourceMetadata;
 import org.apache.sling.api.resource.ResourceWrapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
- * Overrules the resource resolver to let the JCRBrowser render servlets that
+ * Overrules the resource resolver to let the Sling Content Editor render servlets that
  * have been registered by path.
  * 
  * E.g. the login servlet is registered by path using the URL
- * /system/sling/login. When calling /system/sling/login.jcrbrowser.html the
+ * /system/sling/login. When calling /system/sling/login.contenteditor.html the
  * servlet would usually be called to render the request. To render this
- * resource with the JCRBrowser instead, this ResourceDecorator removes the 
- * servlet resource type for requests that use the 'jcrbrowser' selector in 
+ * resource with the Sling Content Editor instead, this ResourceDecorator removes the 
+ * servlet resource type for requests that use the 'contenteditor' selector in 
  * the path.
  * 
  * @scr.component immediate="true" label="%defaultRtp.name" description="%defaultRtp.description"
- * @scr.property name="service.vendor" value="Sandro Boehme"
- * @scr.property name="service.description" value="JCRBrowser extension Resource Decorator"
+ * @scr.property name="service.vendor" value="The Apache Software Foundation"
+ * @scr.property name="service.description" value="Sling Content Editor extension Resource Decorator"
  * @scr.service
  */
-public class JCRBrowserSelectorResourceDecorator implements ResourceDecorator {
+public class SelectorBasedResourceDecorator implements ResourceDecorator {
 
-	private static final String JCRBROWSER_RESOURCE_TYPE = "jcrbrowser";
-	private static final String JCRBROWSER_SELECTOR = "jcrbrowser";
+	private static final String CONTENTEDITOR_RESOURCE_TYPE = "contenteditor";
+	private static final String CONTENTEDITOR_SELECTOR = "contenteditor";
 
 	/**
 	 * @see org.apache.sling.api.resource.ResourceDecorator#decorate(org.apache.sling.api.resource.Resource,
@@ -54,7 +52,7 @@ public class JCRBrowserSelectorResourceDecorator implements ResourceDecorator {
 	 */
 	public Resource decorate(Resource resource, HttpServletRequest request) {
 		String pathInfo = request.getPathInfo();
-		return getJCRBrowserResourceWrapper(resource,
+		return getContentEditorResourceWrapper(resource,
 				pathInfo);
 	}
 
@@ -67,24 +65,24 @@ public class JCRBrowserSelectorResourceDecorator implements ResourceDecorator {
 			ResourceMetadata resourceMetadata = resource.getResourceMetadata();
 			if (resourceMetadata != null) {
 				String resolutionPathInfo = resourceMetadata.getResolutionPathInfo();
-				result = getJCRBrowserResourceWrapper(resource,resolutionPathInfo);
+				result = getContentEditorResourceWrapper(resource,resolutionPathInfo);
 			}
 		}
 		return result;
 	}
 
-	private Resource getJCRBrowserResourceWrapper(Resource resource, String resolutionPathInfo) {
+	private Resource getContentEditorResourceWrapper(Resource resource, String resolutionPathInfo) {
 		Resource result = null;
-		if (resolutionPathInfo != null && resolutionPathInfo.endsWith("." + JCRBROWSER_SELECTOR + ".html")) {
+		if (resolutionPathInfo != null && resolutionPathInfo.endsWith("." + CONTENTEDITOR_SELECTOR + ".html")) {
 			result = new ResourceWrapper(resource) {
 				@Override
 				public String getResourceType() {
 					/*
 					 * It overwrites the resource types to avoid that the servlet 
 					 * resource types have a higher priority then the
-					 * JCRBrowsers html.jsp.
+					 * Content Editor's html.jsp.
 					 */
-					return JCRBROWSER_RESOURCE_TYPE;
+					return CONTENTEDITOR_RESOURCE_TYPE;
 				}
 
 			};

@@ -1,23 +1,27 @@
 /*
-* Copyright 2014 Sandro Boehme
-* 
-* Licensed under the Apache License, Version 2.0 (the "License");
-* you may not use this file except in compliance with the License.
-* You may obtain a copy of the License at
-* 
-*   http://www.apache.org/licenses/LICENSE-2.0
-* 
-* Unless required by applicable law or agreed to in writing, software
-* distributed under the License is distributed on an "AS IS" BASIS,
-* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-* See the License for the specific language governing permissions and
-* limitations under the License.
-*/
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
 
 // creating the namespace
 var org = org || {};
-org.sboehme = org.sboehme || {};
-org.sboehme.jcrbrowser = org.sboehme.jcrbrowser || {};
+org.apache = org.apache || {};
+org.apache.sling = org.apache.sling || {};
+org.apache.sling.contenteditor = org.apache.sling.contenteditor || {};
 
 /*
  * The MainController is responsible for every functionality 
@@ -25,7 +29,7 @@ org.sboehme.jcrbrowser = org.sboehme.jcrbrowser || {};
  */
 
 //defining the module
-org.sboehme.jcrbrowser.MainController = (function() {
+org.apache.sling.contenteditor.MainController = (function() {
 
 	function MainController(settings, ntManager){
 		this.ntManager = ntManager;
@@ -96,7 +100,7 @@ org.sboehme.jcrbrowser.MainController = (function() {
 	MainController.prototype.redirectTo = function(unencodedTargetPath){
 		var newURIencoded = this.encodeURL(unencodedTargetPath);
   	  	var target = this.settings.contextPath+newURIencoded;
-  	  	location.href=target+".jcrbrowser.html";
+  	  	location.href=target+".contenteditor.html";
 	}
 	
 	return MainController;

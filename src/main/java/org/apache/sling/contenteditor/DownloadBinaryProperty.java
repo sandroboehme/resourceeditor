@@ -16,7 +16,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package org.sboehme.jcrbrowser;
+package org.apache.sling.contenteditor;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -51,7 +51,7 @@ import org.slf4j.LoggerFactory;
 @Service(Servlet.class)
 @Properties({
 		@Property(name = "service.description", value = "Download Servlet for binary properties"),
-		@Property(name = "service.vendor", value = "Sandro Boehme"),
+		@Property(name = "service.vendor", value = "The Apache Software Foundation"),
 		@Property(name = "sling.servlet.selectors", value = "property"),
 		@Property(name = "sling.servlet.extensions", value = "download"),
 		@Property(name = "sling.servlet.resourceTypes", value = "sling/servlet/default")

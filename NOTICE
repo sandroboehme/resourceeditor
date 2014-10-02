@@ -1,5 +1,5 @@
-JCRBrowser
-Copyright 2012 Sandro Bšhme
+Sling Content Editor
+Copyright 2014 Apache Software Foundation
 
 +++ Third party libraries +++
 
@@ -7,14 +7,17 @@ Copyright 2012 Sandro Bšhme
 Apache 2 license from http://www.apache.org/licenses/LICENSE-2.0.html 
 
 ++ Twitter Bootstrap - http://twitter.github.com/bootstrap++
-Apache 2 license from http://www.apache.org/licenses/LICENSE-2.0.html
+MIT License from http://opensource.org/licenses/MIT
+
+++ Glyphicons included in Twitter Bootstrap ++
+http://glyphicons.com/license/ states that the version that is included in Twitter Bootstrap uses the same license as Twitter Bootstrap.
 
 ++ Bootbox - http://bootboxjs.com/ ++
 MIT License from http://opensource.org/licenses/MIT
 
 ++ Google Webfonts - http://www.google.com/webfonts ++
 Quote from the about page at http://www.google.com/webfonts#AboutPlace:about
-All of the fonts are Open Source. This means that you are free to share your favorites with friends and colleagues. You can even customize them for your own use, or collaborate with the original designer to improve them. And you can use them in every way you want, privately or commercially Ñ in print, on your computer, or in your websites.
+All of the fonts are Open Source. This means that you are free to share your favorites with friends and colleagues. You can even customize them for your own use, or collaborate with the original designer to improve them. And you can use them in every way you want, privately or commercially ï¿½ in print, on your computer, or in your websites.
 
 ++ Less CSS compiler - http://lesscss.org/ ++
 Apache 2 license from http://www.apache.org/licenses/LICENSE-2.0.html
@@ -51,13 +54,11 @@ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 
-
-
 ++ The background image img/alu.gif - http://www.grsites.com/archive/textures/view/source=archive/id=2237 ++
 Attribution from http://www.apache.org/licenses/LICENSE-2.0.html
 
-++ Animate.css - http://daneden.me/animate ++
-visualidio license from: http://licence.visualidiot.com/
+++ Animate.css - https://github.com/daneden/animate.css ++
+MIT License from http://opensource.org/licenses/MIT
 
 ++ jsTree - http://www.jstree.com ++
 MIT License from http://opensource.org/licenses/MIT

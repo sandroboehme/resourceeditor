@@ -16,7 +16,7 @@
 	"state" : {"opened":true, "disabled": false, "selected": false},
 	"text"	: "<i class=\"jstree-icon node-icon add-icon\"></i> /",
 	"li_attr" :{ "nodename" : "${theResource.name}" },
-	"a_attr" :{ "href" : "<%= request.getContextPath() %>/.jcrbrowser.html" },
+	"a_attr" :{ "href" : "<%= request.getContextPath() %>/.contenteditor.html" },
 	"children" :
 		<%@ include file="nodes.json.incl.jsp" %>
 }]
