@@ -5,7 +5,7 @@ The Apache Sling Content Editor allows to edit Apache Sling content based on the
 ++ Deploy Binaries ++
 o Install Apache Sling (see http://sling.apache.org/site/getting-and-building-sling.html)
 o Navigate to the OSGi Repository page of the management console within your running Sling instance (/system/console/obr)
-o If the OSGi Repository page is not there, install `http://search.maven.org/#artifactdetails|org.apache.felix|org.apache.felix.webconsole.plugins.obr|1.0.2|bundle` at `system/console/bundles` to make it available.
+o If the OSGi Repository page is not there, install ´http://search.maven.org/#artifactdetails|org.apache.felix|org.apache.felix.webconsole.plugins.obr|1.0.2|bundle´ at ´system/console/bundles´ to make it available.
 o Add the OSGi repository URL (http://www.jcrbrowser.org/sling/obr/repository.xml). 
 o Search for the "Apache Sling Content Editor" resource and navigate to the latest version.
 o Click "Deploy and Start".
@@ -15,6 +15,11 @@ o Open "/.contenteditor.html" at your server to see the web application.
 ++ Build the Sling Content Editor ++
 o Deploy the binaries as described above. 
 o Download and install Git from http://www.git-scm.com/download
-o Call 'git clone git://github.com/sandroboehme/jcrbrowser.git' in a shell. It will create the jcrbrowser subfolder containing the source. 
-o Change to the jcrbrowser subdirectory and call 'mvn clean install' there to install the sources into the running Sling instance.
+o Call ´git clone git://github.com/sandroboehme/contenteditor.git´ in a shell. It will create the contenteditor subfolder containing the source. 
+o Change to the contenteditor subdirectory and call ´mvn clean package´ there to install the sources into the running Sling instance.
+
+++ Develop with the Sling Content Editor ++
+o Use ´mvn install´ to deploy changes of Java classes
+o To have frontend changes automatically deployed call ´mvn install´
+o To have the less sources automatically compiled call ´mvn lesscss:compile -Dlesscss.watch=true´
 

@@ -34,8 +34,8 @@
 		</repository>
 	</repositories>
 	<scm>
-		<developerConnection>scm:git:https://sandroboehme@github.com/sandroboehme/jcrbrowser.git</developerConnection>
-		<url>https://github.com/sandroboehme/jcrbrowser</url>
+		<developerConnection>scm:git:https://sandroboehme@github.com/sandroboehme/contenteditor.git</developerConnection>
+		<url>https://github.com/sandroboehme/contenteditor</url>
 	</scm>
 
 	<build>
@@ -197,7 +197,7 @@
 	</dependencies>
 	<distributionManagement>
 <!-- 		<repository> -->
-<!-- 			<id>local8888</id> -->
+<!-- 			<id>localSling</id> -->
 <!-- 			<url>dav:http://localhost:8080/obr</url> -->
 <!-- 		</repository> -->
 		<repository>
