@@ -21,17 +21,17 @@
 var org = org || {};
 org.apache = org.apache || {};
 org.apache.sling = org.apache.sling || {};
-org.apache.sling.contenteditor = org.apache.sling.contenteditor || {};
+org.apache.sling.reseditor = org.apache.sling.reseditor || {};
 
 
 /*
- JSTreeAdapter - It adapts the JSTree library for the use in the Sling Content Editor.
- This JSTreeAdapter contains as less logic as needed to configure the JSTree for the Sling Content Editor. For 
- everything that goes beyond that and contains more functionality, the other Sling Content Editor controllers are called.
+ JSTreeAdapter - It adapts the JSTree library for the use in the Sling Resource Editor.
+ This JSTreeAdapter contains as less logic as needed to configure the JSTree for the Sling Resource Editor. For 
+ everything that goes beyond that and contains more functionality, the other Sling Resource Editor controllers are called.
 */
 
 //defining the module
-org.apache.sling.contenteditor.JSTreeAdapter = (function() {
+org.apache.sling.reseditor.JSTreeAdapter = (function() {
 
 	function JSTreeAdapter(settings, treeController, mainController){
 		this.settings = settings;
@@ -75,11 +75,11 @@ $(document).ready(function() {
 				'url' : function (liJson) {
 					// initial call for the root element
 					if (liJson.id === '#'){
-						return settings.contextPath+"/.contenteditor.rootnodes.json";
+						return settings.contextPath+"/.reseditor.rootnodes.json";
 					} else {
 						// the li the user clicked on.
 						var li = $('#'+liJson.id);
-						return treeController.get_uri_from_li(li,".contenteditor.nodes.json");
+						return treeController.get_uri_from_li(li,".reseditor.nodes.json");
 					}
 				},
 			    'data' : function (node) {
@@ -123,9 +123,6 @@ $(document).ready(function() {
 				alert("DRAG OK"); 
 			}
 		},
-		"hotkeys"	: {
-// 			"space" : function () { alert("hotkey pressed"); }
-		},
 		// the `plugins` array allows you to configure the active plugins on this instance
 		"plugins" : [ "themes", "ui", "core", "hotkeys", "crrm", "dnd"]
     }).bind("rename_node.jstree", function (e, data) {
@@ -145,7 +142,7 @@ $(document).ready(function() {
 			  url: src_path,
       	  success: function(server_data) {
         		var target = ""+settings.contextPath+dest_path;
-            	location.href=target+".contenteditor.html";
+            	location.href=target+".reseditor.html";
     		  },
       	  error: function(server_data) {
       			displayAlert(server_data.responseText);
@@ -165,9 +162,7 @@ $(document).ready(function() {
     	}
     }).on('select_node.jstree', function (e, data) {
     	;
-    }).bind("delete_node.jstree", function (e, data) {
-    	//see treeController.deleteNode();
-	});
+    });
 });
 
 	};

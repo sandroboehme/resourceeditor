@@ -21,7 +21,7 @@
 var org = org || {};
 org.apache = org.apache || {};
 org.apache.sling = org.apache.sling || {};
-org.apache.sling.contenteditor = org.apache.sling.contenteditor || {};
+org.apache.sling.reseditor = org.apache.sling.reseditor || {};
 
 /*
  * The MainController is responsible for every functionality 
@@ -29,7 +29,7 @@ org.apache.sling.contenteditor = org.apache.sling.contenteditor || {};
  */
 
 //defining the module
-org.apache.sling.contenteditor.MainController = (function() {
+org.apache.sling.reseditor.MainController = (function() {
 
 	function MainController(settings, ntManager){
 		this.ntManager = ntManager;
@@ -100,7 +100,7 @@ org.apache.sling.contenteditor.MainController = (function() {
 	MainController.prototype.redirectTo = function(unencodedTargetPath){
 		var newURIencoded = this.encodeURL(unencodedTargetPath);
   	  	var target = this.settings.contextPath+newURIencoded;
-  	  	location.href=target+".contenteditor.html";
+  	  	location.href=target+".reseditor.html";
 	}
 	
 	return MainController;

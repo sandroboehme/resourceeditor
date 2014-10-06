@@ -16,42 +16,31 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package org.apache.sling.contenteditor;
+package org.apache.sling.reseditor;
 
-import javax.servlet.Servlet;
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.felix.scr.annotations.Component;
-import org.apache.felix.scr.annotations.Properties;
-import org.apache.felix.scr.annotations.Property;
-import org.apache.felix.scr.annotations.Service;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ResourceDecorator;
 import org.apache.sling.api.resource.ResourceMetadata;
 import org.apache.sling.api.resource.ResourceWrapper;
 
 /**
- * Overrules the resource resolver to let the Sling Content Editor render servlets that
+ * Overrules the resource resolver to let the Sling Resource Editor render servlets that
  * have been registered by path.
  * 
  * E.g. the login servlet is registered by path using the URL
- * /system/sling/login. When calling /system/sling/login.contenteditor.html the
+ * /system/sling/login. When calling /system/sling/login.reseditor.html the
  * servlet would usually be called to render the request. To render this
- * resource with the Sling Content Editor instead, this ResourceDecorator removes the 
- * servlet resource type for requests that use the 'contenteditor' selector in 
+ * resource with the Sling Resource Editor instead, this ResourceDecorator removes the 
+ * servlet resource type for requests that use the 'reseditor' selector in 
  * the path.
  * 
  */
-@Component
-@Service(ResourceDecorator.class)
-@Properties({
-		@Property(name = "service.description", value = "Resource Decorator for giving the Sling Content Editor scripts a higher priority."),
-		@Property(name = "service.vendor", value = "The Apache Software Foundation")
-})
 public class SelectorBasedResourceDecorator implements ResourceDecorator {
 
-	private static final String CONTENTEDITOR_RESOURCE_TYPE = "contenteditor";
-	private static final String CONTENTEDITOR_SELECTOR = "contenteditor";
+	private static final String RESEDITOR_RESOURCE_TYPE = "reseditor";
+	private static final String RESEDITOR_SELECTOR = "reseditor";
 
 	/**
 	 * @see org.apache.sling.api.resource.ResourceDecorator#decorate(org.apache.sling.api.resource.Resource,
@@ -59,7 +48,7 @@ public class SelectorBasedResourceDecorator implements ResourceDecorator {
 	 */
 	public Resource decorate(Resource resource, HttpServletRequest request) {
 		String pathInfo = request.getPathInfo();
-		return getContentEditorResourceWrapper(resource,
+		return getResourceEditorResourceWrapper(resource,
 				pathInfo);
 	}
 
@@ -72,24 +61,24 @@ public class SelectorBasedResourceDecorator implements ResourceDecorator {
 			ResourceMetadata resourceMetadata = resource.getResourceMetadata();
 			if (resourceMetadata != null) {
 				String resolutionPathInfo = resourceMetadata.getResolutionPathInfo();
-				result = getContentEditorResourceWrapper(resource,resolutionPathInfo);
+				result = getResourceEditorResourceWrapper(resource,resolutionPathInfo);
 			}
 		}
 		return result;
 	}
 
-	private Resource getContentEditorResourceWrapper(Resource resource, String resolutionPathInfo) {
+	private Resource getResourceEditorResourceWrapper(Resource resource, String resolutionPathInfo) {
 		Resource result = null;
-		if (resolutionPathInfo != null && resolutionPathInfo.endsWith("." + CONTENTEDITOR_SELECTOR + ".html")) {
+		if (resolutionPathInfo != null && resolutionPathInfo.endsWith("." + RESEDITOR_SELECTOR + ".html")) {
 			result = new ResourceWrapper(resource) {
 				@Override
 				public String getResourceType() {
 					/*
 					 * It overwrites the resource types to avoid that the servlet 
 					 * resource types have a higher priority then the
-					 * Content Editor's html.jsp.
+					 * Resource Editor's html.jsp.
 					 */
-					return CONTENTEDITOR_RESOURCE_TYPE;
+					return RESEDITOR_RESOURCE_TYPE;
 				}
 
 			};

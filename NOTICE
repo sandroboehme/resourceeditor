@@ -1,4 +1,4 @@
-Sling Content Editor
+Sling Resource Editor
 Copyright 2014 Apache Software Foundation
 
 +++ Third party libraries +++
@@ -6,7 +6,7 @@ Copyright 2014 Apache Software Foundation
 ++ Apache Sling  - http://sling.apache.org/ ++
 Apache 2 license from http://www.apache.org/licenses/LICENSE-2.0.html 
 
-++ Twitter Bootstrap - http://twitter.github.com/bootstrap++
+++ Twitter Bootstrap - http://getbootstrap.com/
 MIT License from http://opensource.org/licenses/MIT
 
 ++ Glyphicons included in Twitter Bootstrap ++
@@ -17,7 +17,7 @@ MIT License from http://opensource.org/licenses/MIT
 
 ++ Google Webfonts - http://www.google.com/webfonts ++
 Quote from the about page at http://www.google.com/webfonts#AboutPlace:about
-All of the fonts are Open Source. This means that you are free to share your favorites with friends and colleagues. You can even customize them for your own use, or collaborate with the original designer to improve them. And you can use them in every way you want, privately or commercially � in print, on your computer, or in your websites.
+All of the fonts are Open Source. This means that you are free to share your favorites with friends and colleagues. You can even customize them for your own use, or collaborate with the original designer to improve them. And you can use them in every way you want, privately or commercially ��� in print, on your computer, or in your websites.
 
 ++ Less CSS compiler - http://lesscss.org/ ++
 Apache 2 license from http://www.apache.org/licenses/LICENSE-2.0.html
@@ -25,34 +25,8 @@ Apache 2 license from http://www.apache.org/licenses/LICENSE-2.0.html
 ++ jQuery - http://jquery.org/ ++
 MIT License from http://opensource.org/licenses/MIT
 
-++ jQuery cookie plugin - https://github.com/carhartl/jquery-cookie ++
-MIT License from http://opensource.org/licenses/MIT
-
 ++ jQuery scrollTo plugin - http://flesler.blogspot.com/2007/10/jqueryscrollto.html ++
 MIT License from http://opensource.org/licenses/MIT
-
-++ jQuery Hotkeys plugin - https://github.com/jquery/plugins.jquery.com ++
-Copyright (c) 2011 jQuery Team, http://jquery.org/team
-
-Permission is hereby granted, free of charge, to any person obtaining
-a copy of this software and associated documentation files (the
-"Software"), to deal in the Software without restriction, including
-without limitation the rights to use, copy, modify, merge, publish,
-distribute, sublicense, and/or sell copies of the Software, and to
-permit persons to whom the Software is furnished to do so, subject to
-the following conditions:
-
-The above copyright notice and this permission notice shall be
-included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
-LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
-OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
-WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
 
 ++ The background image img/alu.gif - http://www.grsites.com/archive/textures/view/source=archive/id=2237 ++
 Attribution from http://www.apache.org/licenses/LICENSE-2.0.html

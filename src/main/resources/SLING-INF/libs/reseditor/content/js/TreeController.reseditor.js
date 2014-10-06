@@ -21,16 +21,16 @@
 var org = org || {};
 org.apache = org.apache || {};
 org.apache.sling = org.apache.sling || {};
-org.apache.sling.contenteditor = org.apache.sling.contenteditor || {};
+org.apache.sling.reseditor = org.apache.sling.reseditor || {};
 
 /*
- * The TreeController is responsible for the node tree functionality of the Sling Content Editor
+ * The TreeController is responsible for the node tree functionality of the Sling Resource Editor
  * that is not specific for a 3rd party library.
  * JSTree-specific functionality is implemented in the JSTreeAdapter instead.
  */
 
 //defining the module
-org.apache.sling.contenteditor.TreeController = (function() {
+org.apache.sling.reseditor.TreeController = (function() {
 
 	function TreeController(settings, mainController){
 		var thatTreeController = this;
@@ -141,6 +141,7 @@ org.apache.sling.contenteditor.TreeController = (function() {
 
 	TreeController.prototype.get_uri_from_li = function(li, extension){
 		var path = this.getPathFromLi(li);
+		path = this.mainController.decodeFromHTML(path);
 		path = this.mainController.encodeURL(path);
 		return this.settings.contextPath+path+extension;
 	}

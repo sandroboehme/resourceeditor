@@ -25,10 +25,10 @@
 var org = org || {};
 org.apache = org.apache || {};
 org.apache.sling = org.apache.sling || {};
-org.apache.sling.contenteditor = org.apache.sling.contenteditor || {};
+org.apache.sling.reseditor = org.apache.sling.reseditor || {};
 
 //defining the module
-org.apache.sling.contenteditor.LoginController = (function() {
+org.apache.sling.reseditor.LoginController = (function() {
 
 	function LoginController(settings, mainController){
 		var authorized = settings.authorized;

@@ -13,11 +13,11 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.apache.sling</groupId>
-	<artifactId>contenteditor</artifactId>
+	<artifactId>resource-editor</artifactId>
 	<packaging>bundle</packaging>
 	<version>1.0-SNAPSHOT</version>
-	<name>Apache Sling Content Editor</name>
-	<description>A content editor for Apache Sling.</description>
+	<name>Apache Sling Resource Editor</name>
+	<description>A resource editor for Apache Sling.</description>
 	<repositories>
 		<repository>
 			<id>com.springsource.repository.bundles.release</id>
@@ -34,8 +34,8 @@
 		</repository>
 	</repositories>
 	<scm>
-		<developerConnection>scm:git:https://sandroboehme@github.com/sandroboehme/contenteditor.git</developerConnection>
-		<url>https://github.com/sandroboehme/contenteditor</url>
+		<developerConnection>scm:git:https://sandroboehme@github.com/sandroboehme/resourceeditor.git</developerConnection>
+		<url>https://github.com/sandroboehme/resourceeditor</url>
 	</scm>
 
 	<build>
@@ -53,7 +53,7 @@
 				<artifactId>lesscss-maven-plugin</artifactId>
 				<version>1.7.0.1.1-SNAPSHOT</version>
 				<configuration>
-					<outputDirectory>${project.basedir}/src/main/resources/SLING-INF/libs/contenteditor/content/css</outputDirectory>
+					<outputDirectory>${project.basedir}/src/main/resources/SLING-INF/libs/reseditor/content/css</outputDirectory>
 					<includes>
 						<include>bootstrap.less</include>
 					</includes>
@@ -86,7 +86,7 @@
 				<extensions>true</extensions>
 				<configuration>
 					<instructions>
-						<Sling-Initial-Content>SLING-INF/libs/sling/servlet/default/contenteditor;overwrite:=true;path:=/libs/sling/servlet/default/contenteditor,SLING-INF/libs/contenteditor;overwrite:=true;path:=/libs/contenteditor</Sling-Initial-Content>
+						<Sling-Initial-Content>SLING-INF/libs/sling/servlet/default/reseditor;overwrite:=true;path:=/libs/sling/servlet/default/reseditor,SLING-INF/libs/reseditor;overwrite:=true;path:=/libs/reseditor</Sling-Initial-Content>
 						<Import-Package>*,javax.servlet;version="[2.5.0,
 							3.1.0)",javax.servlet.http;version="[2.5.0,
 							3.1.0)",javax.servlet.jsp.jstl.core,javax.servlet.jsp.jstl.fmt,javax.servlet.jsp.jstl.sql,javax.servlet.jsp.jstl.tlv,
@@ -95,7 +95,7 @@
 						</Import-Package>
 						<Require-Bundle>de.sandroboehme.jsnodetypes</Require-Bundle>
 						<Private-Package>
-							org.apache.sling.contenteditor.*
+							org.apache.sling.reseditor.*
 						</Private-Package>
 					</instructions>
 					<remoteOBR>www.jcrbrowser.org</remoteOBR>
