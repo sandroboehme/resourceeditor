@@ -31,11 +31,11 @@ import org.apache.sling.api.resource.ResourceProvider;
 import org.apache.sling.api.resource.ResourceResolver;
 import org.apache.sling.api.resource.SyntheticResource;
 
-@Component
-@Service
-@Properties({
-    @Property(name=ResourceProvider.ROOTS, value=ResEditorResourceProvider.ROOT)
-})
+//@Component
+//@Service
+//@Properties({
+//    @Property(name=ResourceProvider.ROOTS, value=ResEditorResourceProvider.ROOT)
+//})
 public class ResEditorResourceProvider implements ResourceProvider{
     public static final String ROOT = "reseditor";
     public static final String ABS_ROOT = "/" + ROOT;
