@@ -119,7 +119,6 @@
 						<id>install-bundle</id>
 						<goals>
 							<goal>validate</goal>
-							<goal>install</goal>
 						</goals>
 						<configuration>
 							<mountByFS>true</mountByFS>
