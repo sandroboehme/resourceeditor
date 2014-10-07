@@ -20,6 +20,10 @@ package org.apache.sling.reseditor;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.felix.scr.annotations.Component;
+import org.apache.felix.scr.annotations.Properties;
+import org.apache.felix.scr.annotations.Property;
+import org.apache.felix.scr.annotations.Service;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ResourceDecorator;
 import org.apache.sling.api.resource.ResourceMetadata;
@@ -37,6 +41,13 @@ import org.apache.sling.api.resource.ResourceWrapper;
  * the path.
  * 
  */
+
+@Component
+@Service(ResourceDecorator.class)
+@Properties({
+ @Property(name = "service.description", value = "Resource Decorator for giving the Sling Content Editor scripts a higher priority."),
+ @Property(name = "service.vendor", value = "The Apache Software Foundation")
+})
 public class SelectorBasedResourceDecorator implements ResourceDecorator {
 
 	private static final String RESEDITOR_RESOURCE_TYPE = "reseditor";
