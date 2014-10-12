@@ -14,9 +14,9 @@
 <meta http-equiv="content-type" content="text/html; charset=utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<link href='<%= request.getContextPath() %>/libs/reseditor/content/css/font.css' rel='stylesheet' type='text/css'>
+<link href='<%= request.getContextPath() %>/libs/sling/resource-editor-static/content/css/font.css' rel='stylesheet' type='text/css'>
  <!--[if lt IE 9]>
-<link href='<%= request.getContextPath() %>/libs/reseditor/content/css/font_ie.css' rel='stylesheet' type='text/css'>
+<link href='<%= request.getContextPath() %>/libs/sling/resource-editor-static/content/css/font_ie.css' rel='stylesheet' type='text/css'>
   <![endif]-->
   
 <!-- 
@@ -26,28 +26,28 @@ original
 
 <script type="text/javascript" src="<%= request.getContextPath() %>/libs/jsnodetypes/js/jsnodetypes.js"></script>
 
-<script type="text/javascript" src="<%= request.getContextPath() %>/libs/reseditor/content/js/jquery.min.js"></script>
-<script type="text/javascript" src="<%= request.getContextPath() %>/libs/reseditor/content/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="<%= request.getContextPath() %>/libs/reseditor/content/js/bootbox.min.js"></script>
-<script type="text/javascript" src="<%= request.getContextPath() %>/libs/reseditor/content/js/jstree.js"></script>
+<script type="text/javascript" src="<%= request.getContextPath() %>/libs/sling/resource-editor-static/content/js/jquery.min.js"></script>
+<script type="text/javascript" src="<%= request.getContextPath() %>/libs/sling/resource-editor-static/content/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="<%= request.getContextPath() %>/libs/sling/resource-editor-static/content/js/bootbox.min.js"></script>
+<script type="text/javascript" src="<%= request.getContextPath() %>/libs/sling/resource-editor-static/content/js/jstree.js"></script>
 
-<script type="text/javascript" src="<%= request.getContextPath() %>/libs/reseditor/content/js/JSTreeAdapter.reseditor.js"></script>
-<script type="text/javascript" src="<%= request.getContextPath() %>/libs/reseditor/content/js/LoginController.reseditor.js"></script>
-<script type="text/javascript" src="<%= request.getContextPath() %>/libs/reseditor/content/js/MainController.reseditor.js"></script>
-<script type="text/javascript" src="<%= request.getContextPath() %>/libs/reseditor/content/js/TreeController.reseditor.js"></script>
+<script type="text/javascript" src="<%= request.getContextPath() %>/libs/sling/resource-editor-static/content/js/JSTreeAdapter.reseditor.js"></script>
+<script type="text/javascript" src="<%= request.getContextPath() %>/libs/sling/resource-editor-static/content/js/LoginController.reseditor.js"></script>
+<script type="text/javascript" src="<%= request.getContextPath() %>/libs/sling/resource-editor-static/content/js/MainController.reseditor.js"></script>
+<script type="text/javascript" src="<%= request.getContextPath() %>/libs/sling/resource-editor-static/content/js/TreeController.reseditor.js"></script>
 
 <!-- 
-<script type="text/javascript" src="<%= request.getContextPath() %>/libs/reseditor/content/js/jquery.scrollTo-min.js"></script>
+<script type="text/javascript" src="<%= request.getContextPath() %>/libs/sling/resource-editor-static/content/js/jquery.scrollTo-min.js"></script>
  -->
-<script type="text/javascript" src="<%= request.getContextPath() %>/libs/reseditor/content/js/urlEncode.js"></script>
+<script type="text/javascript" src="<%= request.getContextPath() %>/libs/sling/resource-editor-static/content/js/urlEncode.js"></script>
 
-<link rel="stylesheet" type="text/css" media="all" href="<%= request.getContextPath() %>/libs/reseditor/content/css/style.css">
-<link rel="stylesheet" type="text/css" media="all" href="<%= request.getContextPath() %>/libs/reseditor/content/css/bootstrap.css">
-<link rel="stylesheet" type="text/css" media="all" href="<%= request.getContextPath() %>/libs/reseditor/content/css/bootbox.reseditor.css">
-<link rel="stylesheet" type="text/css" media="all" href="<%= request.getContextPath() %>/libs/reseditor/content/css/shake.css">
+<link rel="stylesheet" type="text/css" media="all" href="<%= request.getContextPath() %>/libs/sling/resource-editor-static/content/css/style.css">
+<link rel="stylesheet" type="text/css" media="all" href="<%= request.getContextPath() %>/libs/sling/resource-editor-static/content/css/bootstrap.css">
+<link rel="stylesheet" type="text/css" media="all" href="<%= request.getContextPath() %>/libs/sling/resource-editor-static/content/css/bootbox.reseditor.css">
+<link rel="stylesheet" type="text/css" media="all" href="<%= request.getContextPath() %>/libs/sling/resource-editor-static/content/css/shake.css">
 
 <!--[if IE]>
-	<link rel="stylesheet" type="text/css" media="all" href="<%= request.getContextPath() %>/libs/reseditor/content/css/browser_ie.css"/>
+	<link rel="stylesheet" type="text/css" media="all" href="<%= request.getContextPath() %>/libs/sling/resource-editor-static/content/css/browser_ie.css"/>
 <![endif]-->
 
 <%
@@ -236,6 +236,24 @@ new org.apache.sling.reseditor.JSTreeAdapter(jsTreeAdapterSettings, treeControll
 				</div>
 			</div>
 		</div>
+	</div>
+	<!-- Add node dialog -->
+	<div class="modal fade" id="addNodeDialog" tabindex="-1" role="dialog" aria-labelledby="addNodeDialogLabel" aria-hidden="true">
+	  <div class="modal-dialog modal-sm">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+	        <h4 class="modal-title" id="addNodeDialogLabel">Add Node</h4>
+	      </div>
+	      <div class="modal-body">
+	        ...
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	        <button type="button" class="btn btn-primary">Save changes</button>
+	      </div>
+	    </div>
+	  </div>
 	</div>
 </body>
 </html>

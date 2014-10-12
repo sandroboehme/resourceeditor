@@ -16,7 +16,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package org.apache.sling.reseditor;
+package org.apache.sling.reseditor.resource;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -30,28 +30,17 @@ import org.apache.sling.api.resource.ResourceMetadata;
 import org.apache.sling.api.resource.ResourceWrapper;
 
 /**
- * Overrules the resource resolver to let the Sling Resource Editor render servlets that
- * have been registered by path.
- * 
- * E.g. the login servlet is registered by path using the URL
- * /system/sling/login. When calling /system/sling/login.reseditor.html the
- * servlet would usually be called to render the request. To render this
- * resource with the Sling Resource Editor instead, this ResourceDecorator removes the 
- * servlet resource type for requests that use the 'reseditor' selector in 
- * the path.
+ * Decorates resources that have been called with the {@link ResEditorResourceProvider} with the resource-editor resource type.
  * 
  */
 
 @Component
 @Service(ResourceDecorator.class)
 @Properties({
- @Property(name = "service.description", value = "Resource Decorator for giving the Sling Content Editor scripts a higher priority."),
+ @Property(name = "service.description", value = "Decorates resources that have been called with the ResEditorResourceProvider with the resource-editor resource type."),
  @Property(name = "service.vendor", value = "The Apache Software Foundation")
 })
-public class SelectorBasedResourceDecorator implements ResourceDecorator {
-
-	private static final String RESEDITOR_RESOURCE_TYPE = "reseditor";
-	private static final String RESEDITOR_SELECTOR = "reseditor";
+public class ResourceProviderBasedResourceDecorator implements ResourceDecorator {
 
 	/**
 	 * @see org.apache.sling.api.resource.ResourceDecorator#decorate(org.apache.sling.api.resource.Resource,
@@ -80,16 +69,13 @@ public class SelectorBasedResourceDecorator implements ResourceDecorator {
 
 	private Resource getResourceEditorResourceWrapper(Resource resource, String resolutionPathInfo) {
 		Resource result = null;
-		if (resolutionPathInfo != null && resolutionPathInfo.endsWith("." + RESEDITOR_SELECTOR + ".html")) {
+		ResourceMetadata resourceMetadata = resource.getResourceMetadata();
+		boolean isResourceEditorProviderResource = resourceMetadata != null ? resourceMetadata.containsKey(ResEditorResourceProvider.RESOURCE_EDITOR_PROVIDER_RESOURCE) : false;  
+		if (resolutionPathInfo != null && isResourceEditorProviderResource) {
 			result = new ResourceWrapper(resource) {
 				@Override
 				public String getResourceType() {
-					/*
-					 * It overwrites the resource types to avoid that the servlet 
-					 * resource types have a higher priority then the
-					 * Resource Editor's html.jsp.
-					 */
-					return RESEDITOR_RESOURCE_TYPE;
+					return ResEditorResourceProvider.RESEDITOR_RESOURCE_TYPE;
 				}
 
 			};

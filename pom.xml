@@ -53,7 +53,7 @@
 				<artifactId>lesscss-maven-plugin</artifactId>
 				<version>1.7.0.1.1-SNAPSHOT</version>
 				<configuration>
-					<outputDirectory>${project.basedir}/src/main/resources/SLING-INF/libs/reseditor/content/css</outputDirectory>
+					<outputDirectory>${project.basedir}/src/main/resources/SLING-INF/libs/sling/resource-editor-static/content/css</outputDirectory>
 					<includes>
 						<include>bootstrap.less</include>
 					</includes>
@@ -86,7 +86,7 @@
 				<extensions>true</extensions>
 				<configuration>
 					<instructions>
-						<Sling-Initial-Content>SLING-INF/libs/sling/servlet/default/reseditor;overwrite:=true;path:=/libs/sling/servlet/default/reseditor,SLING-INF/libs/reseditor;overwrite:=true;path:=/libs/reseditor</Sling-Initial-Content>
+						<Sling-Initial-Content>SLING-INF/libs/sling/resource-editor-static;overwrite:=true;path:=/libs/sling/resource-editor-static,SLING-INF/libs/sling/resource-editor;overwrite:=true;path:=/libs/sling/resource-editor</Sling-Initial-Content>
 						<Import-Package>*,javax.servlet;version="[2.5.0,
 							3.1.0)",javax.servlet.http;version="[2.5.0,
 							3.1.0)",javax.servlet.jsp.jstl.core,javax.servlet.jsp.jstl.fmt,javax.servlet.jsp.jstl.sql,javax.servlet.jsp.jstl.tlv,

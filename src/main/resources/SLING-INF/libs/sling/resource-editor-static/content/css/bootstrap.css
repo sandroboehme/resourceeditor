@@ -6065,7 +6065,11 @@ body {
   margin: 20px 0px;
 }
 .modal {
-  background-color: #303030;
+  background-color: transparent;
+}
+.modal-body,
+.modal-header {
+  text-shadow: none;
 }
 /* ################################################################# */
 /* --- Main-Seperator ---  */

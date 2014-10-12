@@ -143,7 +143,7 @@ org.apache.sling.reseditor.TreeController = (function() {
 		var path = this.getPathFromLi(li);
 		path = this.mainController.decodeFromHTML(path);
 		path = this.mainController.encodeURL(path);
-		return this.settings.contextPath+path+extension;
+		return this.settings.contextPath+"/reseditor"+path+extension;
 	}
 
 	TreeController.prototype.deleteNodes = function() {

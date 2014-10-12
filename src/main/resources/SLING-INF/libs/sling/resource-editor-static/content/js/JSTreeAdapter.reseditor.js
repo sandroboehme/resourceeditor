@@ -37,7 +37,7 @@ org.apache.sling.reseditor.JSTreeAdapter = (function() {
 		this.settings = settings;
 		this.treeController = treeController;
 		this.mainController = mainController;
-var pathSuffix = ".reseditor.html";
+var pathSuffix = ".html";
 var resourcePath = (settings.resourcePath.endsWith(pathSuffix)) ? settings.resourcePath.substring(0,settings.resourcePath.length-pathSuffix.length) : settings.resourcePath; 
 var currentNodePath = this.mainController.encodeToHTML(resourcePath);
 var paths = currentNodePath.substring(1).split("/");
@@ -76,11 +76,11 @@ $(document).ready(function() {
 				'url' : function (liJson) {
 					// initial call for the root element
 					if (liJson.id === '#'){
-						return settings.contextPath+"/.reseditor.rootnodes.json";
+						return settings.contextPath+"/reseditor/.rootnodes.json";
 					} else {
 						// the li the user clicked on.
 						var li = $('#'+liJson.id);
-						return treeController.get_uri_from_li(li,".reseditor.nodes.json");
+						return treeController.get_uri_from_li(li,".nodes.json");
 					}
 				},
 			    'data' : function (node) {
