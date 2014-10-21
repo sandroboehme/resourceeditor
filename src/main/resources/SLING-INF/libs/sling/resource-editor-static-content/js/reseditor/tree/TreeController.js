@@ -36,13 +36,16 @@ org.apache.sling.reseditor.TreeController = (function() {
 		var thatTreeController = this;
 		this.settings = settings;
 		this.mainController = mainController;
+
+		var addNodeControllerSettings = {};
+		this.addNodeController = new org.apache.sling.reseditor.AddNodeController(addNodeControllerSettings, mainController);
 		
 		$(document).ready(function() {
 			$("#tree").on("click", "li.jstree-node>a.jstree-anchor>i.open-icon",function(e, data) {
 				thatTreeController.openNodeTarget(e);
 			});
 			$("#tree").on("click", "li.jstree-node>a.jstree-anchor>i.add-icon",function(e, data) {
-				thatTreeController.addNode($(e.target).parents("li"));
+				thatTreeController.openAddNodeDialog($(e.target).parents("li"));
 			});
 			$("#tree").on("click", "li.jstree-node>a.jstree-anchor>i.remove-icon",function(e, data) {
 				thatTreeController.deleteSingleNode($(e.target).parents("li"));
@@ -79,13 +82,14 @@ org.apache.sling.reseditor.TreeController = (function() {
 			currentURL = this.mainController.encodeURL(decodedCurrentURI);
 			$.ajax({
 		  	  type: 'POST',
-				  url: currentURL,
+			  url: currentURL,
 		  	  success: function(server_data) {
 		  		  thatTreeController.mainController.redirectTo(newURI);
 			  },
-		  	  error: function(server_data) {
-		  		  thatTreeController.mainController.displayAlert(server_data.responseText);
+		  	  error: function(errorJson) {
+		  		  thatTreeController.mainController.displayAlert(errorJson);
 			  },
+			  dataType: "json",
 			  contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
 		  	  data: { 
 		  		":operation": "move",
@@ -113,7 +117,9 @@ org.apache.sling.reseditor.TreeController = (function() {
 	};
 
 	TreeController.prototype.getURLEncodedPathFromLi = function(li){
-		return this.mainController.encodeURL(this.getPathFromLi(li));
+		var htmlEncodedPath = this.getPathFromLi(li);
+		var htmlDecodedPath = this.mainController.decodeFromHTML(htmlEncodedPath);
+		return this.mainController.encodeURL(htmlDecodedPath);
 	};
 
 	TreeController.prototype.openElement = function(root, paths) {
@@ -177,10 +183,11 @@ org.apache.sling.reseditor.TreeController = (function() {
 								tree.delete_node(id);
 							}
 			      		  },
-			        	  error: function(server_data) {
-			        		thatTreeController.mainController.displayAlert(server_data.responseText);
+			        	  error: function(errorJson) {
+			        		thatTreeController.mainController.displayAlert(errorJson);
 			      		  },
 			      		  traditional: true,
+			      		  dataType: "json",
 						  contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
 			        	  data: { 
 			        		  ":operation": "delete",
@@ -208,9 +215,10 @@ org.apache.sling.reseditor.TreeController = (function() {
 						var tree = $('#tree').jstree(true);
 						tree.delete_node(id);
 		      		  },
-		        	  error: function(server_data) {
-		        		thatTreeController.mainController.displayAlert(server_data.responseText);
+		        	  error: function(errorJson) {
+		        		thatTreeController.mainController.displayAlert(errorJson);
 		      		  },
+					  dataType: "json",
 		        	  data: { 
 		        		  ":operation": "delete"
 		        	  }
@@ -219,16 +227,10 @@ org.apache.sling.reseditor.TreeController = (function() {
 		});
 	}
 
-	TreeController.prototype.addNode = function(li) {
+	TreeController.prototype.openAddNodeDialog = function(li) {
 		var thatTreeController = this;
 		var resourcePath = this.getPathFromLi(li);
-		var confirmationMsg = "This is a mock dialog for the adding nodes at "+resourcePath+".";
-		var encodedresourcePath = this.mainController.encodeURL(resourcePath);
-		bootbox.confirm(confirmationMsg, function(result){
-			if (result){
-				bootbox.alert("Confirmed.");
-			}
-		});
+		this.addNodeController.openAddNodeDialog(resourcePath);
 	}
 
 	/*

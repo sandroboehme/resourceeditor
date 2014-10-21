@@ -47,6 +47,14 @@ org.apache.sling.reseditor.MainController = (function() {
 		});
 	};
 
+	MainController.prototype.getNodeTypes = function(){
+		return this.settings.nodeTypes;
+	}
+
+	MainController.prototype.getContextPath = function(){
+		return this.settings.contextPath;
+	}
+
 	MainController.prototype.encodeURL = function(unencodedURL){
 		url = encodeURIComponent(unencodedURL);
 		return url.replace(/%2F/g, "/");
@@ -77,15 +85,13 @@ org.apache.sling.reseditor.MainController = (function() {
 		$("#outer_content").height( usable_height );
 	}
 
-	MainController.prototype.displayAlert = function(errorMsg, resourcePath){
+	MainController.prototype.displayAlert = function(error, resourcePath){
 		var thisMainController = this;
-		// Let jQuery parse the error message from the html 
-		// by using an id selector.
-		var errorMessage = $("#Message",errorMsg).html();
-		if (resourcePath) {
-			errorMessage = "'"+resourcePath+"': "+errorMessage;
-		}
-		$('#alertMsg').append($("<div id='Message'>").append(errorMessage));
+		var errorJson = error.responseJSON;
+		var encodedTitle = this.encodeToHTML(errorJson.title);
+		var encodedMsg = this.encodeToHTML(errorJson["status.message"]);
+		var errorMsg = encodedTitle+" ("+"Status "+errorJson["status.code"]+") "+encodedMsg;
+		$('#alertMsg').append($("<div id='Message'>").append((resourcePath) ? "'"+resourcePath+"': "+errorMsg : errorMsg));
 		$("#alert").slideDown(function() {
 			thisMainController.adjust_height();
 		});
@@ -99,8 +105,8 @@ org.apache.sling.reseditor.MainController = (function() {
 	
 	MainController.prototype.redirectTo = function(unencodedTargetPath){
 		var newURIencoded = this.encodeURL(unencodedTargetPath);
-  	  	var target = this.settings.contextPath+newURIencoded;
-  	  	location.href=target+".reseditor.html";
+  	  	var target = this.settings.contextPath+"/reseditor"+newURIencoded;
+  	  	location.href=target+".html";
 	}
 	
 	return MainController;

@@ -14,9 +14,9 @@
 [{
 	"id" : "/",
 	"state" : {"opened":true, "disabled": false, "selected": false},
-	"text"	: "<i class=\"jstree-icon node-icon add-icon\"></i> /",
+	"text"	: "<i class=\"jstree-icon node-icon open-icon\"></i><i class=\"jstree-icon node-icon add-icon\"></i> /",
 	"li_attr" :{ "nodename" : "${theResource.name}" },
-	"a_attr" :{ "href" : "<%= request.getContextPath() %>/.reseditor.html" },
+	"a_attr" :{ "href" : "<%= request.getContextPath() %>/reseditor/.html" },
 	"children" :
 		<%@ include file="nodes.json.incl.jsp" %>
 }]

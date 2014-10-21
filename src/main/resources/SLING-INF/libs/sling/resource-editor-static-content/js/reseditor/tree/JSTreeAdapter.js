@@ -130,6 +130,7 @@ $(document).ready(function() {
     	treeController.renameNode(e, data);
     }).bind("move_node.jstree", function (e, data) {
     	// see http://www.jstree.com/documentation/core ._get_move()
+    	// refactor to the new jsTree version
     	var src_li = data.rslt.o;
     	var src_path = ""+settings.contextPath+src_li.children("a").attr("target");
     	var dest_li = data.rslt.np; // new parent .cr - same as np, but if a root node is created this is -1
@@ -140,13 +141,14 @@ $(document).ready(function() {
     	var position = data.rslt.cp;
     	$.ajax({
       	  type: 'POST',
-			  url: src_path,
+		  url: src_path,
+		  dataType: "json",
       	  success: function(server_data) {
         		var target = ""+settings.contextPath+dest_path;
             	location.href=target+".reseditor.html";
     		  },
-      	  error: function(server_data) {
-      			displayAlert(server_data.responseText);
+      	  error: function(errorJson) {
+      			displayAlert(errorJson);
     		  },
       	  data: { 
        		":operation": "move",
