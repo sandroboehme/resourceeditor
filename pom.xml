@@ -15,7 +15,7 @@
 	<groupId>org.apache.sling</groupId>
 	<artifactId>resource-editor</artifactId>
 	<packaging>bundle</packaging>
-	<version>1.0-SNAPSHOT</version>
+	<version>1.0.1-SNAPSHOT</version>
 	<name>Apache Sling Resource Editor</name>
 	<description>A resource editor for Apache Sling.</description>
 	<repositories>
@@ -93,7 +93,8 @@
 							org.apache.xalan.serialize,org.apache.xalan.templates,org.apache.xml.utils,org.apache.xpath,org.apache.xpath.objects,
 							org.apache.taglibs.standard,org.apache.taglibs.standard.extra.spath,org.apache.taglibs.standard.functions,org.apache.taglibs.standard.lang.jstl,org.apache.taglibs.standard.lang.jstl.parser,org.apache.taglibs.standard.lang.jstl.test,org.apache.taglibs.standard.lang.jstl.test.beans,org.apache.taglibs.standard.lang.support,org.apache.taglibs.standard.resources,org.apache.taglibs.standard.tag.common.core,org.apache.taglibs.standard.tag.common.fmt,org.apache.taglibs.standard.tag.common.sql,org.apache.taglibs.standard.tag.common.xml,org.apache.taglibs.standard.tag.el.core,org.apache.taglibs.standard.tag.el.fmt,org.apache.taglibs.standard.tag.el.sql,org.apache.taglibs.standard.tag.el.xml,org.apache.taglibs.standard.tag.rt.core,org.apache.taglibs.standard.tag.rt.fmt,org.apache.taglibs.standard.tag.rt.sql,org.apache.taglibs.standard.tag.rt.xml,org.apache.taglibs.standard.tei,org.apache.taglibs.standard.tlv,
 						</Import-Package>
-						<Require-Bundle>de.sandroboehme.jsnodetypes</Require-Bundle>
+<!-- 						<Require-Bundle>de.sandroboehme.jsnodetypes</Require-Bundle> -->
+						<Require-Capability>de.sandroboehme.jsnodetypes</Require-Capability>
 						<Private-Package>
 							org.apache.sling.reseditor.*
 						</Private-Package>
@@ -122,7 +123,7 @@
 							<goal>install</goal>
 						</goals>
 						<configuration>
-							<mountByFS>true</mountByFS>
+<!-- 							<mountByFS>true</mountByFS> -->
 							<slingUrl>http://localhost:8080/system/console</slingUrl>
 							<user>admin</user>
 							<password>admin</password>
