@@ -100,6 +100,7 @@ org.apache.sling.reseditor.AddNodeController = (function() {
 				data["sling:resourceType"] = resourceType;
 			}
 			var targetURL = (this.lastAddNodeURL=="/") ? "/" : this.lastAddNodeURL+"/";
+			targetURL = this.mainController.decodeFromHTML(targetURL);
 			if ("" != nodeName) {
 				targetURL += nodeName;
 			}
@@ -107,8 +108,7 @@ org.apache.sling.reseditor.AddNodeController = (function() {
 				//adding a node without a specified name to the root node 
 				targetURL = "/*";
 			}
-			var decodedTargetURL = this.mainController.decodeFromHTML(targetURL);
-			var encodedTargetURL = this.mainController.encodeURL(decodedTargetURL);
+			var encodedTargetURL = this.mainController.encodeURL(targetURL);
 
 			$.ajax({
 		  	  type: 'POST',
