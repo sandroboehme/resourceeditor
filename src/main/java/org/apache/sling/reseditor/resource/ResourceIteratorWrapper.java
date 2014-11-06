@@ -15,17 +15,14 @@ public class ResourceIteratorWrapper implements Iterator<Resource>{
 		this.iterator = iterator;
 	}
 	
-	@Override
 	public boolean hasNext() {
 		return iterator.hasNext();
 	}
 
-	@Override
 	public Resource next() {
 		return new ResourceTypeResourceWrapper(iterator.next());
 	}
 
-	@Override
 	public void remove() {
 		iterator.remove();
 	}

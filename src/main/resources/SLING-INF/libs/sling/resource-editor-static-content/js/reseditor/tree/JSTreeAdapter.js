@@ -38,7 +38,8 @@ org.apache.sling.reseditor.JSTreeAdapter = (function() {
 		this.treeController = treeController;
 		this.mainController = mainController;
 var pathSuffix = ".html";
-var resourcePath = (settings.resourcePath.endsWith(pathSuffix)) ? settings.resourcePath.substring(0,settings.resourcePath.length-pathSuffix.length) : settings.resourcePath; 
+var pathEndsWithPathSuffix = settings.resourcePath.substring(settings.resourcePath.length-pathSuffix.length) == pathSuffix;
+var resourcePath = (pathEndsWithPathSuffix) ? settings.resourcePath.substring(0,settings.resourcePath.length-pathSuffix.length) : settings.resourcePath; 
 var currentNodePath = this.mainController.encodeToHTML(resourcePath);
 var paths = currentNodePath.substring(1).split("/");
 var selectingNodeWhileOpeningTree=true;

@@ -55,7 +55,7 @@ org.apache.sling.reseditor.AddNodeController = (function() {
 				return "<span><span class=\"search-choice-close\"></span>"+element.text+"</span>";
 			}
 
-			var data=[{id:0,text:'enhancement'},{id:1,text:'bug'},{id:2,text:'duplicate'},{id:3,text:'invalid'},{id:4,text:'wontfix'}];
+			var data=[];
 
 			var select2 = $("#resourceType").select2({
 				placeholder: "Resource Type",
