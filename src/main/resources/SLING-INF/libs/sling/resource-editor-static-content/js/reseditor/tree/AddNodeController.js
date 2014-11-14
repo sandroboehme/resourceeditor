@@ -57,7 +57,7 @@ org.apache.sling.reseditor.AddNodeController = (function() {
 			var thatAddNodeController = this;
 			var nodeName = $("#nodeName").val().trim();
 			var nodeType = $("#nodeType").val();
-			var resourceType = $("#resourceType").val().trim();
+			var resourceType = $("#resourceType").select2('data').text.trim();
 			
 			var data = {"_charset_": "utf-8"};
 			if ("" != nodeType){
