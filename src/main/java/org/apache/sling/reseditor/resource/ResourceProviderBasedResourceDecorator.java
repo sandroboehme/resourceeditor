@@ -70,8 +70,9 @@ public class ResourceProviderBasedResourceDecorator implements ResourceDecorator
 	private Resource getResourceEditorResourceWrapper(Resource resource, String resolutionPathInfo) {
 		Resource result = null;
 		ResourceMetadata resourceMetadata = resource.getResourceMetadata();
-		boolean isResourceEditorProviderResource = resourceMetadata != null ? resourceMetadata.containsKey(ResEditorResourceProvider.RESOURCE_EDITOR_PROVIDER_RESOURCE) : false;  
-		if (resolutionPathInfo != null && isResourceEditorProviderResource) {
+		boolean isResourceEditorProviderResource = resourceMetadata != null ? resourceMetadata.containsKey(ResEditorResourceProvider.RESOURCE_EDITOR_PROVIDER_RESOURCE) : false;
+		boolean isHTMLResource = resolutionPathInfo != null && resolutionPathInfo.endsWith("html"); 
+		if (isHTMLResource && isResourceEditorProviderResource) {
 			result = new ResourceWrapper(resource) {
 				@Override
 				public String getResourceType() {
