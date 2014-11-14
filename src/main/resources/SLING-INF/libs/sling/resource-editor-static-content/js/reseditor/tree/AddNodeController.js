@@ -50,40 +50,7 @@ org.apache.sling.reseditor.AddNodeController = (function() {
 				allowClear: true, 
 				data: nodeTypeObjects
 			})
-
-			function format(element) {
-				return "<span><span class=\"search-choice-close\"></span>"+element.text+"</span>";
-			}
-
-			var data=[];
-
-			var select2 = $("#resourceType").select2({
-				placeholder: "Resource Type",
-				allowClear: true, 
-				formatResult: format,
-				data: data,
-				createSearchChoice: function(searchTerm){
-					return {id:searchTerm, text:searchTerm};
-				}
-			}).data("select2");
 			
-			// To get called on a click in the result list:
-			// http://stackoverflow.com/a/15637696/1743551
-			select2.onSelect = (function(fn) {
-			    return function(data, options) {
-			        var target;
-			        
-			        if (options != null) {
-			            target = $(options.target);
-			        }
-			        
-			        if (target && target.hasClass('search-choice-close')) {
-			            alert('click!');
-			        } else {
-			            return fn.apply(this, arguments);
-			        }
-			    }
-			})(select2.onSelect);
 		});
 
 		AddNodeController.prototype.addNode = function() {
@@ -133,6 +100,23 @@ org.apache.sling.reseditor.AddNodeController = (function() {
 		$('#addNodeDialog').modal({});
 		var contextPath = this.mainController.getContextPath() == "/" && resourcePath=="/" ? "" : this.mainController.getContextPath(); 
 		this.lastAddNodeURL = contextPath+resourcePath;
+
+		
+		var url = this.mainController.getContextPath()+"libs/sling/resource-editor/servlet-nodes/resource-types.json";
+		$.getJSON(url, function( origData ) {
+			var data = jQuery.map( origData, function( n, i ) {
+				return ( {id:i, text:n} );
+			});
+			
+			var select2 = $("#resourceType").select2({
+				placeholder: "Resource Type",
+				allowClear: true, 
+				data: data,
+				createSearchChoice: function(searchTerm){
+					return {id:searchTerm, text:searchTerm};
+				}
+			}).data("select2");
+		});
 	}
 	
 	return AddNodeController;

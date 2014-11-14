@@ -52,7 +52,7 @@ org.apache.sling.reseditor.MainController = (function() {
 	}
 
 	MainController.prototype.getContextPath = function(){
-		return this.settings.contextPath;
+		return this.settings.contextPath=="" ? "/" : this.settings.contextPath;
 	}
 
 	MainController.prototype.encodeURL = function(unencodedURL){
