@@ -159,9 +159,10 @@ $(document).ready(function() {
       	});
     }).on('hover_node.jstree', function (event, nodeObj) {
         $('#'+nodeObj.node.id+' a:first').focus();
-    }).on('keydown.jstree', '.jstree-anchor', function (e) {
+    }).on('keydown.jstree', 'a.jstree-anchor', function (e) {
     	// see http://www.javascripter.net/faq/keycodes.htm
     	if (46==e.which) {
+    		// && node not in edit mode
     		treeController.deleteNodes();
     	}
     }).on('select_node.jstree', function (e, data) {
