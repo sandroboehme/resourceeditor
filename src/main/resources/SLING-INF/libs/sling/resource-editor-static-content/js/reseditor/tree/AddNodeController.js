@@ -99,7 +99,7 @@ org.apache.sling.reseditor.AddNodeController = (function() {
 	
 	AddNodeController.prototype.openAddNodeDialog = function(resourcePath) {
 		$('#addNodeDialog').modal({});
-		var contextPath = this.mainController.getContextPath() == "/" && resourcePath=="/" ? "" : this.mainController.getContextPath(); 
+		var contextPath = this.mainController.getContextPath() == "/" && resourcePath.length>0 && resourcePath.charAt(0)=="/" ? "" : this.mainController.getContextPath(); 
 		this.lastAddNodeURL = contextPath+resourcePath;
 
 		
