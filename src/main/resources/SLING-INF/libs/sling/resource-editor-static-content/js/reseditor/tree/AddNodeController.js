@@ -98,7 +98,16 @@ org.apache.sling.reseditor.AddNodeController = (function() {
 	};
 	
 	AddNodeController.prototype.openAddNodeDialog = function(resourcePath) {
-		$('#addNodeDialog').modal({});
+		var thatAddNodeController = this;
+		$('#addNodeDialog').on('shown.bs.modal', function () {
+			$('#nodeName').focus();
+		})
+		$('#addNodeDialog').on('keydown', function (e) {
+	    	if (13==e.which) {
+				thatAddNodeController.addNode();
+	    	}
+		})
+		$('#addNodeDialog').modal('show');
 		var contextPath = this.mainController.getContextPath() == "/" && resourcePath.length>0 && resourcePath.charAt(0)=="/" ? "" : this.mainController.getContextPath(); 
 		this.lastAddNodeURL = contextPath+resourcePath;
 
