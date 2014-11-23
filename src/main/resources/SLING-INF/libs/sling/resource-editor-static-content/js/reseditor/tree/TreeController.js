@@ -58,6 +58,22 @@ org.apache.sling.reseditor.TreeController = (function() {
 		});
 	};
 
+	TreeController.prototype.configureKeyListeners = function(e) {
+    	// see http://www.javascripter.net/faq/keycodes.htm
+		var del = 46;
+		var a = 65;
+		switch(e.which) {
+		    case del:
+	    		treeController.deleteNodes();
+		        break;
+		    case a:
+				this.openAddNodeDialog($(e.target).parents("li"));
+		        break;
+		}
+		
+	}
+	
+
 	TreeController.prototype.openNodeTarget = function(e) {
 		var url = $(e.target).parent().attr("href");
 		url = this.mainController.decodeFromHTML(url);
