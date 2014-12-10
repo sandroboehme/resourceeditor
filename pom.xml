@@ -15,7 +15,7 @@
 	<groupId>org.apache.sling</groupId>
 	<artifactId>resource-editor</artifactId>
 	<packaging>bundle</packaging>
-	<version>1.0.1-SNAPSHOT</version>
+	<version>1.0.2-SNAPSHOT</version>
 	<name>Apache Sling Resource Editor</name>
 	<description>A resource editor for Apache Sling.</description>
 
